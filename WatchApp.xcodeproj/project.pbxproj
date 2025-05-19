@@ -11,6 +11,8 @@
 		03BE72B22DD221FE00DD7805 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 03BE72B12DD221FE00DD7805 /* FirebaseCore */; };
 		03BE72B42DD221FE00DD7805 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 03BE72B32DD221FE00DD7805 /* FirebaseFirestore */; };
 		03FA390A2DDB219D005F1EDC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03FA39042DDB219D005F1EDC /* Assets.xcassets */; };
+		03FA390B2DDB219D005F1EDC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 03FA39062DDB219D005F1EDC /* GoogleService-Info.plist */; };
+		03FA390C2DDB219D005F1EDC /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 03FA39072DDB219D005F1EDC /* Secrets.plist */; };
 		03FA390D2DDB219D005F1EDC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA39052DDB219D005F1EDC /* ContentView.swift */; };
 		03FA390E2DDB219D005F1EDC /* WatchAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA39082DDB219D005F1EDC /* WatchAppApp.swift */; };
 		03FA39142DDB2206005F1EDC /* SecretManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA39132DDB2206005F1EDC /* SecretManager.swift */; };
@@ -18,22 +20,20 @@
 		03FA39182DDB224D005F1EDC /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA39172DDB224D005F1EDC /* Movie.swift */; };
 		03FA391A2DDB234E005F1EDC /* MovieViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA39192DDB234E005F1EDC /* MovieViewModel.swift */; };
 		03FA391C2DDB23C0005F1EDC /* MovieListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA391B2DDB23C0005F1EDC /* MovieListView.swift */; };
-		A4B100862DDB2CE70032B48E /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = A4B100852DDB2CE70032B48E /* Secrets.plist */; };
-		A4B100882DDB2D070032B48E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A4B100872DDB2D070032B48E /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		03BE729E2DD21E3300DD7805 /* WatchApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WatchApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		03FA39042DDB219D005F1EDC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		03FA39052DDB219D005F1EDC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		03FA39062DDB219D005F1EDC /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		03FA39072DDB219D005F1EDC /* Secrets.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Secrets.plist; sourceTree = "<group>"; };
 		03FA39082DDB219D005F1EDC /* WatchAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchAppApp.swift; sourceTree = "<group>"; };
 		03FA39132DDB2206005F1EDC /* SecretManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretManager.swift; sourceTree = "<group>"; };
 		03FA39152DDB221F005F1EDC /* TMDBService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDBService.swift; sourceTree = "<group>"; };
 		03FA39172DDB224D005F1EDC /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		03FA39192DDB234E005F1EDC /* MovieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewModel.swift; sourceTree = "<group>"; };
 		03FA391B2DDB23C0005F1EDC /* MovieListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListView.swift; sourceTree = "<group>"; };
-		A4B100852DDB2CE70032B48E /* Secrets.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Secrets.plist; sourceTree = "<group>"; };
-		A4B100872DDB2D070032B48E /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,9 +74,9 @@
 				03FA39102DDB21AB005F1EDC /* Models */,
 				03FA390F2DDB21A0005F1EDC /* Service */,
 				03FA39042DDB219D005F1EDC /* Assets.xcassets */,
+				03FA39062DDB219D005F1EDC /* GoogleService-Info.plist */,
+				03FA39072DDB219D005F1EDC /* Secrets.plist */,
 				03FA39082DDB219D005F1EDC /* WatchAppApp.swift */,
-				A4B100852DDB2CE70032B48E /* Secrets.plist */,
-				A4B100872DDB2D070032B48E /* GoogleService-Info.plist */,
 			);
 			path = WatchApp;
 			sourceTree = "<group>";
@@ -182,9 +182,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A4B100862DDB2CE70032B48E /* Secrets.plist in Resources */,
 				03FA390A2DDB219D005F1EDC /* Assets.xcassets in Resources */,
-				A4B100882DDB2D070032B48E /* GoogleService-Info.plist in Resources */,
+				03FA390B2DDB219D005F1EDC /* GoogleService-Info.plist in Resources */,
+				03FA390C2DDB219D005F1EDC /* Secrets.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
