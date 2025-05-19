@@ -3,26 +3,38 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 63;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		03BE72B02DD221FE00DD7805 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 03BE72AF2DD221FE00DD7805 /* FirebaseAuth */; };
 		03BE72B22DD221FE00DD7805 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 03BE72B12DD221FE00DD7805 /* FirebaseCore */; };
 		03BE72B42DD221FE00DD7805 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 03BE72B32DD221FE00DD7805 /* FirebaseFirestore */; };
+		03FA390A2DDB219D005F1EDC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03FA39042DDB219D005F1EDC /* Assets.xcassets */; };
+		03FA390B2DDB219D005F1EDC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 03FA39062DDB219D005F1EDC /* GoogleService-Info.plist */; };
+		03FA390C2DDB219D005F1EDC /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 03FA39072DDB219D005F1EDC /* Secrets.plist */; };
+		03FA390D2DDB219D005F1EDC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA39052DDB219D005F1EDC /* ContentView.swift */; };
+		03FA390E2DDB219D005F1EDC /* WatchAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA39082DDB219D005F1EDC /* WatchAppApp.swift */; };
+		03FA39142DDB2206005F1EDC /* SecretManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA39132DDB2206005F1EDC /* SecretManager.swift */; };
+		03FA39162DDB221F005F1EDC /* TMDBService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA39152DDB221F005F1EDC /* TMDBService.swift */; };
+		03FA39182DDB224D005F1EDC /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA39172DDB224D005F1EDC /* Movie.swift */; };
+		03FA391A2DDB234E005F1EDC /* MovieViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA39192DDB234E005F1EDC /* MovieViewModel.swift */; };
+		03FA391C2DDB23C0005F1EDC /* MovieListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA391B2DDB23C0005F1EDC /* MovieListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		03BE729E2DD21E3300DD7805 /* WatchApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WatchApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		03FA39042DDB219D005F1EDC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		03FA39052DDB219D005F1EDC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		03FA39062DDB219D005F1EDC /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		03FA39072DDB219D005F1EDC /* Secrets.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Secrets.plist; sourceTree = "<group>"; };
+		03FA39082DDB219D005F1EDC /* WatchAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchAppApp.swift; sourceTree = "<group>"; };
+		03FA39132DDB2206005F1EDC /* SecretManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretManager.swift; sourceTree = "<group>"; };
+		03FA39152DDB221F005F1EDC /* TMDBService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDBService.swift; sourceTree = "<group>"; };
+		03FA39172DDB224D005F1EDC /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
+		03FA39192DDB234E005F1EDC /* MovieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewModel.swift; sourceTree = "<group>"; };
+		03FA391B2DDB23C0005F1EDC /* MovieListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		03BE72A02DD21E3300DD7805 /* WatchApp */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = WatchApp;
-			sourceTree = "<group>";
-		};
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		03BE729B2DD21E3300DD7805 /* Frameworks */ = {
@@ -41,7 +53,7 @@
 		03BE72952DD21E3300DD7805 = {
 			isa = PBXGroup;
 			children = (
-				03BE72A02DD21E3300DD7805 /* WatchApp */,
+				03FA39092DDB219D005F1EDC /* WatchApp */,
 				03BE729F2DD21E3300DD7805 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -52,6 +64,55 @@
 				03BE729E2DD21E3300DD7805 /* WatchApp.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		03FA39092DDB219D005F1EDC /* WatchApp */ = {
+			isa = PBXGroup;
+			children = (
+				03FA39122DDB21B8005F1EDC /* Views */,
+				03FA39112DDB21B2005F1EDC /* ViewModels */,
+				03FA39102DDB21AB005F1EDC /* Models */,
+				03FA390F2DDB21A0005F1EDC /* Service */,
+				03FA39042DDB219D005F1EDC /* Assets.xcassets */,
+				03FA39062DDB219D005F1EDC /* GoogleService-Info.plist */,
+				03FA39072DDB219D005F1EDC /* Secrets.plist */,
+				03FA39082DDB219D005F1EDC /* WatchAppApp.swift */,
+			);
+			path = WatchApp;
+			sourceTree = "<group>";
+		};
+		03FA390F2DDB21A0005F1EDC /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				03FA39132DDB2206005F1EDC /* SecretManager.swift */,
+				03FA39152DDB221F005F1EDC /* TMDBService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		03FA39102DDB21AB005F1EDC /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				03FA39172DDB224D005F1EDC /* Movie.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		03FA39112DDB21B2005F1EDC /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				03FA39192DDB234E005F1EDC /* MovieViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		03FA39122DDB21B8005F1EDC /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				03FA39052DDB219D005F1EDC /* ContentView.swift */,
+				03FA391B2DDB23C0005F1EDC /* MovieListView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -68,9 +129,6 @@
 			buildRules = (
 			);
 			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				03BE72A02DD21E3300DD7805 /* WatchApp */,
 			);
 			name = WatchApp;
 			packageProductDependencies = (
@@ -98,6 +156,7 @@
 				};
 			};
 			buildConfigurationList = 03BE72992DD21E3300DD7805 /* Build configuration list for PBXProject "WatchApp" */;
+			compatibilityVersion = "Xcode 15.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -109,7 +168,6 @@
 			packageReferences = (
 				03BE72AE2DD221FE00DD7805 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
-			preferredProjectObjectVersion = 77;
 			productRefGroup = 03BE729F2DD21E3300DD7805 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -124,6 +182,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03FA390A2DDB219D005F1EDC /* Assets.xcassets in Resources */,
+				03FA390B2DDB219D005F1EDC /* GoogleService-Info.plist in Resources */,
+				03FA390C2DDB219D005F1EDC /* Secrets.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -134,6 +195,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03FA39162DDB221F005F1EDC /* TMDBService.swift in Sources */,
+				03FA391C2DDB23C0005F1EDC /* MovieListView.swift in Sources */,
+				03FA390D2DDB219D005F1EDC /* ContentView.swift in Sources */,
+				03FA390E2DDB219D005F1EDC /* WatchAppApp.swift in Sources */,
+				03FA39142DDB2206005F1EDC /* SecretManager.swift in Sources */,
+				03FA39182DDB224D005F1EDC /* Movie.swift in Sources */,
+				03FA391A2DDB234E005F1EDC /* MovieViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,6 +344,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -304,6 +373,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
