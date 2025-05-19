@@ -22,10 +22,22 @@ struct WatchAppApp: App {
     
     // register app delegate for Firebase setup
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @State private var showSplash = true
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+          Group {
+            if showSplash {
+              SplashScreenView()
+                .onAppear {
+                  DispatchQueue.main.asyncAfter(deadline: .now() + 5.5) {
+                      showSplash = false
+                  }
+                }
+            } else {
+                ContentView()
+            }
+          }
         }
     }
 }
