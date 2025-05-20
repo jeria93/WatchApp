@@ -18,6 +18,9 @@
 		03FA39182DDB224D005F1EDC /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA39172DDB224D005F1EDC /* Movie.swift */; };
 		03FA391A2DDB234E005F1EDC /* MovieViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA39192DDB234E005F1EDC /* MovieViewModel.swift */; };
 		03FA391C2DDB23C0005F1EDC /* MovieListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA391B2DDB23C0005F1EDC /* MovieListView.swift */; };
+		5D0D0C3E2DDB663300FC4499 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0D0C3D2DDB663300FC4499 /* AuthViewModel.swift */; };
+		5D0D0C402DDB665800FC4499 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0D0C3F2DDB665800FC4499 /* LoginView.swift */; };
+		5D0D0C422DDB6FCB00FC4499 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0D0C412DDB6FCB00FC4499 /* User.swift */; };
 		5DEE6D7A2DDB2CF600C7DF1B /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5DEE6D792DDB2CF600C7DF1B /* Secrets.plist */; };
 		5DEE6D7C2DDB2D1100C7DF1B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5DEE6D7B2DDB2D1100C7DF1B /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
@@ -32,6 +35,9 @@
 		03FA39172DDB224D005F1EDC /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		03FA39192DDB234E005F1EDC /* MovieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewModel.swift; sourceTree = "<group>"; };
 		03FA391B2DDB23C0005F1EDC /* MovieListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListView.swift; sourceTree = "<group>"; };
+		5D0D0C3D2DDB663300FC4499 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		5D0D0C3F2DDB665800FC4499 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		5D0D0C412DDB6FCB00FC4499 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		5DEE6D792DDB2CF600C7DF1B /* Secrets.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Secrets.plist; sourceTree = "<group>"; };
 		5DEE6D7B2DDB2D1100C7DF1B /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -94,6 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				03FA39172DDB224D005F1EDC /* Movie.swift */,
+				5D0D0C412DDB6FCB00FC4499 /* User.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -102,6 +109,7 @@
 			isa = PBXGroup;
 			children = (
 				03FA39192DDB234E005F1EDC /* MovieViewModel.swift */,
+				5D0D0C3D2DDB663300FC4499 /* AuthViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -111,6 +119,7 @@
 			children = (
 				03FA39052DDB219D005F1EDC /* ContentView.swift */,
 				03FA391B2DDB23C0005F1EDC /* MovieListView.swift */,
+				5D0D0C3F2DDB665800FC4499 /* LoginView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -198,9 +207,12 @@
 				03FA39162DDB221F005F1EDC /* TMDBService.swift in Sources */,
 				03FA391C2DDB23C0005F1EDC /* MovieListView.swift in Sources */,
 				03FA390D2DDB219D005F1EDC /* ContentView.swift in Sources */,
+				5D0D0C402DDB665800FC4499 /* LoginView.swift in Sources */,
 				03FA390E2DDB219D005F1EDC /* WatchAppApp.swift in Sources */,
+				5D0D0C3E2DDB663300FC4499 /* AuthViewModel.swift in Sources */,
 				03FA39142DDB2206005F1EDC /* SecretManager.swift in Sources */,
 				03FA39182DDB224D005F1EDC /* Movie.swift in Sources */,
+				5D0D0C422DDB6FCB00FC4499 /* User.swift in Sources */,
 				03FA391A2DDB234E005F1EDC /* MovieViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
