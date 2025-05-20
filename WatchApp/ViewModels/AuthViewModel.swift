@@ -11,7 +11,7 @@ import FirebaseAuth
 class AuthViewModel: ObservableObject {
     @Published var user: User?
     @Published var isSignedIn: Bool = false
-
+    
     
     init() {
         if let currentUser = Auth.auth().currentUser {
