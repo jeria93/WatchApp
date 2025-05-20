@@ -16,4 +16,10 @@ final class FirestoreMovieService {
     func saveMovie(_ movie: Movie) async throws {
         try firestore.collection("savedMovies").document("\(movie.id)").setData(from: movie)
     }
+    
+    func fetchSavedMovies() async throws -> [Movie] {
+        let snapshot = try await firestore.collection("savedMovies").getDocuments()
+        return try snapshot.documents.compactMap { try $0.data(as: Movie.self)}
+    }
+
 }
