@@ -11,6 +11,7 @@ struct MovieRow: View {
     
     let movie: Movie
     var onSave: (() -> Void)?
+    let contentType: ContentType
     
     var body: some View {
         
@@ -30,6 +31,10 @@ struct MovieRow: View {
             }
             
             VStack(alignment: .leading, spacing: 6) {
+                
+                Text(contentType == .movie ? "🎬 Movie" : "📺 TV Show")
+                    .font(.caption)
+                    .foregroundColor(.blue)
                 
                 Text(movie.title)
                     .font(.headline)
@@ -53,7 +58,7 @@ struct MovieRow: View {
                     }
                     .buttonStyle(.borderedProminent)
                     .font(.caption)
-
+                    
                 }
             }
         }
@@ -64,8 +69,12 @@ struct MovieRow: View {
     }
 }
 
-#Preview {
-    MovieRow(movie: .preview)
+#Preview("Movie Example") {
+    MovieRow(movie: .preview, contentType: .movie)
+}
+
+#Preview("TV Show Example") {
+    MovieRow(movie: .preview, contentType: .tv)
 }
 
 extension Movie {

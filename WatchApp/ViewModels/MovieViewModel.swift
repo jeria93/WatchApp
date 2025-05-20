@@ -15,31 +15,63 @@ final class MovieViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var searchText = ""
     @Published var totalResults: Int = 0
+    @Published var selectedType: ContentType = .movie
     
     private let service = TMDBService()
     
     /// Fetches the current list of trending movies from the API.
     ///
     /// This is the default call made on app start or when search is cleared.
-    func fetchTrendingMovies() async {
+    func fetchTrendingContent() async {
         await fetch {
-            try await self.service.fetchTrendingMovies()
+            switch selectedType {
+            case .movie:
+                return try await service.fetchTrendingMovies()
+            case .tv:
+                let shows = try await service.trendingTVShows()
+                return shows.map { show in
+                    Movie(
+                        id: show.id,
+                        title: show.name,
+                        overview: show.overview,
+                        posterPath: show.posterPath,
+                        voteAverage: show.voteAverage,
+                        releaseDate: show.firstAirDate
+                    )
+                }
+            }
         }
     }
     
-    func searchMovies() async {
-        
+    func searchContent() async {
         let trimmed = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
         
         guard !trimmed.isEmpty else {
-            await fetchTrendingMovies()
+            await fetchTrendingContent()
             return
         }
+        
         isLoading = true
         errorMessage = nil
         
         do {
-            let fetched = try await service.searchMovies(query: trimmed)
+            let fetched: [Movie]
+            switch selectedType {
+            case .movie:
+                fetched = try await service.searchMovies(query: trimmed)
+            case .tv:
+                let shows = try await service.searchTVSeries(query: trimmed)
+                fetched = shows.map { show in
+                    Movie(
+                        id: show.id,
+                        title: show.name,
+                        overview: show.overview,
+                        posterPath: show.posterPath,
+                        voteAverage: show.voteAverage,
+                        releaseDate: show.firstAirDate
+                    )
+                }
+            }
             movies = fetched
             totalResults = fetched.count
         } catch {
@@ -61,6 +93,10 @@ final class MovieViewModel: ObservableObject {
         }
         isLoading = false
     }
+    
+    
+    
+    
     
     
 }

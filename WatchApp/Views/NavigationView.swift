@@ -30,9 +30,14 @@ struct NavigationView: View {
                 Image("movies_black_1x")
                 Text("Movies")
             }
+            SavedMoviesView()
+                .tabItem {
+                    Label("Saved", systemImage: "bookmark.fill")
+                }
             .tag(2)
             VStack{
                 Text("Edit profile")
+                
             }
             .tabItem{
                 Image(systemName: "person.fill")

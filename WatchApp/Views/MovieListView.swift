@@ -19,11 +19,22 @@ struct MovieListView: View {
                     Task {
                         
                         if viewModel.searchText.trimmingCharacters(in: .whitespaces).isEmpty {
-                            await viewModel.fetchTrendingMovies()
+                            await viewModel.fetchTrendingContent()
                         } else {
-                            await viewModel.searchMovies()
+                            await viewModel.searchContent()
                         }
                     }
+                }
+                
+                Picker("Type", selection: $viewModel.selectedType) {
+                    ForEach(ContentType.allCases) { type in
+                        Text(type.rawValue).tag(type)
+                    }
+                }
+                .pickerStyle(.segmented)
+                .padding(.horizontal)
+                .onChange(of: viewModel.selectedType) { _ in
+                    Task { await viewModel.fetchTrendingContent() }
                 }
                 
                 if !viewModel.movies.isEmpty {
@@ -58,7 +69,7 @@ struct MovieListView: View {
                         ScrollView {
                             LazyVStack(spacing: 15) {
                                 ForEach(viewModel.movies) { movie in
-                                    MovieRow(movie: movie) {
+                                    MovieRow(movie: movie, contentType: viewModel.selectedType) {
                                         Task { await firestoreVM.saveMovie(movie)}
                                     }
                                 }
@@ -69,7 +80,13 @@ struct MovieListView: View {
                 }
             }
             .navigationTitle("🎬 Trending Movies")
-            .task { await viewModel.fetchTrendingMovies() }
+            .task { await viewModel.fetchTrendingContent() }
+        }
+    }
+    
+    private func loadTrendingContent() {
+        Task {
+            await viewModel.fetchTrendingContent()
         }
     }
 }
