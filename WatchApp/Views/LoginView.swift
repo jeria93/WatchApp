@@ -9,6 +9,11 @@ import SwiftUI
 
 struct LoginView: View {
     @StateObject private var authVM = AuthViewModel()
+    @State private var email: String = ""
+    @State private var password: String = ""
+    @State private var rememberMe: Bool = false
+    @State private var emailError: String?
+    @State private var passwordError: String?
     
     var body: some View {
         NavigationStack {
@@ -23,12 +28,11 @@ struct LoginView: View {
                         path.addLine(to: CGPoint(x: -150, y: 950))
                         path.closeSubpath()
                     }
-                    .fill(Color.red)
+                    .fill(.red)
                 }
                 .edgesIgnoringSafeArea(.all)
                 
                 VStack {
-                    //sätt in logga
                     Image("logo_w_pop_face")
                         .resizable()
                         .scaledToFit()
@@ -40,31 +44,168 @@ struct LoginView: View {
                         .fontWeight(.heavy)
                         .foregroundColor(.popcornYellow)
                     
-                    HStack {
-                        Button("LOGIN"){
+                    HStack{
+                        Spacer()
+                        
+                        Button(action: {
                             authVM.signInAnonymously()
+                        }) {
+                            Image(systemName: "person.fill.questionmark")
+                                .fontWeight(.bold)
+                                .foregroundStyle(.black)
                         }
-                        .padding(.horizontal, 25)
-                        .padding(.vertical, 10)
-                        .foregroundColor(.gold)
-                        .font(.title3)
-                        .fontWeight(.bold)
-                        .background(Color.black.opacity(0.9))
-                        .cornerRadius(40)
-                        .shadow(radius: 30)
+                        .padding(.trailing, 26)
+                    }
+                    
+                    VStack(alignment: .leading, spacing: 4){
+                        ZStack(alignment: .trailing) {
+                            TextField("Email",text: $email)
+                                .padding()
+                                .padding(.trailing, 30)
+                                .background(Color.white.opacity(1.0))
+                                .cornerRadius(8)
+                                .foregroundColor(.gold)
+                                .autocapitalization(.none)
+                                .keyboardType(.emailAddress)
+                            
+                            if !email.isEmpty {
+                                Button(action: {email = ""
+                                    emailError = nil
+                                }) {
+                                    Image(systemName: "xmark.circle")
+                                        .foregroundStyle(.gold)
+                                        .padding(.trailing, 8)
+                                }
+                            }
+                        }
+                        
+                        if let emailError = emailError {
+                            Text(emailError)
+                                .foregroundStyle(.white)
+                                .font(.caption)
+                                .padding(.horizontal, 4)
+                        }
+                        
+                        if let authError = authVM.errorMessage {
+                            Text(authError)
+                                .foregroundStyle(.white)
+                                .font(.caption)
+                                .padding(.horizontal, 4)
+                        }
+                    }
+                    
+                    .padding(.horizontal)
+                    
+                    VStack(alignment: .leading, spacing: 4) {
+                    ZStack(alignment: .trailing) {
+                        SecureField("Password", text: $password)
+                            .padding()
+                            .padding(.trailing, 30)
+                            .background(Color.white.opacity(1.0))
+                            .cornerRadius(8)
+                            .foregroundColor(.gold)
+                        
+                    if !password.isEmpty {
+                        Button(action: {password = ""
+                            passwordError = nil
+                        }) {
+                            Image(systemName: "xmark.circle")
+                                .foregroundStyle(.gold)
+                                .padding(.trailing, 8)
+                        }
                     }
                 }
-      
-                .padding(.horizontal)
-                .navigationDestination(isPresented: $authVM.isSignedIn) {
-                    MovieListView()
+                    
+                    if let passwordError = passwordError {
+                        Text(passwordError)
+                            .foregroundStyle(.white)
+                            .font(.caption)
+                            .padding(.horizontal, 4)
+                    }
+                    
+                    if let authError = authVM.errorMessage {
+                        Text(authError)
+                            .foregroundStyle(.white)
+                            .font(.caption)
+                            .padding(.horizontal, 4)
+                    }
                 }
+                
+                    .padding(.horizontal)
+                    
+                    HStack{
+                        Button(action: {
+                            rememberMe.toggle()
+                        }) {
+                            HStack{
+                                Image(systemName: rememberMe ? "checkmark.square.fill" : "square")
+                                    .foregroundStyle(.gold)
+                                    .font(.system(size: 20))
+                                Text("Remember Me")
+                                    .foregroundStyle(.gold)
+                                    .font(.headline)
+                            }
+                        }
+                        
+                        Spacer()
+                        
+                        Button(action: {
+                            print("forgot pw")
+                        }) {
+                            Text("Forgot Password?")
+                                .foregroundStyle(.gold)
+                                .font(.headline)
+                        }
+                    }
+                    .padding(.horizontal)
+                    
+                  
+                    
+                    Button(action: {
+                        print("create account")
+                    }){
+                        Text("Create Account!")
+                            .font(.headline)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .foregroundStyle(.black)
+                    }
+                    .padding(.horizontal)
+                    
+                    Button(action: {
+                        authVM.signInWithEmail(email: email, password: password)
+                    }) {
+                        Text("LOGIN")
+                            .padding(.horizontal, 25)
+                            .padding(.vertical, 10)
+                            .foregroundColor(.gold)
+                            .font(.title3)
+                            .fontWeight(.bold)
+                            .background(Color.black.opacity(0.9))
+                            .cornerRadius(40)
+                            .shadow(radius: 30)
+                    }
+                    .padding(.horizontal)
+                    
+                    Button(action: {
+                        print("google sign in")
+                    }){
+                        Image("google_sign_in")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 250, height: 50)
+                            .padding()
+                    }
+                    .padding(.horizontal)
+                    
+                }
+            }
+            .navigationDestination(isPresented: $authVM.isSignedIn) {
+                MovieListView()
             }
         }
     }
 }
-
-
 
 #Preview {
     LoginView()
