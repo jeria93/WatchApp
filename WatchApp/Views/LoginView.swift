@@ -29,17 +29,16 @@ struct LoginView: View {
                 
                 VStack {
                     //sätt in logga
-                    Image(systemName: "popcorn.fill")
+                    Image("logo_w_pop_face")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 100, height: 100)
-                        .foregroundColor(.white)
+                        .frame(width: 250, height: 250)
                     
                     Text("WATCHAPP")
                         .font(.largeTitle)
-                        .fontWeight(.bold)
-                        .foregroundColor(.yellow)
-                    
+                        .fontDesign(.monospaced)
+                        .fontWeight(.heavy)
+                        .foregroundColor(.popcornYellow)
                     
                     HStack {
                         Button("LOGIN"){
@@ -47,11 +46,12 @@ struct LoginView: View {
                         }
                         .padding(.horizontal, 25)
                         .padding(.vertical, 10)
-                        .foregroundColor(.orange)
+                        .foregroundColor(.gold)
                         .font(.title3)
                         .fontWeight(.bold)
                         .background(Color.black.opacity(0.9))
                         .cornerRadius(40)
+                        .shadow(radius: 30)
                     }
                 }
       
