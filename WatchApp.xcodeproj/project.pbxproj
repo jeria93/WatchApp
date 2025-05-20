@@ -28,6 +28,7 @@
 		5D0D0C422DDB6FCB00FC4499 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0D0C412DDB6FCB00FC4499 /* User.swift */; };
 		5DEE6D7A2DDB2CF600C7DF1B /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5DEE6D792DDB2CF600C7DF1B /* Secrets.plist */; };
 		5DEE6D7C2DDB2D1100C7DF1B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5DEE6D7B2DDB2D1100C7DF1B /* GoogleService-Info.plist */; };
+		A4B100BD2DDCA7040032B48E /* NavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B100BC2DDCA7040032B48E /* NavigationView.swift */; };
 		DD5C92972DDB6FFB009D633F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD5C92962DDB6FFB009D633F /* LaunchScreen.storyboard */; };
 		DD5C92992DDB7199009D633F /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5C92982DDB7199009D633F /* SplashScreenView.swift */; };
 /* End PBXBuildFile section */
@@ -52,6 +53,7 @@
 		5D0D0C412DDB6FCB00FC4499 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		5DEE6D792DDB2CF600C7DF1B /* Secrets.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Secrets.plist; sourceTree = "<group>"; };
 		5DEE6D7B2DDB2D1100C7DF1B /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		A4B100BC2DDCA7040032B48E /* NavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationView.swift; sourceTree = "<group>"; };
 		DD5C92962DDB6FFB009D633F /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DD5C92982DDB7199009D633F /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -148,6 +150,7 @@
 				037763392DDBBCD300777B8C /* MovieRow.swift */,
 				0377633B2DDBBFD000777B8C /* EmptyStateView.swift */,
 				0377633D2DDBCB0300777B8C /* SearchBarView.swift */,
+				A4B100BC2DDCA7040032B48E /* NavigationView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -238,6 +241,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A4B100BD2DDCA7040032B48E /* NavigationView.swift in Sources */,
 				0377633C2DDBBFD000777B8C /* EmptyStateView.swift in Sources */,
 				03FA39162DDB221F005F1EDC /* TMDBService.swift in Sources */,
 				0377633E2DDBCB0300777B8C /* SearchBarView.swift in Sources */,
