@@ -10,30 +10,78 @@ import SwiftUI
 struct MovieListView: View {
     
     @StateObject private var viewModel = MovieViewModel()
+    @StateObject private var firestoreVM = FirestoreViewModel()
     
     var body: some View {
         NavigationStack {
-              Group {
-                  if viewModel.isLoading {
-                      ProgressView("Loading movies...")
-                  } else if let error = viewModel.errorMessage {
-                      Text(error).foregroundColor(.red)
-                  } else {
-                      List(viewModel.movies) { movie in
-                          VStack(alignment: .leading, spacing: 6) {
-                              Text(movie.title).font(.headline)
-                              Text(movie.overview).font(.subheadline).lineLimit(2)
-                          }
-                          .padding(.vertical, 4)
-                      }
-                  }
-              }
-              .navigationTitle("Trending Movies")
-          }
-          .task { await viewModel.fetchTrendingMovies() }
+            VStack {
+                SearchBarView(text: $viewModel.searchText) {
+                    Task {
+                        
+                        if viewModel.searchText.trimmingCharacters(in: .whitespaces).isEmpty {
+                            await viewModel.fetchTrendingMovies()
+                        } else {
+                            await viewModel.searchMovies()
+                        }
+                    }
+                }
+                
+                if !viewModel.movies.isEmpty {
+                    Text(viewModel.searchText.isEmpty ? "Trending now" : "\(viewModel.totalResults) results found")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                        .padding(.top, 10)
+                }
+                
+                Group {
+                    if viewModel.isLoading {
+                        VStack {
+                            ProgressView("Loading movies...")
+                            Spacer()
+                        }
+                        .frame(maxHeight: .infinity)
+                        
+                    } else if let error = viewModel.errorMessage {
+                        VStack {
+                            Text(error)
+                                .foregroundColor(.red)
+                            Spacer()
+                        }
+                        .padding()
+                        .frame(maxHeight: .infinity)
+                        
+                    } else if viewModel.movies.isEmpty {
+                        EmptyStateView(searchText: viewModel.searchText)
+                            .frame(maxHeight: .infinity)
+                        
+                    } else {
+                        ScrollView {
+                            LazyVStack(spacing: 15) {
+                                ForEach(viewModel.movies) { movie in
+                                    MovieRow(movie: movie) {
+                                        Task { await firestoreVM.saveMovie(movie)}
+                                    }
+                                }
+                            }
+                            .padding()
+                        }
+                    }
+                }
+            }
+            .navigationTitle("🎬 Trending Movies")
+            .task { await viewModel.fetchTrendingMovies() }
+        }
     }
 }
 
 #Preview {
     MovieListView()
+}
+
+#Preview("Default Empty") {
+    EmptyStateView(searchText: "")
+}
+
+#Preview("No results found for 'Batman'") {
+    EmptyStateView(searchText: "Star Wars")
 }
