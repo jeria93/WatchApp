@@ -10,6 +10,7 @@ import SwiftUI
 struct MovieListView: View {
     
     @StateObject private var viewModel = MovieViewModel()
+    @StateObject private var firestoreVM = FirestoreViewModel()
     
     var body: some View {
         NavigationStack {
@@ -57,7 +58,9 @@ struct MovieListView: View {
                         ScrollView {
                             LazyVStack(spacing: 15) {
                                 ForEach(viewModel.movies) { movie in
-                                    MovieRow(movie: movie)
+                                    MovieRow(movie: movie) {
+                                        Task { await firestoreVM.saveMovie(movie)}
+                                    }
                                 }
                             }
                             .padding()

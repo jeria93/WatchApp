@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct MovieRow: View {
+    
     let movie: Movie
+    var onSave: (() -> Void)?
     
     var body: some View {
         
@@ -28,6 +30,7 @@ struct MovieRow: View {
             }
             
             VStack(alignment: .leading, spacing: 6) {
+                
                 Text(movie.title)
                     .font(.headline)
                 
@@ -37,18 +40,27 @@ struct MovieRow: View {
                         .foregroundColor(.secondary)
                 }
                 
-                let overview = movie.overview.trimmingCharacters(in: .whitespacesAndNewlines)
-                Text(overview.isEmpty ? "No description available." : overview)
+                Text(movie.overview.isEmpty ? "No description available" : movie.overview)
                     .font(.subheadline)
                     .lineLimit(3)
-                    .foregroundColor(.gray)
+                    .foregroundColor(.secondary)
+                
+                if let onSave = onSave {
+                    Button {
+                        onSave()
+                    } label: {
+                        Label("Save", systemImage: "plus")
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .font(.caption)
+
+                }
             }
         }
         .padding()
-        .frame(minHeight: 120, alignment: .topLeading)
         .background(Color(.systemBackground))
-        .cornerRadius(10)
-        .shadow(color: .black.opacity(0.05), radius: 3, x: 0, y: 1)
+        .clipShape(RoundedRectangle(cornerRadius: 10))
+        .shadow(radius: 1)
     }
 }
 
