@@ -201,7 +201,7 @@ struct LoginView: View {
                 }
             }
             .navigationDestination(isPresented: $authVM.isSignedIn) {
-                MovieListView()
+                NavigationView()
             }
         }
     }
