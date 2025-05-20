@@ -46,47 +46,24 @@ struct MovieListView: View {
                 
                 Group {
                     if viewModel.isLoading {
-                        VStack {
-                            ProgressView("Loading movies...")
-                            Spacer()
-                        }
-                        .frame(maxHeight: .infinity)
+                        LoadingView()
                         
                     } else if let error = viewModel.errorMessage {
-                        VStack {
-                            Text(error)
-                                .foregroundColor(.red)
-                            Spacer()
-                        }
-                        .padding()
-                        .frame(maxHeight: .infinity)
+                        ErrorView(message: error)
                         
                     } else if viewModel.movies.isEmpty {
                         EmptyStateView(searchText: viewModel.searchText)
                             .frame(maxHeight: .infinity)
                         
                     } else {
-                        ScrollView {
-                            LazyVStack(spacing: 15) {
-                                ForEach(viewModel.movies) { movie in
-                                    MovieRow(movie: movie, contentType: viewModel.selectedType) {
-                                        Task { await firestoreVM.saveMovie(movie)}
-                                    }
-                                }
-                            }
-                            .padding()
+                        ContentListView(movies: viewModel.movies, contentType: viewModel.selectedType) { movie in
+                            Task { await firestoreVM.saveMovie(movie)}
                         }
                     }
                 }
             }
             .navigationTitle("🎬 Trending Movies")
             .task { await viewModel.fetchTrendingContent() }
-        }
-    }
-    
-    private func loadTrendingContent() {
-        Task {
-            await viewModel.fetchTrendingContent()
         }
     }
 }

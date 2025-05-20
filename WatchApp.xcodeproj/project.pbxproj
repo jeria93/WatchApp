@@ -18,6 +18,9 @@
 		03BE72B42DD221FE00DD7805 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 03BE72B32DD221FE00DD7805 /* FirebaseFirestore */; };
 		03BFB3C62DDCFD7C00B3778B /* ContentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BFB3C52DDCFD7C00B3778B /* ContentType.swift */; };
 		03BFB3C82DDD07E100B3778B /* TVShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BFB3C72DDD07E100B3778B /* TVShow.swift */; };
+		03BFB3CA2DDD13F400B3778B /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BFB3C92DDD13F400B3778B /* LoadingView.swift */; };
+		03BFB3CC2DDD166400B3778B /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BFB3CB2DDD166400B3778B /* ErrorView.swift */; };
+		03BFB3CE2DDD16B600B3778B /* ContentListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BFB3CD2DDD16B600B3778B /* ContentListView.swift */; };
 		03FA390A2DDB219D005F1EDC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03FA39042DDB219D005F1EDC /* Assets.xcassets */; };
 		03FA390D2DDB219D005F1EDC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA39052DDB219D005F1EDC /* ContentView.swift */; };
 		03FA390E2DDB219D005F1EDC /* WatchAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA39082DDB219D005F1EDC /* WatchAppApp.swift */; };
@@ -46,6 +49,9 @@
 		03BE729E2DD21E3300DD7805 /* WatchApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WatchApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		03BFB3C52DDCFD7C00B3778B /* ContentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentType.swift; sourceTree = "<group>"; };
 		03BFB3C72DDD07E100B3778B /* TVShow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShow.swift; sourceTree = "<group>"; };
+		03BFB3C92DDD13F400B3778B /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		03BFB3CB2DDD166400B3778B /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
+		03BFB3CD2DDD16B600B3778B /* ContentListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentListView.swift; sourceTree = "<group>"; };
 		03FA39042DDB219D005F1EDC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		03FA39052DDB219D005F1EDC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		03FA39082DDB219D005F1EDC /* WatchAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchAppApp.swift; sourceTree = "<group>"; };
@@ -153,6 +159,7 @@
 			children = (
 				03FA39052DDB219D005F1EDC /* ContentView.swift */,
 				03FA391B2DDB23C0005F1EDC /* MovieListView.swift */,
+				03BFB3CD2DDD16B600B3778B /* ContentListView.swift */,
 				DD5C92982DDB7199009D633F /* SplashScreenView.swift */,
 				5D0D0C3F2DDB665800FC4499 /* LoginView.swift */,
 				037763392DDBBCD300777B8C /* MovieRow.swift */,
@@ -160,6 +167,8 @@
 				0377633D2DDBCB0300777B8C /* SearchBarView.swift */,
 				A4B100BC2DDCA7040032B48E /* NavigationView.swift */,
 				03908DBD2DDCA8100008C202 /* SavedMoviesView.swift */,
+				03BFB3C92DDD13F400B3778B /* LoadingView.swift */,
+				03BFB3CB2DDD166400B3778B /* ErrorView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -250,12 +259,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03BFB3CE2DDD16B600B3778B /* ContentListView.swift in Sources */,
 				A4B100BD2DDCA7040032B48E /* NavigationView.swift in Sources */,
 				0377633C2DDBBFD000777B8C /* EmptyStateView.swift in Sources */,
 				03FA39162DDB221F005F1EDC /* TMDBService.swift in Sources */,
 				0377633E2DDBCB0300777B8C /* SearchBarView.swift in Sources */,
 				03BFB3C82DDD07E100B3778B /* TVShow.swift in Sources */,
 				0377633A2DDBBCD300777B8C /* MovieRow.swift in Sources */,
+				03BFB3CC2DDD166400B3778B /* ErrorView.swift in Sources */,
 				03908DBE2DDCA8100008C202 /* SavedMoviesView.swift in Sources */,
 				03FA391C2DDB23C0005F1EDC /* MovieListView.swift in Sources */,
 				03FA390D2DDB219D005F1EDC /* ContentView.swift in Sources */,
@@ -270,6 +281,7 @@
 				03FA391A2DDB234E005F1EDC /* MovieViewModel.swift in Sources */,
 				03908DAE2DDC8F690008C202 /* FirestoreViewModel.swift in Sources */,
 				DD5C92992DDB7199009D633F /* SplashScreenView.swift in Sources */,
+				03BFB3CA2DDD13F400B3778B /* LoadingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -69,18 +69,14 @@ struct MovieRow: View {
     }
 }
 
-#Preview("Movie Example") {
+#Preview("Movie Preview") {
     MovieRow(movie: .preview, contentType: .movie)
-}
-
-#Preview("TV Show Example") {
-    MovieRow(movie: .preview, contentType: .tv)
 }
 
 extension Movie {
     static var preview: Movie {
         Movie(
-            id: 157336,
+            id: 1,
             title: "Interstellar",
             overview: "Set in a dystopian future where Earth is suffering from catastrophic blight and famine, the film follows a group of astronauts who travel through a wormhole near Saturn in search of a new home for mankind.",
             posterPath: "/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg",

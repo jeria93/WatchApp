@@ -16,18 +16,11 @@ struct SavedMoviesView: View {
         NavigationStack {
             Group {
                 if let error = viewModel.errorMessage {
-                    
-                    Text(error)
-                        .foregroundColor(.red)
-                    
+                    ErrorView(message: error)
                 } else if viewModel.movies.isEmpty {
-                    
-                    Text("No saved movies yet")
-                        .foregroundColor(.gray)
+                    EmptyStateView(searchText: "")
                 } else {
-                    List(viewModel.movies) { movie in
-                        MovieRow(movie: movie)
-                    }
+                    ContentListView(movies: viewModel.movies, contentType: .movie)
                 }
             }
             .navigationTitle("Saved Movies")
