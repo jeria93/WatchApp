@@ -13,11 +13,9 @@ struct MovieListView: View {
     @StateObject private var firestoreVM = FirestoreViewModel()
     
     var body: some View {
-        NavigationStack {
             VStack {
                 SearchBarView(text: $viewModel.searchText) {
                     Task {
-                        
                         if viewModel.searchText.trimmingCharacters(in: .whitespaces).isEmpty {
                             await viewModel.fetchTrendingContent()
                         } else {
@@ -62,9 +60,7 @@ struct MovieListView: View {
                     }
                 }
             }
-            .navigationTitle("🎬 Trending Movies")
             .task { await viewModel.fetchTrendingContent() }
-        }
     }
 }
 

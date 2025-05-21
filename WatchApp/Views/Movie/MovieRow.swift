@@ -30,7 +30,7 @@ struct MovieRow: View {
                     .overlay(Text("🍿"))
             }
             
-            VStack(alignment: .leading, spacing: 6) {
+            VStack(alignment: .leading, spacing: 5) {
                 
                 Text(contentType == .movie ? "🎬 Movie" : "📺 TV Show")
                     .font(.caption)
@@ -50,6 +50,8 @@ struct MovieRow: View {
                     .lineLimit(3)
                     .foregroundColor(.secondary)
                 
+                Spacer()
+                
                 if let onSave = onSave {
                     Button {
                         onSave()
@@ -61,7 +63,9 @@ struct MovieRow: View {
                     
                 }
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
+        .frame(height: 160)
         .padding()
         .background(Color(.systemBackground))
         .clipShape(RoundedRectangle(cornerRadius: 10))
