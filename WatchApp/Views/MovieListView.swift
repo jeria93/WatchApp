@@ -11,6 +11,7 @@ struct MovieListView: View {
     
     @StateObject private var viewModel = MovieViewModel()
     @StateObject private var firestoreVM = FirestoreViewModel()
+    @ObservedObject var authVM: AuthViewModel
     
     var body: some View {
         NavigationStack {
@@ -70,12 +71,24 @@ struct MovieListView: View {
             }
             .navigationTitle("🎬 Trending Movies")
             .task { await viewModel.fetchTrendingMovies() }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        authVM.signOut()
+                    } label: {
+                        Image(systemName: "rectangle.portrait.and.arrow.right")
+                            .font(.title3)
+                            .foregroundColor(.yellow)
+                    }
+                }
+            }
+
         }
     }
 }
 
 #Preview {
-    MovieListView()
+    MovieListView(authVM: AuthViewModel())
 }
 
 #Preview("Default Empty") {

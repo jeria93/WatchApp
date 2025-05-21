@@ -18,7 +18,7 @@ struct SplashScreenView: View {
 
     var body: some View {
         ZStack {
-            Color.black.ignoresSafeArea()
+            Color.BG.ignoresSafeArea()
           
           // MARK: - Animated Rectangle
           RedRectangleView(
@@ -42,7 +42,7 @@ struct SplashScreenView: View {
                 .frame(width: 300, height: 400)
                 .scaleEffect(logoScale)
                 .opacity(logoOpacity)
-                .shadow(color: Color.gray.opacity(0.9), radius: 10, x: 0, y: 0)
+                .shadow(color: Color.gray.opacity(0.9), radius: 7, x: 0, y: 0)
                 .onAppear {
                     withAnimation(.easeOut(duration: 3.0).delay(0.3)) {
                       logoScale = 1.0
