@@ -38,7 +38,8 @@ struct ContentListView: View {
                     overview: "A computer hacker learns the truth about his past and the nature of reality as he navigates a labyrinth of virtual worlds",
                     posterPath: "/dXNAPwY7VrqMAo51EKhhCJfaGb5.jpg",
                     voteAverage: 9.9,
-                    releaseDate: "1999-03-31"
+                    releaseDate: "1999-03-31",
+                    contentType: .movie
                  )],
         contentType: .movie,
         onSave: {_ in }

@@ -26,7 +26,18 @@ final class MovieViewModel: ObservableObject {
         await fetch {
             switch selectedType {
             case .movie:
-                return try await service.fetchTrendingMovies()
+                let movies = try await service.fetchTrendingMovies()
+                return movies.map { movie in
+                    Movie(
+                        id: movie.id,
+                        title: movie.title,
+                        overview: movie.overview,
+                        posterPath: movie.posterPath,
+                        voteAverage: movie.voteAverage,
+                        releaseDate: movie.releaseDate,
+                        contentType: .movie
+                    )
+                }
             case .tv:
                 let shows = try await service.trendingTVShows()
                 return shows.map { show in
@@ -36,7 +47,8 @@ final class MovieViewModel: ObservableObject {
                         overview: show.overview,
                         posterPath: show.posterPath,
                         voteAverage: show.voteAverage,
-                        releaseDate: show.firstAirDate
+                        releaseDate: show.firstAirDate,
+                        contentType: .tv
                     )
                 }
             }
@@ -58,7 +70,18 @@ final class MovieViewModel: ObservableObject {
             let fetched: [Movie]
             switch selectedType {
             case .movie:
-                fetched = try await service.searchMovies(query: trimmed)
+                let moviesFound = try await service.searchMovies(query: trimmed)
+                fetched = moviesFound.map { movie in
+                    Movie(
+                        id: movie.id,
+                        title: movie.title,
+                        overview: movie.overview,
+                        posterPath: movie.posterPath,
+                        voteAverage: movie.voteAverage,
+                        releaseDate: movie.releaseDate,
+                        contentType: .movie
+                    )
+                }
             case .tv:
                 let shows = try await service.searchTVSeries(query: trimmed)
                 fetched = shows.map { show in
@@ -68,7 +91,8 @@ final class MovieViewModel: ObservableObject {
                         overview: show.overview,
                         posterPath: show.posterPath,
                         voteAverage: show.voteAverage,
-                        releaseDate: show.firstAirDate
+                        releaseDate: show.firstAirDate,
+                        contentType: .tv
                     )
                 }
             }
@@ -93,10 +117,4 @@ final class MovieViewModel: ObservableObject {
         }
         isLoading = false
     }
-    
-    
-    
-    
-    
-    
 }

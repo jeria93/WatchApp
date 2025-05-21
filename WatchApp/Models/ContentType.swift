@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum ContentType: String, CaseIterable, Identifiable {
+enum ContentType: String, CaseIterable, Identifiable, Codable {
     
     var id: String { rawValue }
     case movie = "Movies"

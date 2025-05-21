@@ -81,7 +81,8 @@ extension Movie {
             overview: "Set in a dystopian future where Earth is suffering from catastrophic blight and famine, the film follows a group of astronauts who travel through a wormhole near Saturn in search of a new home for mankind.",
             posterPath: "/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg",
             voteAverage: 8.8,
-            releaseDate: "2025-05-15"
+            releaseDate: "2025-05-15",
+            contentType: .movie
         )
     }
 }
