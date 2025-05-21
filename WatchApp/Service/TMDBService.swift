@@ -14,12 +14,12 @@ final class TMDBService {
     
     
     /// Fetches the current list of trending movies by today
-    func fetchTrendingMovies() async throws -> [Movie] {
+    func fetchTrendingMovies() async throws -> [MovieRaw] {
         try await request(path: "/trending/movie/day")
     }
     
     /// Searches API for movies matching the given query
-    func searchMovies(query: String) async throws -> [Movie] {
+    func searchMovies(query: String) async throws -> [MovieRaw] {
         let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         return try await request(path: "/search/movie?query=\(encoded)")
     }
@@ -30,11 +30,7 @@ final class TMDBService {
         return try await requestTV(path: "/search/tv?query=\(encoded)")
     }
     
-    func fetchTrendingTVSeries() async throws -> [Movie] {
-        try await request(path: "/trending/tv/day")
-    }
-    
-    func trendingTVShows() async throws -> [TVShow] {
+    func fetchTrendingTVSeries() async throws -> [TVShow] {
         try await requestTV(path: "/trending/tv/day")
     }
     
@@ -47,7 +43,7 @@ final class TMDBService {
     /// - Parameter path: The TMDB API endpoint path, e.g. `/trending/movie/day`
     /// - Returns: A list of decoded `Movie` objects.
     /// - Throws: Errors if the URL is invalid, the network request fails, or decoding fails.
-    private func request(path: String) async throws -> [Movie] {
+    private func request(path: String) async throws -> [MovieRaw] {
         
         guard let url = URL(string: "\(baseURL)\(path)") else { throw URLError(.badURL) }
         

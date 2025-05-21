@@ -26,31 +26,11 @@ final class MovieViewModel: ObservableObject {
         await fetch {
             switch selectedType {
             case .movie:
-                let movies = try await service.fetchTrendingMovies()
-                return movies.map { movie in
-                    Movie(
-                        id: movie.id,
-                        title: movie.title,
-                        overview: movie.overview,
-                        posterPath: movie.posterPath,
-                        voteAverage: movie.voteAverage,
-                        releaseDate: movie.releaseDate,
-                        contentType: .movie
-                    )
-                }
+                let raw = try await service.fetchTrendingMovies()
+                return raw.map(ContentMapper.fromRaw)
             case .tv:
-                let shows = try await service.trendingTVShows()
-                return shows.map { show in
-                    Movie(
-                        id: show.id,
-                        title: show.name,
-                        overview: show.overview,
-                        posterPath: show.posterPath,
-                        voteAverage: show.voteAverage,
-                        releaseDate: show.firstAirDate,
-                        contentType: .tv
-                    )
-                }
+                let shows = try await service.fetchTrendingTVSeries()
+                return shows.map(ContentMapper.fromTVShow)
             }
         }
     }
@@ -70,31 +50,11 @@ final class MovieViewModel: ObservableObject {
             let fetched: [Movie]
             switch selectedType {
             case .movie:
-                let moviesFound = try await service.searchMovies(query: trimmed)
-                fetched = moviesFound.map { movie in
-                    Movie(
-                        id: movie.id,
-                        title: movie.title,
-                        overview: movie.overview,
-                        posterPath: movie.posterPath,
-                        voteAverage: movie.voteAverage,
-                        releaseDate: movie.releaseDate,
-                        contentType: .movie
-                    )
-                }
+                let raw = try await service.searchMovies(query: trimmed)
+                fetched = raw.map(ContentMapper.fromRaw)
             case .tv:
                 let shows = try await service.searchTVSeries(query: trimmed)
-                fetched = shows.map { show in
-                    Movie(
-                        id: show.id,
-                        title: show.name,
-                        overview: show.overview,
-                        posterPath: show.posterPath,
-                        voteAverage: show.voteAverage,
-                        releaseDate: show.firstAirDate,
-                        contentType: .tv
-                    )
-                }
+                fetched = shows.map(ContentMapper.fromTVShow)
             }
             movies = fetched
             totalResults = fetched.count

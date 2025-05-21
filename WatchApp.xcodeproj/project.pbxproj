@@ -13,6 +13,8 @@
 		03908DAC2DDC85BC0008C202 /* FirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03908DAB2DDC85BC0008C202 /* FirestoreService.swift */; };
 		03908DAE2DDC8F690008C202 /* FirestoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03908DAD2DDC8F690008C202 /* FirestoreViewModel.swift */; };
 		03908DBE2DDCA8100008C202 /* SavedMoviesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03908DBD2DDCA8100008C202 /* SavedMoviesView.swift */; };
+		03AECB3C2DDDEEAE002F99C9 /* ContentMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AECB3B2DDDEEAE002F99C9 /* ContentMapper.swift */; };
+		03AECB3E2DDDF0DC002F99C9 /* MovieRaw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AECB3D2DDDF0DC002F99C9 /* MovieRaw.swift */; };
 		03BE72B02DD221FE00DD7805 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 03BE72AF2DD221FE00DD7805 /* FirebaseAuth */; };
 		03BE72B22DD221FE00DD7805 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 03BE72B12DD221FE00DD7805 /* FirebaseCore */; };
 		03BE72B42DD221FE00DD7805 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 03BE72B32DD221FE00DD7805 /* FirebaseFirestore */; };
@@ -46,6 +48,8 @@
 		03908DAB2DDC85BC0008C202 /* FirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreService.swift; sourceTree = "<group>"; };
 		03908DAD2DDC8F690008C202 /* FirestoreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreViewModel.swift; sourceTree = "<group>"; };
 		03908DBD2DDCA8100008C202 /* SavedMoviesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedMoviesView.swift; sourceTree = "<group>"; };
+		03AECB3B2DDDEEAE002F99C9 /* ContentMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentMapper.swift; sourceTree = "<group>"; };
+		03AECB3D2DDDF0DC002F99C9 /* MovieRaw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieRaw.swift; sourceTree = "<group>"; };
 		03BE729E2DD21E3300DD7805 /* WatchApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WatchApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		03BFB3C52DDCFD7C00B3778B /* ContentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentType.swift; sourceTree = "<group>"; };
 		03BFB3C72DDD07E100B3778B /* TVShow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShow.swift; sourceTree = "<group>"; };
@@ -140,6 +144,8 @@
 				03908DAB2DDC85BC0008C202 /* FirestoreService.swift */,
 				03BFB3C52DDCFD7C00B3778B /* ContentType.swift */,
 				03BFB3C72DDD07E100B3778B /* TVShow.swift */,
+				03AECB3B2DDDEEAE002F99C9 /* ContentMapper.swift */,
+				03AECB3D2DDDF0DC002F99C9 /* MovieRaw.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -260,6 +266,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				03BFB3CE2DDD16B600B3778B /* ContentListView.swift in Sources */,
+				03AECB3C2DDDEEAE002F99C9 /* ContentMapper.swift in Sources */,
 				A4B100BD2DDCA7040032B48E /* NavigationView.swift in Sources */,
 				0377633C2DDBBFD000777B8C /* EmptyStateView.swift in Sources */,
 				03FA39162DDB221F005F1EDC /* TMDBService.swift in Sources */,
@@ -280,6 +287,7 @@
 				5D0D0C422DDB6FCB00FC4499 /* User.swift in Sources */,
 				03FA391A2DDB234E005F1EDC /* MovieViewModel.swift in Sources */,
 				03908DAE2DDC8F690008C202 /* FirestoreViewModel.swift in Sources */,
+				03AECB3E2DDDF0DC002F99C9 /* MovieRaw.swift in Sources */,
 				DD5C92992DDB7199009D633F /* SplashScreenView.swift in Sources */,
 				03BFB3CA2DDD13F400B3778B /* LoadingView.swift in Sources */,
 			);

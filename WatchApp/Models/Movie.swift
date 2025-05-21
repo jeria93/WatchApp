@@ -31,5 +31,5 @@ struct Movie: Codable, Identifiable, Equatable {
 }
 
 struct MovieResults: Codable {
-    let results: [Movie]
+    let results: [MovieRaw]
 }
