@@ -19,9 +19,7 @@ final class MovieViewModel: ObservableObject {
     
     private let service = TMDBService()
     
-    /// Fetches the current list of trending movies from the API.
-    ///
-    /// This is the default call made on app start or when search is cleared.
+    /// Fetches trending content (movies or TV shows) based on the selected content type.
     func fetchTrendingContent() async {
         await fetch {
             switch selectedType {
@@ -35,6 +33,10 @@ final class MovieViewModel: ObservableObject {
         }
     }
     
+    /// Searches for movies or TV shows using the current `searchText`
+    ///
+    /// Falls back to `fetchTrendingContent()` if the search text is empty.
+    /// Results are mapped to `Movie` models using `ContentMapper`
     func searchContent() async {
         let trimmed = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
         
@@ -65,6 +67,8 @@ final class MovieViewModel: ObservableObject {
         isLoading = false
     }
     
+    
+    /// A reusable fetch wrapper used for trending or other content loaders.
     private func fetch(_ fetcher: () async throws -> [Movie]) async {
         isLoading = true
         errorMessage = nil

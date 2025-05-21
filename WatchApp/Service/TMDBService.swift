@@ -29,7 +29,7 @@ final class TMDBService {
         let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         return try await requestTV(path: "/search/tv?query=\(encoded)")
     }
-    
+    /// fetches API for trending tv-series for the day
     func fetchTrendingTVSeries() async throws -> [TVShow] {
         try await requestTV(path: "/trending/tv/day")
     }

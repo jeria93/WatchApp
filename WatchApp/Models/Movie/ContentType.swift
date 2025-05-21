@@ -7,6 +7,9 @@
 
 import Foundation
 
+/// Represents the type of content that can be displayed or saved in the app.
+///
+/// Used to distinguish between movies and TV shows in UI logic, API calls, and storage.
 enum ContentType: String, CaseIterable, Identifiable, Codable {
     
     var id: String { rawValue }
