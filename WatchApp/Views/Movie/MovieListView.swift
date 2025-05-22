@@ -14,17 +14,26 @@ struct MovieListView: View {
     @ObservedObject var authVM: AuthViewModel
     
     var body: some View {
-        NavigationStack {
             VStack {
                 SearchBarView(text: $viewModel.searchText) {
                     Task {
-                        
                         if viewModel.searchText.trimmingCharacters(in: .whitespaces).isEmpty {
-                            await viewModel.fetchTrendingMovies()
+                            await viewModel.fetchTrendingContent()
                         } else {
-                            await viewModel.searchMovies()
+                            await viewModel.searchContent()
                         }
                     }
+                }
+                
+                Picker("Type", selection: $viewModel.selectedType) {
+                    ForEach(ContentType.allCases) { type in
+                        Text(type.rawValue).tag(type)
+                    }
+                }
+                .pickerStyle(.segmented)
+                .padding(.horizontal)
+                .onChange(of: viewModel.selectedType) { _ in
+                    Task { await viewModel.fetchTrendingContent() }
                 }
                 
                 if !viewModel.movies.isEmpty {
@@ -36,41 +45,24 @@ struct MovieListView: View {
                 
                 Group {
                     if viewModel.isLoading {
-                        VStack {
-                            ProgressView("Loading movies...")
-                            Spacer()
-                        }
-                        .frame(maxHeight: .infinity)
+                        LoadingView()
                         
                     } else if let error = viewModel.errorMessage {
-                        VStack {
-                            Text(error)
-                                .foregroundColor(.red)
-                            Spacer()
-                        }
-                        .padding()
-                        .frame(maxHeight: .infinity)
+                        ErrorView(message: error)
                         
                     } else if viewModel.movies.isEmpty {
                         EmptyStateView(searchText: viewModel.searchText)
                             .frame(maxHeight: .infinity)
                         
                     } else {
-                        ScrollView {
-                            LazyVStack(spacing: 15) {
-                                ForEach(viewModel.movies) { movie in
-                                    MovieRow(movie: movie) {
-                                        Task { await firestoreVM.saveMovie(movie)}
-                                    }
-                                }
-                            }
-                            .padding()
+                        ContentListView(movies: viewModel.movies, contentType: viewModel.selectedType) { movie in
+                            Task { await firestoreVM.saveMovie(movie)}
                         }
                     }
                 }
             }
             .navigationTitle("🎬 Trending Movies")
-            .task { await viewModel.fetchTrendingMovies() }
+           	.task { await viewModel.fetchTrendingContent() }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {

@@ -15,31 +15,49 @@ final class MovieViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var searchText = ""
     @Published var totalResults: Int = 0
+    @Published var selectedType: ContentType = .movie
     
     private let service = TMDBService()
     
-    /// Fetches the current list of trending movies from the API.
-    ///
-    /// This is the default call made on app start or when search is cleared.
-    func fetchTrendingMovies() async {
+    /// Fetches trending content (movies or TV shows) based on the selected content type.
+    func fetchTrendingContent() async {
         await fetch {
-            try await self.service.fetchTrendingMovies()
+            switch selectedType {
+            case .movie:
+                let raw = try await service.fetchTrendingMovies()
+                return raw.map(ContentMapper.fromRaw)
+            case .tv:
+                let shows = try await service.fetchTrendingTVSeries()
+                return shows.map(ContentMapper.fromTVShow)
+            }
         }
     }
     
-    func searchMovies() async {
-        
+    /// Searches for movies or TV shows using the current `searchText`
+    ///
+    /// Falls back to `fetchTrendingContent()` if the search text is empty.
+    /// Results are mapped to `Movie` models using `ContentMapper`
+    func searchContent() async {
         let trimmed = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
         
         guard !trimmed.isEmpty else {
-            await fetchTrendingMovies()
+            await fetchTrendingContent()
             return
         }
+        
         isLoading = true
         errorMessage = nil
         
         do {
-            let fetched = try await service.searchMovies(query: trimmed)
+            let fetched: [Movie]
+            switch selectedType {
+            case .movie:
+                let raw = try await service.searchMovies(query: trimmed)
+                fetched = raw.map(ContentMapper.fromRaw)
+            case .tv:
+                let shows = try await service.searchTVSeries(query: trimmed)
+                fetched = shows.map(ContentMapper.fromTVShow)
+            }
             movies = fetched
             totalResults = fetched.count
         } catch {
@@ -49,6 +67,8 @@ final class MovieViewModel: ObservableObject {
         isLoading = false
     }
     
+    
+    /// A reusable fetch wrapper used for trending or other content loaders.
     private func fetch(_ fetcher: () async throws -> [Movie]) async {
         isLoading = true
         errorMessage = nil
@@ -61,6 +81,4 @@ final class MovieViewModel: ObservableObject {
         }
         isLoading = false
     }
-    
-    
 }

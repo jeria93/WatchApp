@@ -14,6 +14,7 @@ final class FirestoreViewModel: ObservableObject {
     
     private let firestoreService = FirestoreMovieService()
     
+    /// Saves a movie/tv-show to Firestore
     func saveMovie(_ movie: Movie) async {
         do {
             try await firestoreService.saveMovie(movie)
@@ -22,5 +23,14 @@ final class FirestoreViewModel: ObservableObject {
         }
     }
     
+    
+    /// Fetches all saved movies/shows from Firestore
+    func fetchMovies() async {
+        do {
+            movies = try await firestoreService.fetchSavedMovies()
+        } catch {
+            errorMessage = "Failed to load saved movies: \(error.localizedDescription)"
+        }
+    }
     
 }

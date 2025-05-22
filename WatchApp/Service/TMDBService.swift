@@ -14,14 +14,24 @@ final class TMDBService {
     
     
     /// Fetches the current list of trending movies by today
-    func fetchTrendingMovies() async throws -> [Movie] {
+    func fetchTrendingMovies() async throws -> [MovieRaw] {
         try await request(path: "/trending/movie/day")
     }
     
     /// Searches API for movies matching the given query
-    func searchMovies(query: String) async throws -> [Movie] {
+    func searchMovies(query: String) async throws -> [MovieRaw] {
         let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         return try await request(path: "/search/movie?query=\(encoded)")
+    }
+    
+    /// Searches API for tv-series
+    func searchTVSeries(query: String) async throws -> [TVShow] {
+        let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        return try await requestTV(path: "/search/tv?query=\(encoded)")
+    }
+    /// fetches API for trending tv-series for the day
+    func fetchTrendingTVSeries() async throws -> [TVShow] {
+        try await requestTV(path: "/trending/tv/day")
     }
     
     
@@ -33,7 +43,7 @@ final class TMDBService {
     /// - Parameter path: The TMDB API endpoint path, e.g. `/trending/movie/day`
     /// - Returns: A list of decoded `Movie` objects.
     /// - Throws: Errors if the URL is invalid, the network request fails, or decoding fails.
-    private func request(path: String) async throws -> [Movie] {
+    private func request(path: String) async throws -> [MovieRaw] {
         
         guard let url = URL(string: "\(baseURL)\(path)") else { throw URLError(.badURL) }
         
@@ -48,5 +58,21 @@ final class TMDBService {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return try decoder.decode(MovieResults.self, from: data).results
+    }
+    
+    private func requestTV(path: String) async throws -> [TVShow] {
+        
+        guard let url = URL(string: "\(baseURL)\(path)") else { throw URLError(.badURL) }
+        var req = URLRequest(url: url)
+        req.httpMethod = "GET"
+        req.allHTTPHeaderFields = [
+            "accept": "application/json",
+            "Authorization": "Bearer \(SecretManager.bearerToken)"
+        ]
+        let (data,_) = try await session.data(for: req)
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return try decoder.decode(TVShowResults.self, from: data).results
+        
     }
 }
