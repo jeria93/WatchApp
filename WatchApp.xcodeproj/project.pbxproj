@@ -28,6 +28,14 @@
 		A42B66492DDF41EA00BDA4A0 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A42B66482DDF41EA00BDA4A0 /* User.swift */; };
 		A42B664A2DDF41EA00BDA4A0 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = A42B66472DDF41EA00BDA4A0 /* Movie.swift */; };
 		A42B664B2DDF41EA00BDA4A0 /* FirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A42B66462DDF41EA00BDA4A0 /* FirestoreService.swift */; };
+		A45A5F4D2DDF631F0092054A /* ContentMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45A5F4C2DDF631F0092054A /* ContentMapper.swift */; };
+		A45A5F4F2DDF63B10092054A /* MovieRaw.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45A5F4E2DDF63B10092054A /* MovieRaw.swift */; };
+		A45A5F512DDF63DD0092054A /* TVShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45A5F502DDF63DD0092054A /* TVShow.swift */; };
+		A45A5F532DDF644E0092054A /* ContentListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45A5F522DDF644E0092054A /* ContentListView.swift */; };
+		A45A5F552DDF64790092054A /* EmptySavedContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45A5F542DDF64790092054A /* EmptySavedContentView.swift */; };
+		A45A5F572DDF64910092054A /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45A5F562DDF64910092054A /* ErrorView.swift */; };
+		A45A5F592DDF64A60092054A /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45A5F582DDF64A60092054A /* LoadingView.swift */; };
+		A45A5F5B2DDF64E80092054A /* SavedMoviesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45A5F5A2DDF64E80092054A /* SavedMoviesView.swift */; };
 		A4B100BD2DDCA7040032B48E /* NavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B100BC2DDCA7040032B48E /* NavigationView.swift */; };
 		A4F921432DDF4CB8003B8C41 /* ContentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F921422DDF4CB8003B8C41 /* ContentType.swift */; };
 		DD5C92972DDB6FFB009D633F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD5C92962DDB6FFB009D633F /* LaunchScreen.storyboard */; };
@@ -56,6 +64,14 @@
 		A42B66462DDF41EA00BDA4A0 /* FirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreService.swift; sourceTree = "<group>"; };
 		A42B66472DDF41EA00BDA4A0 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		A42B66482DDF41EA00BDA4A0 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		A45A5F4C2DDF631F0092054A /* ContentMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentMapper.swift; sourceTree = "<group>"; };
+		A45A5F4E2DDF63B10092054A /* MovieRaw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieRaw.swift; sourceTree = "<group>"; };
+		A45A5F502DDF63DD0092054A /* TVShow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShow.swift; sourceTree = "<group>"; };
+		A45A5F522DDF644E0092054A /* ContentListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentListView.swift; sourceTree = "<group>"; };
+		A45A5F542DDF64790092054A /* EmptySavedContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptySavedContentView.swift; sourceTree = "<group>"; };
+		A45A5F562DDF64910092054A /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
+		A45A5F582DDF64A60092054A /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		A45A5F5A2DDF64E80092054A /* SavedMoviesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedMoviesView.swift; sourceTree = "<group>"; };
 		A4B100BC2DDCA7040032B48E /* NavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationView.swift; sourceTree = "<group>"; };
 		A4F921422DDF4CB8003B8C41 /* ContentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentType.swift; sourceTree = "<group>"; };
 		DD5C92962DDB6FFB009D633F /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -134,6 +150,9 @@
 				A42B66472DDF41EA00BDA4A0 /* Movie.swift */,
 				A42B66482DDF41EA00BDA4A0 /* User.swift */,
 				A4F921422DDF4CB8003B8C41 /* ContentType.swift */,
+				A45A5F4C2DDF631F0092054A /* ContentMapper.swift */,
+				A45A5F4E2DDF63B10092054A /* MovieRaw.swift */,
+				A45A5F502DDF63DD0092054A /* TVShow.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -160,6 +179,11 @@
 				0377633B2DDBBFD000777B8C /* EmptyStateView.swift */,
 				0377633D2DDBCB0300777B8C /* SearchBarView.swift */,
 				A4B100BC2DDCA7040032B48E /* NavigationView.swift */,
+				A45A5F522DDF644E0092054A /* ContentListView.swift */,
+				A45A5F542DDF64790092054A /* EmptySavedContentView.swift */,
+				A45A5F562DDF64910092054A /* ErrorView.swift */,
+				A45A5F582DDF64A60092054A /* LoadingView.swift */,
+				A45A5F5A2DDF64E80092054A /* SavedMoviesView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -250,20 +274,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A45A5F512DDF63DD0092054A /* TVShow.swift in Sources */,
+				A45A5F4F2DDF63B10092054A /* MovieRaw.swift in Sources */,
 				A4B100BD2DDCA7040032B48E /* NavigationView.swift in Sources */,
 				0377633C2DDBBFD000777B8C /* EmptyStateView.swift in Sources */,
 				03FA39162DDB221F005F1EDC /* TMDBService.swift in Sources */,
+				A45A5F572DDF64910092054A /* ErrorView.swift in Sources */,
 				0377633E2DDBCB0300777B8C /* SearchBarView.swift in Sources */,
 				DDAD79B62DDCB2AD00C97EA6 /* SignUpView.swift in Sources */,
 				A4F921432DDF4CB8003B8C41 /* ContentType.swift in Sources */,
+				A45A5F4D2DDF631F0092054A /* ContentMapper.swift in Sources */,
 				0377633A2DDBBCD300777B8C /* MovieRow.swift in Sources */,
+				A45A5F552DDF64790092054A /* EmptySavedContentView.swift in Sources */,
 				03FA391C2DDB23C0005F1EDC /* MovieListView.swift in Sources */,
 				03FA390D2DDB219D005F1EDC /* ContentView.swift in Sources */,
 				5D0D0C402DDB665800FC4499 /* LoginView.swift in Sources */,
 				03FA390E2DDB219D005F1EDC /* WatchAppApp.swift in Sources */,
+				A45A5F532DDF644E0092054A /* ContentListView.swift in Sources */,
 				A42B66492DDF41EA00BDA4A0 /* User.swift in Sources */,
 				A42B664A2DDF41EA00BDA4A0 /* Movie.swift in Sources */,
 				A42B664B2DDF41EA00BDA4A0 /* FirestoreService.swift in Sources */,
+				A45A5F592DDF64A60092054A /* LoadingView.swift in Sources */,
+				A45A5F5B2DDF64E80092054A /* SavedMoviesView.swift in Sources */,
 				5D0D0C3E2DDB663300FC4499 /* AuthViewModel.swift in Sources */,
 				DDAD79B82DDCF72C00C97EA6 /* UserProfile.swift in Sources */,
 				03FA39142DDB2206005F1EDC /* SecretManager.swift in Sources */,
