@@ -13,6 +13,7 @@ struct NavigationView: View {
     @StateObject private var authVM = AuthViewModel()
     
     var body: some View {
+<<<<<<< HEAD
                     
             TabView(selection:$selection){
                 
@@ -49,6 +50,48 @@ struct NavigationView: View {
         
     }
     
+=======
+        TabView(selection:$selection) {
+            VStack {
+                Text("WatchList")
+            }
+            .tabItem {
+                Image("pop_black_icon1x")
+                Text("WatchList")
+            }
+            .tag(1)
+            
+            VStack {
+                MovieListView(authVM: authVM)
+                Text("")
+            }
+            .tabItem {
+                Image("movies_black_1x")
+                Text("Movies")
+            }
+            .tag(2)
+            
+            SavedMoviesView()
+                .tabItem {
+                    Label("Saved", systemImage: "bookmark.fill")
+                }
+                .tag(3)
+            
+            VStack {
+                Text("Edit profile")
+            }
+            .tabItem {
+                Image(systemName: "person.fill")
+                Text("Profile")
+            }
+            .tag(4)
+        }
+        .onAppear() {
+            UITabBar.appearance().backgroundColor = .black
+            UITabBar.appearance().unselectedItemTintColor = .popcornYellow
+        }
+    }
+>>>>>>> dev-add-favorite-nico
 }
 
 #Preview {

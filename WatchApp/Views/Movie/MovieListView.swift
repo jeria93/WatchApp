@@ -25,7 +25,11 @@ struct MovieListView: View {
                         }
                     }
                 }
+<<<<<<< HEAD
 
+=======
+                
+>>>>>>> dev-add-favorite-nico
                 Picker("Type", selection: $viewModel.selectedType) {
                     ForEach(ContentType.allCases) { type in
                         Text(type.rawValue).tag(type)
@@ -36,11 +40,15 @@ struct MovieListView: View {
                 .onChange(of: viewModel.selectedType) { _ in
                     Task { await viewModel.fetchTrendingContent() }
                 }
+<<<<<<< HEAD
 
+=======
+                
+>>>>>>> dev-add-favorite-nico
                 if !viewModel.movies.isEmpty {
                     Text(viewModel.searchText.isEmpty ? "Trending now" : "\(viewModel.totalResults) results found")
                         .font(.subheadline)
-                        .foregroundColor(.popcornYellow)
+                        .foregroundColor(.secondary)
                         .padding(.top, 10)
                 }
 
@@ -61,7 +69,6 @@ struct MovieListView: View {
                     }
                 }
             }
-            .background(Color.BG.ignoresSafeArea(.all))
             .navigationTitle("🎬 Trending Movies")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
