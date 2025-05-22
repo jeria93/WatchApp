@@ -10,42 +10,45 @@ import SwiftUI
 struct NavigationView: View {
     
     @State private var selection = 2
+    @StateObject private var authVM = AuthViewModel()
     
     var body: some View {
-        
-        TabView(selection:$selection){
-            VStack{
-                Text("WatchList")
-            }
-            .tabItem{
-                Image("pop_black_icon1x")
-                Text("WatchList")
-            }
-            .tag(1)
-            VStack{
-                MovieListView()
-                Text("")
-            }
-            .tabItem{
-                Image("movies_black_1x")
-                Text("Movies")
-            }
-            SavedMoviesView()
-                .tabItem {
-                    Label("Saved", systemImage: "bookmark.fill")
-                }
-            .tag(2)
-            VStack{
-                Text("Edit profile")
+                    
+            TabView(selection:$selection){
                 
+                VStack{
+                    Text("WatchList")
+                }
+                .tabItem{
+                    Image("pop_black_icon1x")
+                    Text("WatchList")
+                }
+                .tag(1)
+                VStack{
+                    MovieListView(authVM: authVM)
+                }
+                .tabItem{
+                    Image("movies_black_1x")
+                    Text("Movies")
+                }
+                .tag(2)
+                VStack{
+                    Text("Edit profile")
+                }
+                .tabItem{
+                    Image(systemName: "person.fill")
+                    Text("Profile")
+                }
+                .tag(3)
             }
-            .tabItem{
-                Image(systemName: "person.fill")
-                Text("Profile")
+            .onAppear(){
+                UITabBar.appearance().backgroundColor = .black
+                UITabBar.appearance().unselectedItemTintColor = .popcornYellow
             }
-            .tag(3)
-        }
+
+        
     }
+    
 }
 
 #Preview {
