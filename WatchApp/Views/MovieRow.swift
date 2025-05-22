@@ -33,17 +33,19 @@ struct MovieRow: View {
                 
                 Text(movie.title)
                     .font(.headline)
+                    .foregroundColor(.white)
+
                 
                 if let releaseDate = movie.releaseDate {
                     Text("Released: \(releaseDate)")
                         .font(.caption)
-                        .foregroundColor(.secondary)
+                        .foregroundColor(.white)
                 }
                 
                 Text(movie.overview.isEmpty ? "No description available" : movie.overview)
                     .font(.subheadline)
                     .lineLimit(3)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(.white)
                 
                 if let onSave = onSave {
                     Button {
@@ -58,7 +60,7 @@ struct MovieRow: View {
             }
         }
         .padding()
-        .background(Color(.systemBackground))
+        .background(Color.BG.ignoresSafeArea(.all))
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .shadow(radius: 1)
     }

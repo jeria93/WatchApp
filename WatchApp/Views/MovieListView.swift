@@ -27,10 +27,12 @@ struct MovieListView: View {
                     }
                 }
                 
+                
+                
                 if !viewModel.movies.isEmpty {
                     Text(viewModel.searchText.isEmpty ? "Trending now" : "\(viewModel.totalResults) results found")
                         .font(.subheadline)
-                        .foregroundColor(.secondary)
+                        .foregroundColor(.popcornYellow)
                         .padding(.top, 10)
                 }
                 
@@ -69,6 +71,7 @@ struct MovieListView: View {
                     }
                 }
             }
+            .background(Color.BG.ignoresSafeArea(.all))
             .navigationTitle("🎬 Trending Movies")
             .task { await viewModel.fetchTrendingMovies() }
             .toolbar {
