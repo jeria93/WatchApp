@@ -25,11 +25,24 @@ struct NavigationView: View {
             VStack{
                 MovieListView()
                 Text("")
+<<<<<<< HEAD
             }
             .tabItem{
                 Image("movies_black_1x")
                 Text("Movies")
             }
+=======
+            }
+            .tabItem{
+                Image("movies_black_1x")
+                Text("Movies")
+            }
+<<<<<<< HEAD
+            .onAppear(){
+                UITabBar.appearance().backgroundColor = .black
+                UITabBar.appearance().unselectedItemTintColor = .popcornYellow
+=======
+>>>>>>> dev-main
             SavedMoviesView()
                 .tabItem {
                     Label("Saved", systemImage: "bookmark.fill")
@@ -38,6 +51,10 @@ struct NavigationView: View {
             VStack{
                 Text("Edit profile")
                 
+<<<<<<< HEAD
+=======
+>>>>>>> dev-add-favorite-nico
+>>>>>>> dev-main
             }
             .tabItem{
                 Image(systemName: "person.fill")

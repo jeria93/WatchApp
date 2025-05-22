@@ -16,7 +16,10 @@ struct ContentView: View {
 #Preview {
     ContentView()
 }
+<<<<<<< HEAD
 /*
  test
  test 2
  */
+=======
+>>>>>>> dev-main

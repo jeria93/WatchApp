@@ -8,11 +8,19 @@
 import SwiftUI
 
 struct MovieListView: View {
+<<<<<<< HEAD
     
     @StateObject private var viewModel = MovieViewModel()
     @StateObject private var firestoreVM = FirestoreViewModel()
     @ObservedObject var authVM: AuthViewModel
     
+=======
+
+    @StateObject private var viewModel = MovieViewModel()
+    @StateObject private var firestoreVM = FirestoreViewModel()
+    @ObservedObject var authVM: AuthViewModel
+
+>>>>>>> dev-main
     var body: some View {
         NavigationStack {
             VStack {
@@ -25,7 +33,11 @@ struct MovieListView: View {
                         }
                     }
                 }
+<<<<<<< HEAD
                 
+=======
+
+>>>>>>> dev-main
                 Picker("Type", selection: $viewModel.selectedType) {
                     ForEach(ContentType.allCases) { type in
                         Text(type.rawValue).tag(type)
@@ -36,14 +48,24 @@ struct MovieListView: View {
                 .onChange(of: viewModel.selectedType) { _ in
                     Task { await viewModel.fetchTrendingContent() }
                 }
+<<<<<<< HEAD
                 
                 if !viewModel.movies.isEmpty {
                     Text(viewModel.searchText.isEmpty ? "Trending now" : "\(viewModel.totalResults) results found")
+=======
+
+                if !viewModel.movies.isEmpty {
+                    Text(viewModel.searchText.isEmpty ? "Trending now" : "(viewModel.totalResults) results found")
+>>>>>>> dev-main
                         .font(.subheadline)
                         .foregroundColor(.popcornYellow)
                         .padding(.top, 10)
                 }
+<<<<<<< HEAD
                 
+=======
+
+>>>>>>> dev-main
                 Group {
                     if viewModel.isLoading {
                         LoadingView()

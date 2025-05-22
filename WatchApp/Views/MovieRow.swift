@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MovieRow: View {
+<<<<<<< HEAD
     
     let movie: Movie
     var onSave: (() -> Void)?
@@ -17,6 +18,17 @@ struct MovieRow: View {
         
         HStack(alignment: .top, spacing: 12) {
             
+=======
+
+    let movie: Movie
+    var onSave: (() -> Void)?
+    let contentType: ContentType
+
+    var body: some View {
+
+        HStack(alignment: .top, spacing: 12) {
+
+>>>>>>> dev-main
             AsyncImage(url: movie.posterURLSmall) { image in
                 image
                     .resizable()
@@ -29,6 +41,7 @@ struct MovieRow: View {
                     .frame(width: 80, height: 120)
                     .overlay(Text("🍿"))
             }
+<<<<<<< HEAD
             
             VStack(alignment: .leading, spacing: 5) {
                 
@@ -36,10 +49,20 @@ struct MovieRow: View {
                     .font(.caption)
                     .foregroundColor(.blue)
                 
+=======
+
+            VStack(alignment: .leading, spacing: 5) {
+
+                Text(contentType == .movie ? "🎬 Movie" : "📺 TV Show")
+                    .font(.caption)
+                    .foregroundColor(.blue)
+
+>>>>>>> dev-main
                 Text(movie.title)
                     .font(.headline)
                     .foregroundColor(.white)
 
+<<<<<<< HEAD
                 
                 if let releaseDate = movie.releaseDate {
                     Text("Released: \(releaseDate)")
@@ -47,13 +70,28 @@ struct MovieRow: View {
                         .foregroundColor(.white)
                 }
                 
+=======
+
+                if let releaseDate = movie.releaseDate {
+                    Text("Released: (releaseDate)")
+                        .font(.caption)
+                        .foregroundColor(.white)
+                }
+
+>>>>>>> dev-main
                 Text(movie.overview.isEmpty ? "No description available" : movie.overview)
                     .font(.subheadline)
                     .lineLimit(3)
                     .foregroundColor(.white)
+<<<<<<< HEAD
                 
                 Spacer()
                 
+=======
+
+                Spacer()
+
+>>>>>>> dev-main
                 if let onSave = onSave {
                     Button {
                         onSave()
@@ -62,7 +100,11 @@ struct MovieRow: View {
                     }
                     .buttonStyle(.borderedProminent)
                     .font(.caption)
+<<<<<<< HEAD
                     
+=======
+
+>>>>>>> dev-main
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
