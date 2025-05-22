@@ -11,24 +11,68 @@ import Foundation
 final class TMDBService {
     private let baseURL = "https://api.themoviedb.org/3"
     private let session = URLSession.shared
-
-    func fetchTrendingMovies() async throws -> [Movie] {
+    
+    
+    /// Fetches the current list of trending movies by today
+    func fetchTrendingMovies() async throws -> [MovieRaw] {
+        try await request(path: "/trending/movie/day")
+    }
+    
+    /// Searches API for movies matching the given query
+    func searchMovies(query: String) async throws -> [MovieRaw] {
+        let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        return try await request(path: "/search/movie?query=\(encoded)")
+    }
+    
+    /// Searches API for tv-series
+    func searchTVSeries(query: String) async throws -> [TVShow] {
+        let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        return try await requestTV(path: "/search/tv?query=\(encoded)")
+    }
+    /// fetches API for trending tv-series for the day
+    func fetchTrendingTVSeries() async throws -> [TVShow] {
+        try await requestTV(path: "/trending/tv/day")
+    }
+    
+    
+    /// Helper method that builds and sends a TMDB GET request, then decodes the response.
+    ///
+    /// This avoids repeating boilerplate code when making API calls like fetching trending movies
+    /// or searching by query.
+    ///
+    /// - Parameter path: The TMDB API endpoint path, e.g. `/trending/movie/day`
+    /// - Returns: A list of decoded `Movie` objects.
+    /// - Throws: Errors if the URL is invalid, the network request fails, or decoding fails.
+    private func request(path: String) async throws -> [MovieRaw] {
         
-        guard let url = URL(string: "\(baseURL)/trending/movie/day") else {
-            throw URLError(.badURL)
-        }
-
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        request.allHTTPHeaderFields = [
+        guard let url = URL(string: "\(baseURL)\(path)") else { throw URLError(.badURL) }
+        
+        var req = URLRequest(url: url)
+        req.httpMethod = "GET"
+        req.allHTTPHeaderFields = [
             "accept": "application/json",
             "Authorization": "Bearer \(SecretManager.bearerToken)"
         ]
-
-        let (data, _) = try await session.data(for: request)
+        
+        let (data,_) = try await session.data(for: req)
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
-        let movieResults = try decoder.decode(MovieResults.self, from: data)
-        return movieResults.results
+        return try decoder.decode(MovieResults.self, from: data).results
+    }
+    
+    private func requestTV(path: String) async throws -> [TVShow] {
+        
+        guard let url = URL(string: "\(baseURL)\(path)") else { throw URLError(.badURL) }
+        var req = URLRequest(url: url)
+        req.httpMethod = "GET"
+        req.allHTTPHeaderFields = [
+            "accept": "application/json",
+            "Authorization": "Bearer \(SecretManager.bearerToken)"
+        ]
+        let (data,_) = try await session.data(for: req)
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return try decoder.decode(TVShowResults.self, from: data).results
+        
     }
 }
