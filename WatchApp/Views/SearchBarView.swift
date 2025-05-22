@@ -15,9 +15,13 @@ struct SearchBarView: View {
     var body: some View {
         
         ZStack(alignment: .trailing) {
+
             
             TextField("Search movies...", text: $text)
-                .textFieldStyle(.roundedBorder)
+                .foregroundColor(.white)
+                .accentColor(.white)
+                .padding(8)
+                .background(RoundedRectangle(cornerRadius: 20).fill(Color.gray.opacity(0.5)))
                 .onChange(of: text) { newValue in
                       if newValue.count > 35 {
                           text = String(newValue.prefix(35))
@@ -37,6 +41,7 @@ struct SearchBarView: View {
             }
         }
         .padding(.horizontal)
+        
     }
 }
 

@@ -10,40 +10,47 @@ import SwiftUI
 struct NavigationView: View {
     
     @State private var selection = 2
+    @StateObject private var authVM = AuthViewModel()
     
     var body: some View {
-        
-        TabView(selection:$selection){
-            VStack{
+        TabView(selection:$selection) {
+            VStack {
                 Text("WatchList")
             }
-            .tabItem{
+            .tabItem {
                 Image("pop_black_icon1x")
                 Text("WatchList")
             }
             .tag(1)
-            VStack{
+            
+            VStack {
                 MovieListView(authVM: authVM)
                 Text("")
             }
-            .tabItem{
+            .tabItem {
                 Image("movies_black_1x")
                 Text("Movies")
             }
+            .tag(2)
+            
             SavedMoviesView()
                 .tabItem {
                     Label("Saved", systemImage: "bookmark.fill")
                 }
-            .tag(2)
-            VStack{
+                .tag(3)
+            
+            VStack {
                 Text("Edit profile")
-                
             }
-            .tabItem{
+            .tabItem {
                 Image(systemName: "person.fill")
                 Text("Profile")
             }
-            .tag(3)
+            .tag(4)
+        }
+        .onAppear() {
+            UITabBar.appearance().backgroundColor = .black
+            UITabBar.appearance().unselectedItemTintColor = .popcornYellow
         }
     }
 }
