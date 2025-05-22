@@ -116,36 +116,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		03EDA4E82DDE744D0022E842 /* SharedComponents */ = {
-			isa = PBXGroup;
-			children = (
-				03BFB3CD2DDD16B600B3778B /* ContentListView.swift */,
-				03BFB3C92DDD13F400B3778B /* LoadingView.swift */,
-				03BFB3CB2DDD166400B3778B /* ErrorView.swift */,
-			);
-			path = SharedComponents;
-			sourceTree = "<group>";
-		};
-		03EDA4E92DDE74C50022E842 /* Movie */ = {
-			isa = PBXGroup;
-			children = (
-				03180F932DDF1810005391B0 /* Movie.swift */,
-				03BFB3C52DDCFD7C00B3778B /* ContentType.swift */,
-				03BFB3C72DDD07E100B3778B /* TVShow.swift */,
-				03AECB3B2DDDEEAE002F99C9 /* ContentMapper.swift */,
-				03AECB3D2DDDF0DC002F99C9 /* MovieRaw.swift */,
-			);
-			path = Movie;
-			sourceTree = "<group>";
-		};
-		03EDA4EA2DDE74D60022E842 /* Authentication */ = {
-			isa = PBXGroup;
-			children = (
-				03180F952DDF1837005391B0 /* User.swift */,
-			);
-			path = Authentication;
-			sourceTree = "<group>";
-		};
 		03EDA4EC2DDE75E10022E842 /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -180,22 +150,6 @@
 			path = Shared;
 			sourceTree = "<group>";
 		};
-		03EDA4F52DDE76640022E842 /* Movie */ = {
-			isa = PBXGroup;
-			children = (
-				03908DBD2DDCA8100008C202 /* SavedMoviesView.swift */,
-				03EDA4E62DDE5BF80022E842 /* EmptySavedContentView.swift */,
-			);
-			path = Movie;
-			sourceTree = "<group>";
-		};
-		03EDA4F62DDE76780022E842 /* Login */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Login;
-			sourceTree = "<group>";
-		};
 		03FA39092DDB219D005F1EDC /* WatchApp */ = {
 			isa = PBXGroup;
 			children = (
@@ -225,10 +179,14 @@
 		03FA39102DDB21AB005F1EDC /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				03EDA4EA2DDE74D60022E842 /* Authentication */,
-				03EDA4E92DDE74C50022E842 /* Movie */,
 				DDAD79B72DDCF72C00C97EA6 /* UserProfile.swift */,
 				03180F972DDF184D005391B0 /* FirestoreService.swift */,
+				03180F952DDF1837005391B0 /* User.swift */,
+				03180F932DDF1810005391B0 /* Movie.swift */,
+				03BFB3C52DDCFD7C00B3778B /* ContentType.swift */,
+				03BFB3C72DDD07E100B3778B /* TVShow.swift */,
+				03AECB3B2DDDEEAE002F99C9 /* ContentMapper.swift */,
+				03AECB3D2DDDF0DC002F99C9 /* MovieRaw.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -246,9 +204,6 @@
 		03FA39122DDB21B8005F1EDC /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				03EDA4F62DDE76780022E842 /* Login */,
-				03EDA4F52DDE76640022E842 /* Movie */,
-				03EDA4E82DDE744D0022E842 /* SharedComponents */,
 				03FA39052DDB219D005F1EDC /* ContentView.swift */,
 				03180F852DDF16DC005391B0 /* MovieListView.swift */,
 				03180F872DDF170E005391B0 /* SplashScreenView.swift */,
@@ -258,6 +213,11 @@
 				03180F8D2DDF1788005391B0 /* EmptyStateView.swift */,
 				03180F912DDF17A5005391B0 /* NavigationView.swift */,
 				03180F8F2DDF179A005391B0 /* SearchBarView.swift */,
+				03908DBD2DDCA8100008C202 /* SavedMoviesView.swift */,
+				03EDA4E62DDE5BF80022E842 /* EmptySavedContentView.swift */,
+				03BFB3CD2DDD16B600B3778B /* ContentListView.swift */,
+				03BFB3C92DDD13F400B3778B /* LoadingView.swift */,
+				03BFB3CB2DDD166400B3778B /* ErrorView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
