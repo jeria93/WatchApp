@@ -31,6 +31,8 @@
 		A4B100BD2DDCA7040032B48E /* NavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B100BC2DDCA7040032B48E /* NavigationView.swift */; };
 		DD5C92972DDB6FFB009D633F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD5C92962DDB6FFB009D633F /* LaunchScreen.storyboard */; };
 		DD5C92992DDB7199009D633F /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5C92982DDB7199009D633F /* SplashScreenView.swift */; };
+		DDAD79B62DDCB2AD00C97EA6 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAD79B52DDCB2AD00C97EA6 /* SignUpView.swift */; };
+		DDAD79B82DDCF72C00C97EA6 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAD79B72DDCF72C00C97EA6 /* UserProfile.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +58,8 @@
 		A4B100BC2DDCA7040032B48E /* NavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationView.swift; sourceTree = "<group>"; };
 		DD5C92962DDB6FFB009D633F /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DD5C92982DDB7199009D633F /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
+		DDAD79B52DDCB2AD00C97EA6 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		DDAD79B72DDCF72C00C97EA6 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -125,6 +129,7 @@
 			children = (
 				03FA39172DDB224D005F1EDC /* Movie.swift */,
 				5D0D0C412DDB6FCB00FC4499 /* User.swift */,
+				DDAD79B72DDCF72C00C97EA6 /* UserProfile.swift */,
 				03908DAB2DDC85BC0008C202 /* FirestoreService.swift */,
 			);
 			path = Models;
@@ -147,6 +152,7 @@
 				03FA391B2DDB23C0005F1EDC /* MovieListView.swift */,
 				DD5C92982DDB7199009D633F /* SplashScreenView.swift */,
 				5D0D0C3F2DDB665800FC4499 /* LoginView.swift */,
+				DDAD79B52DDCB2AD00C97EA6 /* SignUpView.swift */,
 				037763392DDBBCD300777B8C /* MovieRow.swift */,
 				0377633B2DDBBFD000777B8C /* EmptyStateView.swift */,
 				0377633D2DDBCB0300777B8C /* SearchBarView.swift */,
@@ -245,12 +251,14 @@
 				0377633C2DDBBFD000777B8C /* EmptyStateView.swift in Sources */,
 				03FA39162DDB221F005F1EDC /* TMDBService.swift in Sources */,
 				0377633E2DDBCB0300777B8C /* SearchBarView.swift in Sources */,
+				DDAD79B62DDCB2AD00C97EA6 /* SignUpView.swift in Sources */,
 				0377633A2DDBBCD300777B8C /* MovieRow.swift in Sources */,
 				03FA391C2DDB23C0005F1EDC /* MovieListView.swift in Sources */,
 				03FA390D2DDB219D005F1EDC /* ContentView.swift in Sources */,
 				5D0D0C402DDB665800FC4499 /* LoginView.swift in Sources */,
 				03FA390E2DDB219D005F1EDC /* WatchAppApp.swift in Sources */,
 				5D0D0C3E2DDB663300FC4499 /* AuthViewModel.swift in Sources */,
+				DDAD79B82DDCF72C00C97EA6 /* UserProfile.swift in Sources */,
 				03908DAC2DDC85BC0008C202 /* FirestoreService.swift in Sources */,
 				03FA39142DDB2206005F1EDC /* SecretManager.swift in Sources */,
 				03FA39182DDB224D005F1EDC /* Movie.swift in Sources */,

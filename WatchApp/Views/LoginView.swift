@@ -9,11 +9,12 @@ import SwiftUI
 
 struct LoginView: View {
     @StateObject private var authVM = AuthViewModel()
-    @State private var email: String = ""
-    @State private var password: String = ""
+    @State private var email: String = "test@test.com"
+    @State private var password: String = "123456"
     @State private var rememberMe: Bool = false
     @State private var emailError: String?
     @State private var passwordError: String?
+    @State private var showSignUpSheet = false
     
     var body: some View {
         NavigationStack {
@@ -93,7 +94,6 @@ struct LoginView: View {
                                 .padding(.horizontal, 4)
                         }
                     }
-                    
                     .padding(.horizontal)
                     
                     VStack(alignment: .leading, spacing: 4) {
@@ -130,8 +130,7 @@ struct LoginView: View {
                             .padding(.horizontal, 4)
                     }
                 }
-                
-                    .padding(.horizontal)
+                .padding(.horizontal)
                     
                     HStack{
                         Button(action: {
@@ -159,10 +158,9 @@ struct LoginView: View {
                     }
                     .padding(.horizontal)
                     
-                  
-                    
                     Button(action: {
-                        print("create account")
+                        SoundPlayer.play("pop")
+                        showSignUpSheet = true
                     }){
                         Text("Create Account!")
                             .font(.headline)
@@ -171,8 +169,14 @@ struct LoginView: View {
                             .foregroundStyle(.black)
                     }
                     .padding(.horizontal)
-                    
+                    .sheet(isPresented: $showSignUpSheet) {
+                        SignUpView(authVM: authVM)
+                        .presentationDetents([.fraction(0.5)])
+                        .presentationDragIndicator(.visible)
+                    }
+
                     Button(action: {
+                        SoundPlayer.play("click")
                         authVM.signInWithEmail(email: email, password: password)
                     }) {
                         Text("LOGIN")
@@ -201,7 +205,9 @@ struct LoginView: View {
                 }
             }
             .navigationDestination(isPresented: $authVM.isSignedIn) {
+
                 NavigationView()
+
             }
         }
     }
