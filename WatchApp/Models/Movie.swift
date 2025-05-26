@@ -16,6 +16,7 @@ struct Movie: Codable, Identifiable, Equatable {
     let voteAverage: Double
     let releaseDate: String?
     let contentType: ContentType
+    var userRating = 0
     
     /// small size poster
     var posterURLSmall: URL? {

@@ -12,6 +12,8 @@ struct MovieRow: View {
     let movie: Movie
     var onSave: (() -> Void)?
     let contentType: ContentType
+    
+    @State private var showDetails = false
 
     var body: some View {
 
@@ -42,7 +44,7 @@ struct MovieRow: View {
 
 
                 if let releaseDate = movie.releaseDate {
-                    Text("Released: (releaseDate)")
+                    Text("Released: \(releaseDate)")
                         .font(.caption)
                         .foregroundColor(.white)
                 }
@@ -72,6 +74,12 @@ struct MovieRow: View {
         .background(Color.BG.ignoresSafeArea(.all))
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .shadow(radius: 1)
+        .onTapGesture {
+            showDetails = true
+        }
+        .sheet(isPresented: $showDetails){
+            MovieDetailView(movie: movie, contentType: contentType)
+        }
     }
 }
 
