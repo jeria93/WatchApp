@@ -1,41 +1,75 @@
-# Firebase config file
+# MARK: - Secrets & config
+Secrets.plist
 GoogleService-Info.plist
 
-# API TMDB key
-Secrets.plist
-
-# Xcode
+# MARK: - Xcode project files (användarspecifika)
 xcuserdata/
 *.xcuserstate
-*.xcresult/
-*.hmap
-*.ipa
-*.dSYM.zip
-*.dSYM
-timeline.xctimeline
-playground.xcworkspace
+*.xcscmblueprint
+*.xccheckout
+*.xcuserdatad
+*.xcsettings
+*.xcodeproj/project.xcworkspace/
+*.xcodeproj/xcshareddata/WorkspaceSettings.xcsettings
+*.xcworkspace/xcuserdata/
 
-# Swift Package Manager
+# MARK: - Swift Package Manager
 .build/
 .swiftpm/
 Package.resolved
 
-# CocoaPods
+# MARK: - CocoaPods (om det används)
 Pods/
 
-# Carthage
+# MARK: - Carthage (om det används)
 Carthage/Checkouts
 Carthage/Build/
 
-# fastlane
+# MARK: - fastlane
 fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots/**/*.png
 fastlane/test_output
+fastlane/*.log
 
-# macOS
-.DS_Store
+# MARK: - Xcode build artifacts
+*.xcresult/
+*.hmap
+*.ipa
+*.dSYM
+*.dSYM.zip
+timeline.xctimeline
+playground.xcworkspace
 
-# Artifacts & Logs
-.artifacts/
+# MARK: - SwiftUI previews
+*.preview-thumbnails
+
+# MARK: - Xcode Instruments / Profiler
+*.trace
+*.profdata
+
+# MARK: - Användarspecifika verktyg & editorer
+.swiftlint.yml
+.swiftlint.tmp
+.idea/
+
+# MARK: - Temporära & backupfiler
 *.log
+*.tmp
+*.temp
+*.bak
+*~
+*.swp
+*.swo
+*.orig
+
+# MARK: - macOS systemfiler
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+ehthumbs.db
+Thumbs.db
+
+# MARK: - Övrigt
+.artifacts/
