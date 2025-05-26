@@ -20,8 +20,8 @@ extension Genre {
     static let previewGenres: [Genre] = [
         .init(id: 28, name: "Action"),
         .init(id: 35, name: "Comedy"),
-        .init(id: 18, name: "Drama"),
-        .init(id: 10749, name: "Romance"),
+        .init(id: 80, name: "Crime"),
+        .init(id: 878, name: "Science Fiction"),
         .init(id: 27, name: "Horror")
         ]
 }

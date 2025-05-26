@@ -26,14 +26,7 @@ struct MovieListView: View {
                     }
                 }
 
-                Picker("Type", selection: $viewModel.selectedType) {
-                    ForEach(ContentType.allCases) { type in
-                        Text(type.rawValue).tag(type)
-                    }
-                }
-                .pickerStyle(.segmented)
-                .padding(.horizontal)
-                .onChange(of: viewModel.selectedType) { _ in
+                ContentTypePickerView(selectedType: $viewModel.selectedType) {
                     Task { await viewModel.fetchTrendingContent() }
                 }
 
