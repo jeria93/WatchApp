@@ -9,10 +9,10 @@ import SwiftUI
 
 struct MovieDetailView: View {
     
-    let movie: Movie
+    @State var movie: Movie
     let contentType: ContentType
     
-    let fireStore = FirestoreMovieService()
+    let firestore = FirestoreMovieService()
     
     
     var body: some View {
@@ -51,40 +51,40 @@ struct MovieDetailView: View {
                     .frame(width: 20, height: 20)
                     .opacity(movie.userRating >= 1 ? 1.0 : 0.2)
                     .onTapGesture {
-                        print("1 clicked")
                         setRating(id: movie.id, rating: 1)
+                        fetchRating()
                     }
                 Image("pop_white")
                     .resizable()
                     .frame(width: 20, height: 20)
                     .opacity(movie.userRating >= 2 ? 1.0 : 0.2)
                     .onTapGesture {
-                        print("2 clicked")
                         setRating(id: movie.id, rating: 2)
+                        fetchRating()
                     }
                 Image("pop_white")
                     .resizable()
                     .frame(width: 20, height: 20)
                     .opacity(movie.userRating >= 3 ? 1.0 : 0.2)
                     .onTapGesture {
-                        print("3 clicked")
                         setRating(id: movie.id, rating: 3)
+                        fetchRating()
                     }
                 Image("pop_white")
                     .resizable()
                     .frame(width: 20, height: 20)
                     .opacity(movie.userRating >= 4 ? 1.0 : 0.2)
                     .onTapGesture {
-                        print("4 clicked")
                         setRating(id: movie.id, rating: 4)
+                        fetchRating()
                     }
                 Image("pop_white")
                     .resizable()
                     .frame(width: 20, height: 20)
                     .opacity(movie.userRating >= 5 ? 1.0 : 0.2)
                     .onTapGesture {
-                        print("5 clicked")
                         setRating(id: movie.id, rating: 5)
+                        fetchRating()
                     }
             }
             
@@ -95,15 +95,26 @@ struct MovieDetailView: View {
         }
         .padding()
         .background(Color.BG.ignoresSafeArea(.all))
+        .onAppear{
+         fetchRating()
+        }
     }
     
     private func setRating(id: Int, rating: Int) {
-        let id = id
-        let rating = rating
+//        let id = id
+//        let rating = rating
         print("\(id), \(rating)")
-        
-        
-        
+        firestore.addUserRating(ratedMovieId: id, rating: rating)
+    }
+    
+    func fetchRating() {
+        firestore.fetchUserRating(id: movie.id) { rating in
+            if let rating = rating {
+                movie.userRating = rating
+            } else {
+                print("cant fetch rating")
+            }
+        }
     }
     
 }

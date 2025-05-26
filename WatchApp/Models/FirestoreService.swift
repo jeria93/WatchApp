@@ -25,10 +25,20 @@ final class FirestoreMovieService {
     }
     
     
-    func addMovieRating(ratedMovieId: Int, rating: Int) {
+    func addUserRating(ratedMovieId: Int, rating: Int) {
         let ratedMovieId = ratedMovieId
         let rating = rating
-        firestore.collection("ratedMovies").document("\ratedMovieId)").setData(["rating": rating])
+        firestore.collection("ratedMovies").document("\(ratedMovieId)").setData(["rating": rating])
+    }
+    
+    func fetchUserRating(id: Int, completion: @escaping (Int?) -> Void){
+        firestore.collection("ratedMovies").document("\(id)").getDocument { (document, _) in
+            if let rating = document?.get("rating") as? Int {
+                completion(rating)
+            } else {
+                completion(nil)
+            }
+        }
     }
     
 }

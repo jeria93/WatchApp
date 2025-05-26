@@ -15,11 +15,11 @@ struct NavigationView: View {
     var body: some View {
         TabView(selection:$selection) {
             VStack {
-                Text("WatchList")
+                Text("POPular movies (coming soon...")
             }
             .tabItem {
                 Image("pop_black_icon1x")
-                Text("WatchList")
+                Text("POPular")
             }
             .tag(1)
             
@@ -30,13 +30,13 @@ struct NavigationView: View {
             }
             .tabItem {
                 Image("movies_black_1x")
-                Text("Movies")
+                Text("Library")
             }
             .tag(2)
             
             SavedMoviesView()
                 .tabItem {
-                    Label("Saved", systemImage: "bookmark.fill")
+                    Label("Watchlist", systemImage: "bookmark.fill")
                 }
                 .tag(3)
             
