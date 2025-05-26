@@ -15,8 +15,9 @@ struct Movie: Codable, Identifiable, Equatable {
     let posterPath: String?
     let voteAverage: Double
     let releaseDate: String?
+    let genreIds: [Int]
     let contentType: ContentType
-    
+
     /// small size poster
     var posterURLSmall: URL? {
         guard let path = posterPath else { return nil }

@@ -12,7 +12,6 @@ struct MovieListView: View {
     @StateObject private var viewModel = MovieViewModel()
     @StateObject private var firestoreVM = FirestoreViewModel()
     @ObservedObject var authVM: AuthViewModel
-    @State private var selectedGenre: Genre? = nil
 
     var body: some View {
         NavigationStack {
@@ -38,7 +37,7 @@ struct MovieListView: View {
                     Task { await viewModel.fetchTrendingContent() }
                 }
 
-                GenrePickerView(genres: Genre.previewGenres, selectedGenre: $selectedGenre)
+                GenrePickerView(genres: Genre.previewGenres, selectedGenre: $viewModel.selectedGenre)
                     .padding(.vertical, 5)
 
                 if !viewModel.movies.isEmpty {
@@ -57,7 +56,7 @@ struct MovieListView: View {
                         EmptyStateView(searchText: viewModel.searchText)
                             .frame(maxHeight: .infinity)
                     } else {
-                        ContentListView(movies: viewModel.movies, contentType: viewModel.selectedType) { movie in
+                        ContentListView(movies: viewModel.filteredMovies, contentType: viewModel.selectedType) { movie in
                             Task { await firestoreVM.saveMovie(movie) }
                         }
                     }

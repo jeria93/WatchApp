@@ -14,7 +14,8 @@ struct TVShow: Codable, Identifiable {
     let posterPath: String?
     let voteAverage: Double
     let firstAirDate: String?
-    
+    let genreIds: [Int]
+
     var posterURLSmall: URL? {
         guard let posterPath else { return nil }
         return URL(string: "https://image.tmdb.org/t/p/w200/\(posterPath)")
