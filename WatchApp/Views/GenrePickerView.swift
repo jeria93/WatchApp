@@ -10,14 +10,17 @@ import SwiftUI
 struct GenrePickerView: View {
     let genres: [Genre]
     @Binding var selectedGenre: Genre?
-    
+    @State private var animateIn = false
+
     var body: some View {
-        
+
         ScrollView(.horizontal, showsIndicators: false) {
             HStack {
                 ForEach(genres) { genre in
                     Button {
-                        selectedGenre = genre
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
+                            selectedGenre = genre
+                        }
                     } label: {
                         Text(genre.name)
                             .padding(.horizontal, 15)
@@ -26,10 +29,14 @@ struct GenrePickerView: View {
                             .clipShape(Capsule())
                             .foregroundStyle(.white)
                             .fontWeight(.semibold)
+                            .scaleEffect(selectedGenre == genre ? 1.1 : 1.0)
                     }
                 }
             }
             .padding(.horizontal)
+            .opacity(animateIn ? 1 : 0)
+            .animation(.easeIn(duration: 0.6), value: animateIn)
+            .onAppear { animateIn = true }
         }
     }
 }

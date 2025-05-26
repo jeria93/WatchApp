@@ -34,10 +34,20 @@ final class TMDBService {
         try await requestTV(path: "/trending/tv/day")
     }
 
+    /// This method sends a GET request to the `/genre/movie/list` endpoint,
+    /// which returns a predefined list of all available movie genres supported by TMDB.
+    ///
+    /// - Returns: An array of `Genre` objects representing movie genres.
+    /// - Throws: A `URLError` or decoding error if the request fails or the response is invalid.
     func fetchMoviesGenres() async throws -> [Genre] {
         try await requestGenres(path: "/genre/movie/list")
     }
 
+    /// This method sends a GET request to the `/genre/tv/list` endpoint,
+    /// which returns a predefined list of all available TV show genres supported by TMDB.
+    ///
+    /// - Returns: An array of `Genre` objects representing TV genres.
+    /// - Throws: A `URLError` or decoding error if the request fails or the response is invalid.
     func fetchTvGenres() async throws -> [Genre] {
         try await requestGenres(path: "/genre/tv/list")
     }

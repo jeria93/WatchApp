@@ -34,7 +34,7 @@ struct MovieListView: View {
                     .padding(.vertical, 5)
 
                 if !viewModel.movies.isEmpty {
-                    Text(viewModel.searchText.isEmpty ? "Trending now" : "(viewModel.totalResults) results found")
+                    Text(viewModel.searchText.isEmpty ? "Trending now" : "\(viewModel.totalResults) results found")
                         .font(.subheadline)
                         .foregroundColor(.popcornYellow)
                         .padding(.top, 10)
@@ -75,12 +75,4 @@ struct MovieListView: View {
 
 #Preview {
     MovieListView(authVM: AuthViewModel())
-}
-
-#Preview("Default Empty") {
-    EmptyStateView(searchText: "")
-}
-
-#Preview("No results found for 'Batman'") {
-    EmptyStateView(searchText: "Star Wars")
 }
