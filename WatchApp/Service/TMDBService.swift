@@ -75,4 +75,19 @@ final class TMDBService {
         return try decoder.decode(TVShowResults.self, from: data).results
         
     }
+
+    private func requesGenres(path: String) async throws -> [Genre] {
+        guard let url = URL(string: "\(baseURL)\(path)?language=en") else { throw URLError(.badURL) }
+
+        var req = URLRequest(url: url)
+        req.httpMethod = "GET"
+        req.allHTTPHeaderFields = [
+            "accept": "application/json",
+            "Authorization": "Bearer \(SecretManager.bearerToken)"
+        ]
+
+        let (data,_) = try await session.data(for: req)
+        let decoded = try JSONDecoder().decode(GenreResult.self, from: data)
+        return decoded.genres
+    }
 }
