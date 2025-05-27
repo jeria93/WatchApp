@@ -16,7 +16,13 @@ final class MovieViewModel: ObservableObject {
     @Published var searchText = ""
     @Published var totalResults: Int = 0
     @Published var selectedType: ContentType = .movie
-    
+    @Published var selectedGenre: Genre?
+
+    var filteredMovies: [Movie] {
+        guard let selectedGenre else { return movies }
+        return movies.filter { $0.genreIds.contains(selectedGenre.id) }
+    }
+
     private let service = TMDBService()
     
     /// Fetches trending content (movies or TV shows) based on the selected content type.

@@ -21,6 +21,7 @@ struct ContentMapper {
             posterPath: raw.posterPath,
             voteAverage: raw.voteAverage,
             releaseDate: raw.releaseDate,
+            genreIds: raw.genreIds,
             contentType: .movie
         )
     }
@@ -37,6 +38,7 @@ struct ContentMapper {
             posterPath: show.posterPath,
             voteAverage: show.voteAverage,
             releaseDate: show.firstAirDate,
+            genreIds: show.genreIds,
             contentType: .tv
         )
     }

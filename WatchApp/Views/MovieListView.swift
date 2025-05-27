@@ -26,19 +26,15 @@ struct MovieListView: View {
                     }
                 }
 
-                Picker("Type", selection: $viewModel.selectedType) {
-                    ForEach(ContentType.allCases) { type in
-                        Text(type.rawValue).tag(type)
-                    }
-                }
-                .pickerStyle(.segmented)
-                .padding(.horizontal)
-                .onChange(of: viewModel.selectedType) { _ in
+                ContentTypePickerView(selectedType: $viewModel.selectedType) {
                     Task { await viewModel.fetchTrendingContent() }
                 }
 
+                GenrePickerView(genres: Genre.previewGenres, selectedGenre: $viewModel.selectedGenre)
+                    .padding(.vertical, 5)
+
                 if !viewModel.movies.isEmpty {
-                    Text(viewModel.searchText.isEmpty ? "Trending now" : "(viewModel.totalResults) results found")
+                    Text(viewModel.searchText.isEmpty ? "Trending now" : "\(viewModel.totalResults) results found")
                         .font(.subheadline)
                         .foregroundColor(.popcornYellow)
                         .padding(.top, 10)
@@ -53,7 +49,7 @@ struct MovieListView: View {
                         EmptyStateView(searchText: viewModel.searchText)
                             .frame(maxHeight: .infinity)
                     } else {
-                        ContentListView(movies: viewModel.movies, contentType: viewModel.selectedType) { movie in
+                        ContentListView(movies: viewModel.filteredMovies, contentType: viewModel.selectedType) { movie in
                             Task { await firestoreVM.saveMovie(movie) }
                         }
                     }
@@ -79,12 +75,4 @@ struct MovieListView: View {
 
 #Preview {
     MovieListView(authVM: AuthViewModel())
-}
-
-#Preview("Default Empty") {
-    EmptyStateView(searchText: "")
-}
-
-#Preview("No results found for 'Batman'") {
-    EmptyStateView(searchText: "Star Wars")
 }
