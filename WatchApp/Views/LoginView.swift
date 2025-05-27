@@ -8,13 +8,15 @@
 import SwiftUI
 
 struct LoginView: View {
-    @StateObject private var authVM = AuthViewModel()
-    @State private var email: String = "test@test.com"
-    @State private var password: String = "123456"
-    @State private var rememberMe: Bool = false
+    @EnvironmentObject var authVM: AuthViewModel
+    @State private var email: String = ""
+    @State private var password: String = ""
+    @State private var rememberMe: Bool = UserDefaults.standard.bool(forKey: "rememberMe")
     @State private var emailError: String?
     @State private var passwordError: String?
     @State private var showSignUpSheet = false
+    @State private var showResetPasswordSheet: Bool = false
+    
     
     var body: some View {
         NavigationStack {
@@ -135,6 +137,7 @@ struct LoginView: View {
                     HStack{
                         Button(action: {
                             rememberMe.toggle()
+                            UserDefaults.standard.set(rememberMe, forKey: "rememberMe")
                         }) {
                             HStack{
                                 Image(systemName: rememberMe ? "checkmark.square.fill" : "square")
@@ -149,7 +152,8 @@ struct LoginView: View {
                         Spacer()
                         
                         Button(action: {
-                            print("forgot pw")
+                            SoundPlayer.play("pop")
+                            showResetPasswordSheet = true
                         }) {
                             Text("Forgot Password?")
                                 .foregroundStyle(.gold)
@@ -204,15 +208,27 @@ struct LoginView: View {
                     
                 }
             }
-            .navigationDestination(isPresented: $authVM.isSignedIn) {
-
-                NavigationView()
-
+            .sheet(isPresented: $showResetPasswordSheet) {
+                ResetPasswordView(authVM: authVM)
+                    .presentationDetents([.fraction(0.5)])
+                    .presentationDragIndicator(.visible)
+            }
+            .onAppear {
+                if UserDefaults.standard.bool(forKey: "rememberMe") {
+                    if let savedEmail = UserDefaults.standard.string(forKey: "savedEmail") {
+                        email = savedEmail
+                    }
+                    if let savedPassword = KeychainService.shared.retrieve(forKey: "savedPassword") {
+                        password = savedPassword
+                    }
+                }
             }
         }
     }
 }
 
+
 #Preview {
     LoginView()
+        .environmentObject(AuthViewModel())
 }

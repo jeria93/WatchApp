@@ -38,19 +38,19 @@ struct MovieRow: View {
 
                 Text(movie.title)
                     .font(.headline)
-                    .foregroundColor(.white)
+                    .foregroundColor(.black)
 
 
                 if let releaseDate = movie.releaseDate {
                     Text("Released: (releaseDate)")
                         .font(.caption)
-                        .foregroundColor(.white)
+                        .foregroundColor(.black)
                 }
 
                 Text(movie.overview.isEmpty ? "No description available" : movie.overview)
                     .font(.subheadline)
                     .lineLimit(3)
-                    .foregroundColor(.white)
+                    .foregroundColor(.black)
 
                 Spacer()
 
@@ -69,7 +69,7 @@ struct MovieRow: View {
         }
         .frame(height: 160)
         .padding()
-        .background(Color.BG.ignoresSafeArea(.all))
+        .background(Color.popcornYellow.opacity(0.8).ignoresSafeArea(.all))
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .shadow(radius: 1)
     }

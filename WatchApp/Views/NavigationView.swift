@@ -10,52 +10,83 @@ import SwiftUI
 struct NavigationView: View {
     
     @State private var selection = 2
-    @StateObject private var authVM = AuthViewModel()
+    @EnvironmentObject var authVM: AuthViewModel
     
     var body: some View {
-        TabView(selection:$selection) {
-            VStack {
-                Text("WatchList")
-            }
-            .tabItem {
-                Image("pop_black_icon1x")
-                Text("WatchList")
-            }
-            .tag(1)
+        NavigationStack {
             
-            VStack {
-                MovieListView(authVM: authVM)
-                Text("")
-                    .background(Color.black)
-            }
-            .tabItem {
-                Image("movies_black_1x")
-                Text("Movies")
-            }
-            .tag(2)
-            
-            SavedMoviesView()
-                .tabItem {
-                    Label("Saved", systemImage: "bookmark.fill")
+            TabView(selection:$selection) {
+                VStack {
+                    Text("WatchList")
                 }
-                .tag(3)
+                .tabItem {
+                    Image("pop_black_icon1x")
+                    Text("WatchList")
+                }
+                .tag(1)
+                
+                MovieListView()
+                    .environmentObject(authVM)
+                    .tabItem {
+                        Image("movies_black_1x")
+                        Text("Movies")
+                        }
+                .tag(2)
+                
+                SavedMoviesView()
+                    .environmentObject(authVM)
+                    .tabItem {
+                        Label("Saved", systemImage: "bookmark.fill")
+                    }
+                    .tag(3)
+                
+                VStack {
+                    Text("Edit profile")
+                }
+                .tabItem {
+                    Image(systemName: "person.fill")
+                    Text("Profile")
+                }
+                .tag(4)
+            }
+            .onAppear() {
+                UITabBar.appearance().backgroundColor = .black
+                UITabBar.appearance().unselectedItemTintColor = .popcornYellow
+            }
+            .toolbar{
+                ToolbarItem(placement: .topBarLeading) {
+                    Text(navigationTitle)
+                        .foregroundStyle(.accent)
+                        .font(.title)
+                        .fontWeight(.bold)
+                        .fontDesign(.rounded)
+                        .padding(.top, 8)
+                        .padding(.bottom, 16)
+                }
+            }
+            .withLogoutButton(authVM: authVM)
+            .background(Color.BG.ignoresSafeArea(.all))
             
-            VStack {
-                Text("Edit profile")
-            }
-            .tabItem {
-                Image(systemName: "person.fill")
-                Text("Profile")
-            }
-            .tag(4)
         }
-        .onAppear() {
-            UITabBar.appearance().backgroundColor = .black
-            UITabBar.appearance().unselectedItemTintColor = .popcornYellow
+    }
+    
+    private var navigationTitle: String {
+        switch selection {
+        case 1:
+            return "WatchList"
+        case 2:
+            return "🎬 Trending Movies"
+        case 3:
+            return "Saved"
+        case 4:
+            return "Profile"
+        default:
+            return ""
         }
     }
 }
 
 #Preview {
     NavigationView()
+        .environmentObject(AuthViewModel())
 }
