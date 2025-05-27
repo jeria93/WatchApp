@@ -18,6 +18,8 @@ final class MovieViewModel: ObservableObject {
     @Published var selectedType: ContentType = .movie
     @Published var selectedGenre: Genre?
     @Published var selectedFilter: FilterType = .title
+    @Published var allGenres: [Genre] = []
+    private var hasLoadedGenres = false
 
     var filteredMovies: [Movie] {
         guard let selectedGenre else { return movies }
@@ -39,40 +41,6 @@ final class MovieViewModel: ObservableObject {
             }
         }
     }
-
-    /// Searches for movies or TV shows using the current `searchText`
-    ///
-    /// Falls back to `fetchTrendingContent()` if the search text is empty.
-    /// Results are mapped to `Movie` models using `ContentMapper`
-    //    func searchContent() async {
-    //        let trimmed = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
-    //
-    //        guard !trimmed.isEmpty else {
-    //            await fetchTrendingContent()
-    //            return
-    //        }
-    //
-    //        isLoading = true
-    //        errorMessage = nil
-    //
-    //        do {
-    //            let fetched: [Movie]
-    //            switch selectedType {
-    //            case .movie:
-    //                let raw = try await service.searchMovies(query: trimmed)
-    //                fetched = raw.map(ContentMapper.fromRaw)
-    //            case .tv:
-    //                let shows = try await service.searchTVSeries(query: trimmed)
-    //                fetched = shows.map(ContentMapper.fromTVShow)
-    //            }
-    //            movies = fetched
-    //            totalResults = fetched.count
-    //        } catch {
-    //            errorMessage = "Search failed: \(error.localizedDescription)"
-    //        }
-    //
-    //        isLoading = false
-    //    }
 
     func searchContent() async {
         let trimmed = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -125,5 +93,23 @@ final class MovieViewModel: ObservableObject {
             errorMessage = error.localizedDescription
         }
         isLoading = false
+    }
+
+    /// Loads genres from TMDB once (movie or tv depending on selectedType)
+    func fetchGenresForSelectedType() async {
+        guard !hasLoadedGenres else { return }
+
+        do {
+            switch selectedType {
+            case .movie:
+                allGenres = try await service.fetchMoviesGenres()
+            case .tv:
+                allGenres = try await service.fetchTvGenres()
+            }
+            hasLoadedGenres = true
+        } catch {
+            print("Failed to fetch genres: \(error.localizedDescription)")
+            errorMessage = "Failed to load genres."
+        }
     }
 }

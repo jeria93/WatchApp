@@ -16,12 +16,14 @@ struct MovieListView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                SearchBarView(text: $viewModel.searchText, filterType: viewModel.selectedFilter) {
-                    Task {
-                        if viewModel.searchText.trimmingCharacters(in: .whitespaces).isEmpty {
-                            await viewModel.fetchTrendingContent()
-                        } else {
-                            await viewModel.searchContent()
+                if viewModel.selectedFilter != .genre {
+                    SearchBarView(text: $viewModel.searchText, filterType: viewModel.selectedFilter) {
+                        Task {
+                            if viewModel.searchText.trimmingCharacters(in: .whitespaces).isEmpty {
+                                await viewModel.fetchTrendingContent()
+                            } else {
+                                await viewModel.searchContent()
+                            }
                         }
                     }
                 }
@@ -38,8 +40,10 @@ struct MovieListView: View {
                     Task { await viewModel.fetchTrendingContent() }
                 }
 
-                GenrePickerView(genres: Genre.previewGenres, selectedGenre: $viewModel.selectedGenre)
-                    .padding(.vertical, 5)
+                if viewModel.selectedFilter == .genre {
+                    GenrePickerView(genres: viewModel.allGenres, selectedGenre: $viewModel.selectedGenre)
+                        .padding(.vertical, 5)
+                }
 
                 if !viewModel.movies.isEmpty {
                     Text(viewModel.searchText.isEmpty ? "Trending now" : "\(viewModel.totalResults) results found")
@@ -65,7 +69,10 @@ struct MovieListView: View {
             }
             .background(Color.BG.ignoresSafeArea(.all))
             .navigationTitle("🎬 Trending Movies")
-            .task { await viewModel.fetchTrendingContent() }
+            .task {
+                await viewModel.fetchTrendingContent()
+                await viewModel.fetchGenresForSelectedType()
+            }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
