@@ -73,11 +73,11 @@ struct NavigationView: View {
     private var navigationTitle: String {
         switch selection {
         case 1:
-            return "🖥️ WatchList"
+            return "🍿 POPular"
         case 2:
-            return "🎬 Trending Movies"
+            return "🎬 Library"
         case 3:
-            return "🏁 Saved"
+            return "🏁 Watchlist"
         case 4:
             return "👤 Profile"
         default:
