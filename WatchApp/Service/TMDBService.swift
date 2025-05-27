@@ -117,4 +117,26 @@ final class TMDBService {
         let decoded = try JSONDecoder().decode(GenreResult.self, from: data)
         return decoded.genres
     }
+
+//    MARK: - TEST
+    private func request<Model: Decodable>(path: String, queryItems: [URLQueryItem] = []) async throws -> Model {
+        var components = URLComponents(string: "\(baseURL)\(path)")!
+        if !queryItems.isEmpty {
+            components.queryItems = queryItems
+        }
+
+        guard let url = components.url else { throw URLError(.badURL) }
+
+        var req = URLRequest(url: url)
+        req.httpMethod = "GET"
+        req.allHTTPHeaderFields = [
+            "accept": "application/json",
+            "Authorization": "Bearer \(SecretManager.bearerToken)"
+        ]
+
+        let (data, _) = try await session.data(for: req)
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return try decoder.decode(Model.self, from: data)
+    }
 }
