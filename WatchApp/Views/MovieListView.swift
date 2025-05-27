@@ -14,7 +14,11 @@ struct MovieListView: View {
     @EnvironmentObject var authVM: AuthViewModel
     
     var body: some View {
-        VStack(spacing: 0) {
+        ZStack{
+            Color.BG
+                .ignoresSafeArea(.all)
+            
+            VStack(spacing: 0) {
                 SearchBarView(text: $viewModel.searchText) {
                     Task {
                         if viewModel.searchText.trimmingCharacters(in: .whitespaces).isEmpty {
@@ -24,14 +28,21 @@ struct MovieListView: View {
                         }
                     }
                 }
-
+                .padding(.vertical)
+                
                 ContentTypePickerView(selectedType: $viewModel.selectedType) {
-                        .font(.subheadline)
-                        .foregroundColor(.popcornYellow)
-
+                    Task { await viewModel.fetchTrendingContent() }
+                }
+                .padding(.vertical, 5)
+                
                 GenrePickerView(genres: Genre.previewGenres, selectedGenre: $viewModel.selectedGenre)
                     .padding(.vertical, 5)
-
+                
+                if !viewModel.movies.isEmpty {
+                    Text(viewModel.searchText.isEmpty ? "Trending now" : "(viewModel.totalResults) results found")
+                        .font(.subheadline)
+                        .foregroundColor(.popcornYellow)
+                        .padding(.top, 10)
                 }
                 
                 Group {
@@ -47,15 +58,15 @@ struct MovieListView: View {
                             Task { await firestoreVM.saveMovie(movie) }
                         }
                     }
-                    
                 }
-                
+                .frame(maxHeight: .infinity)
             }
-            .background(Color.BG.ignoresSafeArea(.all))
-            .task { await viewModel.fetchTrendingContent() }
-        
+        }
+        //            .background(Color.BG.ignoresSafeArea(.all))
+        .task { await viewModel.fetchTrendingContent() }
     }
 }
+
 
 
 #Preview {
@@ -69,3 +80,4 @@ struct MovieListView: View {
 
 #Preview("No results found for 'Batman'") {
     EmptyStateView(searchText: "Star Wars")
+}
