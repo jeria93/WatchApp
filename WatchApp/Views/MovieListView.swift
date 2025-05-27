@@ -62,7 +62,6 @@ struct MovieListView: View {
                 .frame(maxHeight: .infinity)
             }
         }
-        //            .background(Color.BG.ignoresSafeArea(.all))
         .task { await viewModel.fetchTrendingContent() }
     }
 }
