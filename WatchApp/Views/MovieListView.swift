@@ -24,24 +24,14 @@ struct MovieListView: View {
                         }
                     }
                 }
-                .padding()
-                
-                Picker("Type", selection: $viewModel.selectedType) {
-                    ForEach(ContentType.allCases) { type in
-                        Text(type.rawValue).tag(type)
-                    }
-                }
-                .pickerStyle(.segmented)
-                .padding(.horizontal)
-                .onChange(of: viewModel.selectedType) { _ in
-                    Task { await viewModel.fetchTrendingContent() }
-                }
-                
-                if !viewModel.movies.isEmpty {
-                    Text(viewModel.searchText.isEmpty ? "Trending now" : "(viewModel.totalResults) results found")
+
+                ContentTypePickerView(selectedType: $viewModel.selectedType) {
                         .font(.subheadline)
                         .foregroundColor(.popcornYellow)
-                        .padding(.top, 10)
+
+                GenrePickerView(genres: Genre.previewGenres, selectedGenre: $viewModel.selectedGenre)
+                    .padding(.vertical, 5)
+
                 }
                 
                 Group {
@@ -53,7 +43,7 @@ struct MovieListView: View {
                         EmptyStateView(searchText: viewModel.searchText)
                             .frame(maxHeight: .infinity)
                     } else {
-                        ContentListView(movies: viewModel.movies, contentType: viewModel.selectedType) { movie in
+                        ContentListView(movies: viewModel.filteredMovies, contentType: viewModel.selectedType) { movie in
                             Task { await firestoreVM.saveMovie(movie) }
                         }
                     }
@@ -79,4 +69,3 @@ struct MovieListView: View {
 
 #Preview("No results found for 'Batman'") {
     EmptyStateView(searchText: "Star Wars")
-}

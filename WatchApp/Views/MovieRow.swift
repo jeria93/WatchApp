@@ -42,7 +42,7 @@ struct MovieRow: View {
 
 
                 if let releaseDate = movie.releaseDate {
-                    Text("Released: (releaseDate)")
+                    Text("Released: (\(releaseDate)")
                         .font(.caption)
                         .foregroundColor(.black)
                 }
@@ -88,6 +88,7 @@ extension Movie {
             posterPath: "/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg",
             voteAverage: 8.8,
             releaseDate: "2025-05-15",
+            genreIds: [28, 12, 878],
             contentType: .movie
         )
     }
