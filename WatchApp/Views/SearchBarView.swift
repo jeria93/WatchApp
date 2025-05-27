@@ -10,25 +10,23 @@ import SwiftUI
 struct SearchBarView: View {
     
     @Binding var text: String
+    var filterType: FilterType
     var onSubmit: () -> Void
     
     var body: some View {
-        
         ZStack(alignment: .trailing) {
-
-            
-            TextField("Search movies...", text: $text)
+            TextField(placeholder, text: $text)
                 .foregroundColor(.white)
                 .accentColor(.white)
                 .padding(8)
                 .background(RoundedRectangle(cornerRadius: 20).fill(Color.gray.opacity(0.5)))
                 .onChange(of: text) { newValue in
-                      if newValue.count > 35 {
-                          text = String(newValue.prefix(35))
-                      }
-                  }
+                    if newValue.count > 35 {
+                        text = String(newValue.prefix(35))
+                    }
+                }
                 .onSubmit { onSubmit() }
-            
+
             if !text.isEmpty {
                 Button {
                     text = ""
@@ -41,10 +39,29 @@ struct SearchBarView: View {
             }
         }
         .padding(.horizontal)
-        
+    }
+
+    private var placeholder: String {
+        switch filterType {
+        case .title: return "Search by title..."
+        case .genre: return "Filter by genre below"
+        case .director: return "Search by director..."
+        }
     }
 }
 
-#Preview {
-    SearchBarView(text: .constant(""), onSubmit: {})
+#Preview("Title Search") {
+    SearchBarView(
+        text: .constant(""),
+        filterType: .title,
+        onSubmit: {}
+    )
+}
+
+#Preview("Director Search") {
+    SearchBarView(
+        text: .constant("Christopher Nolan"),
+        filterType: .director,
+        onSubmit: {}
+    )
 }

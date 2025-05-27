@@ -16,7 +16,7 @@ struct MovieListView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                SearchBarView(text: $viewModel.searchText) {
+                SearchBarView(text: $viewModel.searchText, filterType: viewModel.selectedFilter) {
                     Task {
                         if viewModel.searchText.trimmingCharacters(in: .whitespaces).isEmpty {
                             await viewModel.fetchTrendingContent()
@@ -25,6 +25,14 @@ struct MovieListView: View {
                         }
                     }
                 }
+
+                Picker("Filter", selection: $viewModel.selectedFilter) {
+                    ForEach(FilterType.allCases) { filter in
+                        Text(filter.rawValue).tag(filter)
+                    }
+                }
+                .pickerStyle(.segmented)
+                .padding(.horizontal)
 
                 ContentTypePickerView(selectedType: $viewModel.selectedType) {
                     Task { await viewModel.fetchTrendingContent() }
