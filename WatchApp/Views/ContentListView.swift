@@ -39,6 +39,7 @@ struct ContentListView: View {
                     posterPath: "/dXNAPwY7VrqMAo51EKhhCJfaGb5.jpg",
                     voteAverage: 9.9,
                     releaseDate: "1999-03-31",
+                    genreIds: [28, 12, 878],
                     contentType: .movie
                  )],
         contentType: .movie,
