@@ -38,10 +38,12 @@ struct SavedMoviesView: View {
                 Spacer()
             }
             .task { await viewModel.fetchMovies() }
+            .background(Color.BG.ignoresSafeArea(.all))
         
     }
 }
 
 #Preview {
     SavedMoviesView()
+        .environmentObject(AuthViewModel())
 }

@@ -8,8 +8,27 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State private var showSplash = true
+    @StateObject private var authVM = AuthViewModel()
+    
     var body: some View {
-        LoginView()
+        Group {
+          if showSplash {
+            SplashScreenView()
+              .onAppear {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 5.5) {
+                    showSplash = false
+                }
+              }
+          } else if authVM.isSignedIn {
+              NavigationView()
+                  .environmentObject(authVM)
+          } else {
+              LoginView()
+                  .environmentObject(authVM)
+          }
+        }
     }
 }
 

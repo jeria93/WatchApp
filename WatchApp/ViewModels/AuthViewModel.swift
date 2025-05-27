@@ -14,11 +14,19 @@ class AuthViewModel: ObservableObject {
     @Published var isSignedIn: Bool = false
     @Published var errorMessage: String?
     @Published var currentUsername: String?
+    @Published var successMessage: String?
     
     init() {
-        if let currentUser = Auth.auth().currentUser {
-            self.user = User(uid: currentUser.uid, email: currentUser.email, isAnonymous: currentUser.isAnonymous)
-            self.isSignedIn = true
+        Auth.auth().addStateDidChangeListener { [weak self] _, firebaseUser in
+            if let firebaseUser = firebaseUser {
+                self?.user = User(uid: firebaseUser.uid, email: firebaseUser.email, isAnonymous: firebaseUser.isAnonymous)
+                self?.isSignedIn = true
+                self?.fetchUsername(for: firebaseUser.uid)
+            } else {
+                self?.user = nil
+                self?.isSignedIn = false
+                self?.currentUsername = nil
+            }
         }
     }
     
@@ -30,10 +38,6 @@ class AuthViewModel: ObservableObject {
             }
             
             if let firebaseUser = result?.user {
-                let user = User(uid: firebaseUser.uid, email: nil, isAnonymous: firebaseUser.isAnonymous)
-                self?.user = user
-                self?.isSignedIn = true
-                self?.fetchUsername(for: firebaseUser.uid)
                 self?.errorMessage = nil
                 print("Signed in anonymously with Uid: \(firebaseUser.uid)")
             }
@@ -48,16 +52,17 @@ class AuthViewModel: ObservableObject {
             }
             
             if let firebaseUser = result?.user {
-                let user = User(uid: firebaseUser.uid, email: firebaseUser.email, isAnonymous: firebaseUser.isAnonymous)
-                self?.user = user
-                self?.isSignedIn = true
-                self?.fetchUsername(for: firebaseUser.uid)
                 self?.errorMessage = nil
                 print("Signed in with email: \(firebaseUser.email ?? "no email")")
+                
+                if UserDefaults.standard.bool(forKey: "rememberMe") {
+                    UserDefaults.standard.set(email, forKey: "savedEmail")
+                    KeychainService.shared.save(password, forKey: "savedPassword")
+                }
             }
         }
     }
-
+    
     func signUpWithEmail(email: String, password: String, username: String, completion: @escaping (Bool) -> Void) {
         Auth.auth().createUser(withEmail: email, password: password) { [weak self] result, error in
             if let error = error {
@@ -65,18 +70,15 @@ class AuthViewModel: ObservableObject {
                 completion(false)
                 return
             }
-
+            
             guard let firebaseUser = result?.user else {
                 self?.errorMessage = "User creation failed"
                 completion(false)
                 return
             }
-
-            let user = User(uid: firebaseUser.uid, email: firebaseUser.email, isAnonymous: firebaseUser.isAnonymous)
-            self?.user = user
-            self?.isSignedIn = true
+        
             self?.errorMessage = nil
-
+            
             let userProfile = UserProfile(uid: firebaseUser.uid, email: firebaseUser.email ?? "", username: username)
             
             do {
@@ -93,11 +95,11 @@ class AuthViewModel: ObservableObject {
             } catch {
                 print("Encoding error: \(error.localizedDescription)")
             }
-
+            
             completion(true)
         }
     }
-
+    
     func fetchUsername(for uid: String) {
         let docRef = Firestore.firestore().collection("users").document(uid)
         
@@ -114,16 +116,31 @@ class AuthViewModel: ObservableObject {
             }
         }
     }
-  
+    
     func signOut() {
         do {
             try Auth.auth().signOut()
-            self.user = nil
-            self.isSignedIn = false
-            self.currentUsername = nil
+            
+            if !UserDefaults.standard.bool(forKey: "rememberMe"){
+                UserDefaults.standard.removeObject(forKey: "savedEmail")
+                KeychainService.shared.delete(forKey: "savedPassword")
+            }
         } catch {
             self.errorMessage = "Error signing out: \(error.localizedDescription)"
         }
     }
 
+    
+    func sendPasswordResetEmail(email: String) {
+        Auth.auth().sendPasswordReset(withEmail: email) { [weak self] error in
+            if let error = error {
+                self?.errorMessage = "Error sending reset email: \(error.localizedDescription)"
+                self?.successMessage = nil
+                return
+            }
+            
+            self?.successMessage = "A password reset link has been sent to \(email)"
+            self?.errorMessage = nil
+        }
+    }
 }
