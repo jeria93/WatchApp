@@ -25,8 +25,7 @@ struct NavigationView: View {
             
             VStack {
                 MovieListView(authVM: authVM)
-                Text("")
-                    .background(Color.black)
+//                Text("")
             }
             .tabItem {
                 Image("movies_black_1x")
@@ -49,6 +48,7 @@ struct NavigationView: View {
             }
             .tag(4)
         }
+        .background(Color.black)
         .onAppear() {
             UITabBar.appearance().backgroundColor = .black
             UITabBar.appearance().unselectedItemTintColor = .popcornYellow

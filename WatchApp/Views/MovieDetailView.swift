@@ -132,6 +132,7 @@ extension Movie {
             posterPath: "/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg",
             voteAverage: 8.8,
             releaseDate: "2025-05-15",
+            genreIds: [1],
             contentType: .movie,
             userRating: 3
         )
