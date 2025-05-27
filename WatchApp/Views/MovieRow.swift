@@ -38,7 +38,7 @@ struct MovieRow: View {
 
                 Text(movie.title)
                     .font(.headline)
-                    .foregroundColor(.white)
+                    .foregroundColor(.black)
 
                 HStack{
                     Text(contentType == .movie ? "🎬" : "📺")
@@ -101,7 +101,7 @@ struct MovieRow: View {
                 }
         .frame(height: 120)
         .padding()
-        .background(Color.BG.ignoresSafeArea(.all))
+        .background(Color.popcornYellow.opacity(0.8).ignoresSafeArea(.all))
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .shadow(radius: 1)
         .onAppear{

@@ -21,7 +21,7 @@ struct SearchBarView: View {
                 .foregroundColor(.white)
                 .accentColor(.white)
                 .padding(8)
-                .background(RoundedRectangle(cornerRadius: 20).fill(Color.gray.opacity(0.5)))
+                .background(RoundedRectangle(cornerRadius: 20).fill(Color.popcornYellow.opacity(0.5)))
                 .onChange(of: text) { newValue in
                       if newValue.count > 35 {
                           text = String(newValue.prefix(35))

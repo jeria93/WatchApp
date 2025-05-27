@@ -8,14 +8,17 @@
 import SwiftUI
 
 struct MovieListView: View {
-
+    
     @StateObject private var viewModel = MovieViewModel()
     @StateObject private var firestoreVM = FirestoreViewModel()
-    @ObservedObject var authVM: AuthViewModel
-
+    @EnvironmentObject var authVM: AuthViewModel
+    
     var body: some View {
-        NavigationStack {
-            VStack {
+        ZStack{
+            Color.BG
+                .ignoresSafeArea(.all)
+            
+            VStack(spacing: 0) {
                 SearchBarView(text: $viewModel.searchText) {
                     Task {
                         if viewModel.searchText.trimmingCharacters(in: .whitespaces).isEmpty {
@@ -25,21 +28,23 @@ struct MovieListView: View {
                         }
                     }
                 }
-
+                .padding(.vertical)
+                
                 ContentTypePickerView(selectedType: $viewModel.selectedType) {
                     Task { await viewModel.fetchTrendingContent() }
                 }
-
+                .padding(.vertical, 5)
+                
                 GenrePickerView(genres: Genre.previewGenres, selectedGenre: $viewModel.selectedGenre)
                     .padding(.vertical, 5)
-
+                
                 if !viewModel.movies.isEmpty {
-                    Text(viewModel.searchText.isEmpty ? "Trending now" : "\(viewModel.totalResults) results found")
+                    Text(viewModel.searchText.isEmpty ? "Trending now" : "(viewModel.totalResults) results found")
                         .font(.subheadline)
                         .foregroundColor(.popcornYellow)
                         .padding(.top, 10)
                 }
-
+                
                 Group {
                     if viewModel.isLoading {
                         LoadingView()
@@ -54,25 +59,24 @@ struct MovieListView: View {
                         }
                     }
                 }
-            }
-            .background(Color.BG.ignoresSafeArea(.all))
-            .navigationTitle("🎬 Trending Movies")
-            .task { await viewModel.fetchTrendingContent() }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        authVM.signOut()
-                    } label: {
-                        Image(systemName: "rectangle.portrait.and.arrow.right")
-                            .font(.title3)
-                            .foregroundColor(.yellow)
-                    }
-                }
+                .frame(maxHeight: .infinity)
             }
         }
+        .task { await viewModel.fetchTrendingContent() }
     }
 }
 
+
+
 #Preview {
-    MovieListView(authVM: AuthViewModel())
+    MovieListView()
+        .environmentObject(AuthViewModel())
+}
+
+#Preview("Default Empty") {
+    EmptyStateView(searchText: "")
+}
+
+#Preview("No results found for 'Batman'") {
+    EmptyStateView(searchText: "Star Wars")
 }

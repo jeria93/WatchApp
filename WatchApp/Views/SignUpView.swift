@@ -23,121 +23,125 @@ struct SignUpView: View {
     
     var body: some View {
         NavigationStack {
-            VStack(spacing: 16) {
+            ZStack {
+                Color.popcornYellow
+                    .ignoresSafeArea(.all)
                 
-              Text("Create Account")
-                  .font(.title)
-                  .fontWeight(.semibold)
-                
-              VStack(spacing: 8) {
-                
-                ClearableTextField(
-                    title: "Email",
-                    text: $email,
-                    keyboardType: .emailAddress,
-                    validate: { input in
-                        if input.isEmpty {
-                            return "Email krävs"
-                        } else if !isValidEmail(input) {
-                            return "Ogiltigt e-postformat"
+                VStack(spacing: 16) {
+                    
+                    Text("Create Account")
+                        .font(.title)
+                        .fontWeight(.semibold)
+                    
+                    VStack(spacing: 8) {
+                        
+                        ClearableTextField(
+                            title: "Email",
+                            text: $email,
+                            keyboardType: .emailAddress,
+                            validate: { input in
+                                if input.isEmpty {
+                                    return "Email krävs"
+                                } else if !isValidEmail(input) {
+                                    return "Ogiltigt e-postformat"
+                                }
+                                return nil
+                            }
+                        )
+                        
+                        ClearableTextField(
+                            title: "Password",
+                            text: $password,
+                            isSecure: true,
+                            validate: { input in
+                                if input.isEmpty {
+                                    return "Lösenord krävs"
+                                } else if input.count < 6 {
+                                    return "Minst 6 tecken"
+                                }
+                                return nil
+                            }
+                        )
+                        
+                        ClearableTextField(
+                            title: "Confirm Password",
+                            text: $confirmPassword,
+                            isSecure: true,
+                            validate: { input in
+                                if input != password {
+                                    return "Lösenorden matchar inte"
+                                }
+                                return nil
+                            }
+                        )
+                        
+                        ClearableTextField(
+                            title: "Username",
+                            text: $username,
+                            autocapitalization: .words,
+                            validate: { input in
+                                input.isEmpty ? "Användarnamn krävs" : nil
+                            }
+                        )
+                    }
+                    
+                    Button("JOIN!") {
+                        SoundPlayer.play("pop")
+                        emailError = nil
+                        passwordError = nil
+                        confirmPasswordError = nil
+                        usernameError = nil
+                        
+                        var isValid = true
+                        
+                        if email.isEmpty {
+                            emailError = "Email får inte vara tomt"
+                            isValid = false
                         }
-                        return nil
-                    }
-                )
-
-                ClearableTextField(
-                    title: "Password",
-                    text: $password,
-                    isSecure: true,
-                    validate: { input in
-                        if input.isEmpty {
-                            return "Lösenord krävs"
-                        } else if input.count < 6 {
-                            return "Minst 6 tecken"
+                        
+                        if password.isEmpty {
+                            passwordError = "Lösenord krävs"
+                            isValid = false
+                        } else if password.count < 6 {
+                            passwordError = "Minst 6 tecken"
+                            isValid = false
                         }
-                        return nil
-                    }
-                )
-
-                ClearableTextField(
-                    title: "Confirm Password",
-                    text: $confirmPassword,
-                    isSecure: true,
-                    validate: { input in
-                        if input != password {
-                            return "Lösenorden matchar inte"
+                        
+                        if confirmPassword != password {
+                            confirmPasswordError = "Lösenorden matchar inte"
+                            isValid = false
                         }
-                        return nil
+                        
+                        if username.isEmpty {
+                            usernameError = "Användarnamn krävs"
+                            isValid = false
+                        }
+                        
+                        guard isValid else { return }
+                        
+                        authVM.signUpWithEmail(email: email, password: password, username: username) { success in
+                            if success {
+                                dismiss()
+                            }
+                        }
                     }
-                )
-                
-                ClearableTextField(
-                    title: "Username",
-                    text: $username,
-                    autocapitalization: .words,
-                    validate: { input in
-                        input.isEmpty ? "Användarnamn krävs" : nil
-                    }
-                )
-              }
-                
-              Button("JOIN!") {
-                SoundPlayer.play("pop")
-                  emailError = nil
-                  passwordError = nil
-                  confirmPasswordError = nil
-                  usernameError = nil
-                  
-                  var isValid = true
-                  
-                  if email.isEmpty {
-                      emailError = "Email får inte vara tomt"
-                      isValid = false
-                  }
-
-                  if password.isEmpty {
-                      passwordError = "Lösenord krävs"
-                      isValid = false
-                  } else if password.count < 6 {
-                      passwordError = "Minst 6 tecken"
-                      isValid = false
-                  }
-
-                  if confirmPassword != password {
-                      confirmPasswordError = "Lösenorden matchar inte"
-                      isValid = false
-                  }
-
-                  if username.isEmpty {
-                      usernameError = "Användarnamn krävs"
-                      isValid = false
-                  }
-
-                  guard isValid else { return }
-
-                  authVM.signUpWithEmail(email: email, password: password, username: username) { success in
-                      if success {
-                          dismiss()
-                      }
-                  }
-              }
-              .padding(.horizontal, 25)
-              .padding(.vertical, 12)
-              .background(Color.BG)
-              .font(.title3.bold())
-              .foregroundColor(.popcornYellow)
-              .cornerRadius(30)
-              
-              Spacer()
-            }
-            .padding(.horizontal, 34)
-            .padding(.top, 40)
-            .background(Color.popcornYellow).ignoresSafeArea(.all)
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button("Cancel") {
-                      SoundPlayer.play("pop-1")
-                      dismiss()
+                    .padding(.horizontal, 25)
+                    .padding(.vertical, 12)
+                    .background(Color.BG)
+                    .font(.title3.bold())
+                    .foregroundColor(.popcornYellow)
+                    .cornerRadius(30)
+                    
+                    Spacer()
+                }
+                .padding(.horizontal, 34)
+                .padding(.top, 40)
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button("Cancel") {
+                            SoundPlayer.play("pop-1")
+                            dismiss()
+                        }
                     }
                 }
             }
