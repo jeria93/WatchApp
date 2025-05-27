@@ -15,6 +15,8 @@
 		03A50E012DE47534004DFF62 /* GenrePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A50E002DE47534004DFF62 /* GenrePickerView.swift */; };
 		03A50E032DE49105004DFF62 /* ContentTypePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A50E022DE49105004DFF62 /* ContentTypePickerView.swift */; };
 		03B4CCC12DE5B4370086EE17 /* FilterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B4CCC02DE5B4370086EE17 /* FilterType.swift */; };
+		03B4CD002DE5E6CF0086EE17 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B4CCFF2DE5E6CF0086EE17 /* Person.swift */; };
+		03B4CD022DE5E9EA0086EE17 /* CrewCredit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B4CD012DE5E9EA0086EE17 /* CrewCredit.swift */; };
 		03BE72B02DD221FE00DD7805 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 03BE72AF2DD221FE00DD7805 /* FirebaseAuth */; };
 		03BE72B22DD221FE00DD7805 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 03BE72B12DD221FE00DD7805 /* FirebaseCore */; };
 		03BE72B42DD221FE00DD7805 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 03BE72B32DD221FE00DD7805 /* FirebaseFirestore */; };
@@ -61,6 +63,8 @@
 		03A50E002DE47534004DFF62 /* GenrePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenrePickerView.swift; sourceTree = "<group>"; };
 		03A50E022DE49105004DFF62 /* ContentTypePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentTypePickerView.swift; sourceTree = "<group>"; };
 		03B4CCC02DE5B4370086EE17 /* FilterType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterType.swift; sourceTree = "<group>"; };
+		03B4CCFF2DE5E6CF0086EE17 /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
+		03B4CD012DE5E9EA0086EE17 /* CrewCredit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrewCredit.swift; sourceTree = "<group>"; };
 		03BE729E2DD21E3300DD7805 /* WatchApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WatchApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		03FA39042DDB219D005F1EDC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		03FA39052DDB219D005F1EDC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -120,6 +124,8 @@
 			children = (
 				03B4CCC02DE5B4370086EE17 /* FilterType.swift */,
 				0377633D2DDBCB0300777B8C /* SearchBarView.swift */,
+				03B4CCFF2DE5E6CF0086EE17 /* Person.swift */,
+				03B4CD012DE5E9EA0086EE17 /* CrewCredit.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -318,6 +324,7 @@
 				03A50E032DE49105004DFF62 /* ContentTypePickerView.swift in Sources */,
 				DDAD79B62DDCB2AD00C97EA6 /* SignUpView.swift in Sources */,
 				A4F921432DDF4CB8003B8C41 /* ContentType.swift in Sources */,
+				03B4CD022DE5E9EA0086EE17 /* CrewCredit.swift in Sources */,
 				A45A5F4D2DDF631F0092054A /* ContentMapper.swift in Sources */,
 				0377633A2DDBBCD300777B8C /* MovieRow.swift in Sources */,
 				A45A5F552DDF64790092054A /* EmptySavedContentView.swift in Sources */,
@@ -333,6 +340,7 @@
 				A42B664B2DDF41EA00BDA4A0 /* FirestoreService.swift in Sources */,
 				03A50DFF2DE46E4E004DFF62 /* Genre.swift in Sources */,
 				A45A5F592DDF64A60092054A /* LoadingView.swift in Sources */,
+				03B4CD002DE5E6CF0086EE17 /* Person.swift in Sources */,
 				A45A5F5B2DDF64E80092054A /* SavedMoviesView.swift in Sources */,
 				5D0D0C3E2DDB663300FC4499 /* AuthViewModel.swift in Sources */,
 				DDAD79B82DDCF72C00C97EA6 /* UserProfile.swift in Sources */,
