@@ -107,6 +107,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		03B4CCC22DE5E1190086EE17 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				03B4CCC02DE5B4370086EE17 /* FilterType.swift */,
+				0377633D2DDBCB0300777B8C /* SearchBarView.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
 		03BE72952DD21E3300DD7805 = {
 			isa = PBXGroup;
 			children = (
@@ -126,6 +135,7 @@
 		03FA39092DDB219D005F1EDC /* WatchApp */ = {
 			isa = PBXGroup;
 			children = (
+				03B4CCC22DE5E1190086EE17 /* Search */,
 				DD5C92A72DDBAC68009D633F /* Components */,
 				DD5C929A2DDBA125009D633F /* Utilits */,
 				03FA39122DDB21B8005F1EDC /* Views */,
@@ -162,7 +172,6 @@
 				A45A5F4E2DDF63B10092054A /* MovieRaw.swift */,
 				A45A5F502DDF63DD0092054A /* TVShow.swift */,
 				03A50DFE2DE46E4E004DFF62 /* Genre.swift */,
-				03B4CCC02DE5B4370086EE17 /* FilterType.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -187,7 +196,6 @@
 				DDAD79B52DDCB2AD00C97EA6 /* SignUpView.swift */,
 				037763392DDBBCD300777B8C /* MovieRow.swift */,
 				0377633B2DDBBFD000777B8C /* EmptyStateView.swift */,
-				0377633D2DDBCB0300777B8C /* SearchBarView.swift */,
 				A4B100BC2DDCA7040032B48E /* NavigationView.swift */,
 				A45A5F522DDF644E0092054A /* ContentListView.swift */,
 				A45A5F542DDF64790092054A /* EmptySavedContentView.swift */,
