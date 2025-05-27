@@ -17,7 +17,8 @@ struct Movie: Codable, Identifiable, Equatable {
     let releaseDate: String?
     let genreIds: [Int]
     let contentType: ContentType
-
+    var userRating = 0
+    
     /// small size poster
     var posterURLSmall: URL? {
         guard let path = posterPath else { return nil }

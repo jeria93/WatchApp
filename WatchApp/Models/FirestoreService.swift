@@ -24,4 +24,21 @@ final class FirestoreMovieService {
         return try snapshot.documents.compactMap { try $0.data(as: Movie.self)}
     }
     
+    
+    func addUserRating(ratedMovieId: Int, rating: Int) {
+        let ratedMovieId = ratedMovieId
+        let rating = rating
+        firestore.collection("ratedMovies").document("\(ratedMovieId)").setData(["rating": rating])
+    }
+    
+    func fetchUserRating(id: Int, completion: @escaping (Int?) -> Void){
+        firestore.collection("ratedMovies").document("\(id)").getDocument { (document, _) in
+            if let rating = document?.get("rating") as? Int {
+                completion(rating)
+            } else {
+                completion(nil)
+            }
+        }
+    }
+    
 }
