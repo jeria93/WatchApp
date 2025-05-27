@@ -47,7 +47,7 @@ struct SplashScreenView: View {
                     withAnimation(.easeOut(duration: 3.0).delay(0.3)) {
                       logoScale = 1.0
                       logoOpacity = 1.0
-                      SoundPlayer.play("intro")
+                        SoundPlayer.play("intro")
                     }
                 }
             }

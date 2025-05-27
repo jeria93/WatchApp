@@ -15,28 +15,27 @@ struct NavigationView: View {
     var body: some View {
         TabView(selection:$selection) {
             VStack {
-                Text("WatchList")
+                Text("POPular movies (coming soon...")
             }
             .tabItem {
                 Image("pop_black_icon1x")
-                Text("WatchList")
+                Text("POPular")
             }
             .tag(1)
             
             VStack {
                 MovieListView(authVM: authVM)
-                Text("")
-                    .background(Color.black)
+//                Text("")
             }
             .tabItem {
                 Image("movies_black_1x")
-                Text("Movies")
+                Text("Library")
             }
             .tag(2)
             
             SavedMoviesView()
                 .tabItem {
-                    Label("Saved", systemImage: "bookmark.fill")
+                    Label("Watchlist", systemImage: "bookmark.fill")
                 }
                 .tag(3)
             
@@ -49,6 +48,7 @@ struct NavigationView: View {
             }
             .tag(4)
         }
+        .background(Color.black)
         .onAppear() {
             UITabBar.appearance().backgroundColor = .black
             UITabBar.appearance().unselectedItemTintColor = .popcornYellow

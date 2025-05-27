@@ -39,6 +39,7 @@
 		A45A5F572DDF64910092054A /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45A5F562DDF64910092054A /* ErrorView.swift */; };
 		A45A5F592DDF64A60092054A /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45A5F582DDF64A60092054A /* LoadingView.swift */; };
 		A45A5F5B2DDF64E80092054A /* SavedMoviesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45A5F5A2DDF64E80092054A /* SavedMoviesView.swift */; };
+		A4A3BA662DE46676002BAADD /* MovieDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A3BA652DE46676002BAADD /* MovieDetailView.swift */; };
 		A4B100BD2DDCA7040032B48E /* NavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B100BC2DDCA7040032B48E /* NavigationView.swift */; };
 		A4F921432DDF4CB8003B8C41 /* ContentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F921422DDF4CB8003B8C41 /* ContentType.swift */; };
 		DD5C92972DDB6FFB009D633F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD5C92962DDB6FFB009D633F /* LaunchScreen.storyboard */; };
@@ -78,6 +79,7 @@
 		A45A5F562DDF64910092054A /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		A45A5F582DDF64A60092054A /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		A45A5F5A2DDF64E80092054A /* SavedMoviesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedMoviesView.swift; sourceTree = "<group>"; };
+		A4A3BA652DE46676002BAADD /* MovieDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailView.swift; sourceTree = "<group>"; };
 		A4B100BC2DDCA7040032B48E /* NavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationView.swift; sourceTree = "<group>"; };
 		A4F921422DDF4CB8003B8C41 /* ContentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentType.swift; sourceTree = "<group>"; };
 		DD5C92962DDB6FFB009D633F /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -193,6 +195,7 @@
 				A45A5F5A2DDF64E80092054A /* SavedMoviesView.swift */,
 				03A50E002DE47534004DFF62 /* GenrePickerView.swift */,
 				03A50E022DE49105004DFF62 /* ContentTypePickerView.swift */,
+				A4A3BA652DE46676002BAADD /* MovieDetailView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -313,6 +316,7 @@
 				03FA39142DDB2206005F1EDC /* SecretManager.swift in Sources */,
 				03FA391A2DDB234E005F1EDC /* MovieViewModel.swift in Sources */,
 				03908DAE2DDC8F690008C202 /* FirestoreViewModel.swift in Sources */,
+				A4A3BA662DE46676002BAADD /* MovieDetailView.swift in Sources */,
 				DD5C92992DDB7199009D633F /* SplashScreenView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

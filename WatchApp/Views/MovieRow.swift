@@ -9,9 +9,13 @@ import SwiftUI
 
 struct MovieRow: View {
 
-    let movie: Movie
+    @State var movie: Movie
     var onSave: (() -> Void)?
     let contentType: ContentType
+    
+    let firestore = FirestoreMovieService()
+    
+    @State private var showDetails = false
 
     var body: some View {
 
@@ -32,46 +36,89 @@ struct MovieRow: View {
 
             VStack(alignment: .leading, spacing: 5) {
 
-                Text(contentType == .movie ? "🎬 Movie" : "📺 TV Show")
-                    .font(.caption)
-                    .foregroundColor(.blue)
-
                 Text(movie.title)
                     .font(.headline)
                     .foregroundColor(.white)
 
-
-                if let releaseDate = movie.releaseDate {
-                    Text("Released: (\(releaseDate)")
+                HStack{
+                    Text(contentType == .movie ? "🎬" : "📺")
                         .font(.caption)
-                        .foregroundColor(.white)
-                }
+                        .foregroundColor(.blue)
 
-                Text(movie.overview.isEmpty ? "No description available" : movie.overview)
-                    .font(.subheadline)
-                    .lineLimit(3)
-                    .foregroundColor(.white)
-
-                Spacer()
-
-                if let onSave = onSave {
-                    Button {
-                        onSave()
-                    } label: {
-                        Label("Save", systemImage: "plus")
+                    if let releaseDate = movie.releaseDate {
+                        let displayYear = String(releaseDate.prefix(4))
+                        Text(displayYear)
+                            .font(.caption)
+                            .foregroundColor(.white)
                     }
-                    .buttonStyle(.borderedProminent)
-                    .font(.caption)
-
+                    
+                    Spacer()
+                    
+                    if let onSave = onSave {
+                        Button {
+                            onSave()
+                        } label: {
+                                Image(systemName: "bookmark.fill")
+                                    .resizable()
+                                    .frame(width: 10, height: 15)
+                                    .foregroundColor(.white)
+                        }
+                        .buttonStyle(.plain)
+                    }
+                    
                 }
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-        }
-        .frame(height: 160)
+
+                    Text(movie.overview.isEmpty ? "No description available" : movie.overview)
+                        .font(.caption)
+                        .lineLimit(3)
+                        .foregroundColor(.white)
+                    
+                    HStack{
+                        Image("pop_white")
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                            .opacity(movie.userRating >= 1 ? 1.0 : 0.2)
+                        Image("pop_white")
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                            .opacity(movie.userRating >= 2 ? 1.0 : 0.2)
+                        Image("pop_white")
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                            .opacity(movie.userRating >= 3 ? 1.0 : 0.2)
+                        Image("pop_white")
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                            .opacity(movie.userRating >= 4 ? 1.0 : 0.2)
+                        Image("pop_white")
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                            .opacity(movie.userRating >= 5 ? 1.0 : 0.2)
+                    }
+                        
+                    }
+                    
+                }
+        .frame(height: 120)
         .padding()
         .background(Color.BG.ignoresSafeArea(.all))
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .shadow(radius: 1)
+        .onAppear{
+                firestore.fetchUserRating(id: movie.id) { rating in
+                    if let rating = rating {
+                        movie.userRating = rating
+                    } else {
+                        print("not rated yet")
+                    }
+            }
+        }
+        .onTapGesture {
+            showDetails = true
+        }
+        .sheet(isPresented: $showDetails){
+            MovieDetailView(movie: movie, contentType: contentType)
+        }
     }
 }
 
