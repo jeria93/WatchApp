@@ -15,7 +15,7 @@ final class TMDBService {
 
     /// Fetches the current list of trending movies by today
     func fetchTrendingMovies() async throws -> [MovieRaw] {
-        let result: MovieResults = try await request(path: "/trending/movie/day")
+        let result: MovieResults = try await request(path: "/trending/movie/week")
         return result.results
     }
 
@@ -35,7 +35,7 @@ final class TMDBService {
 
     /// Fetches API for trending tv-series for the day
     func fetchTrendingTvSeries() async throws -> [TVShow] {
-        let result: TVShowResults = try await request(path: "/trending/tv/day")
+        let result: TVShowResults = try await request(path: "/trending/tv/week")
         return result.results
     }
 

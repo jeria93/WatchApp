@@ -43,7 +43,7 @@ struct ContentMapper {
         )
     }
 
-    static func fromCrewCredit(_ credit: CrewCredit) -> Movie? {
+    static func fromCrewCreditMovie(_ credit: CrewCredit) -> Movie? {
         guard credit.mediaType == "movie",
               let title = credit.title else { return nil }
 
@@ -56,6 +56,20 @@ struct ContentMapper {
             releaseDate: credit.releaseDate,
             genreIds: credit.genreIds ?? [],
             contentType: .movie
+        )
+    }
+
+    static func fromCrewCreditTV(_ credit: CrewCredit) -> Movie? {
+        guard credit.mediaType == "tv", let title = credit.title else { return nil }
+        return Movie(
+            id: credit.id,
+            title: title,
+            overview: credit.overview ?? "",
+            posterPath: credit.posterPath,
+            voteAverage: credit.voteAverage ?? 0.0,
+            releaseDate: credit.releaseDate,
+            genreIds: credit.genreIds ?? [],
+            contentType: .tv
         )
     }
 }

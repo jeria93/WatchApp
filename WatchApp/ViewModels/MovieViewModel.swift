@@ -15,7 +15,9 @@ final class MovieViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var searchText = ""
     @Published var totalResults: Int = 0
-    @Published var selectedType: ContentType = .movie
+    @Published var selectedType: ContentType = .movie {
+        didSet { Task { await onSearchTrigger() } }
+    }
     @Published var selectedGenre: Genre?
     @Published var selectedFilter: FilterType = .title
     @Published var allGenres: [Genre] = []
@@ -27,6 +29,16 @@ final class MovieViewModel: ObservableObject {
     }
 
     private let service = TMDBService()
+
+
+    func onSearchTrigger() async {
+        let trimmed = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+        if trimmed.isEmpty {
+            await fetchTrendingContent()
+        } else {
+            await searchContent()
+        }
+    }
 
     /// Fetches trending content (movies or TV shows) based on the selected content type.
     func fetchTrendingContent() async {
@@ -49,6 +61,7 @@ final class MovieViewModel: ObservableObject {
             return
         }
 
+        movies = []
         isLoading = true
         errorMessage = nil
 
@@ -68,7 +81,12 @@ final class MovieViewModel: ObservableObject {
 
             case .director:
                 let directedCredits = try await service.searchDirector(query: trimmed)
-                fetched = directedCredits.compactMap(ContentMapper.fromCrewCredit)
+                switch selectedType {
+                case .movie:
+                    fetched = directedCredits.compactMap(ContentMapper.fromCrewCreditMovie)
+                case .tv:
+                    fetched = directedCredits.compactMap(ContentMapper.fromCrewCreditTV)
+                }
             case .genre:
                 fetched = movies
             }

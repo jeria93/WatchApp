@@ -19,7 +19,7 @@ struct MovieListView: View {
                 Color.BG
                     .ignoresSafeArea(.all)
 
-                VStack(spacing: 0) {
+                VStack(spacing: 15) {
 
                     if viewModel.selectedFilter != .genre {
                         SearchBarView(text: $viewModel.searchText, filterType: viewModel.selectedFilter) {
@@ -33,7 +33,7 @@ struct MovieListView: View {
                         }
                         .padding(.vertical)
                     }
-
+//                    Extract to its own view later TODO: 
                     Picker("Filter", selection: $viewModel.selectedFilter) {
                         ForEach(FilterType.allCases) { filter in
                             Text(filter.rawValue).tag(filter)
@@ -42,10 +42,7 @@ struct MovieListView: View {
                     .pickerStyle(.segmented)
                     .padding(.horizontal)
 
-                    ContentTypePickerView(selectedType: $viewModel.selectedType) {
-                        Task { await viewModel.fetchTrendingContent() }
-                    }
-                    .padding(.vertical, 5)
+                    ContentTypePickerView(selectedType: $viewModel.selectedType)
 
                     if viewModel.selectedFilter == .genre {
                         GenrePickerView(genres: viewModel.allGenres, selectedGenre: $viewModel.selectedGenre)
