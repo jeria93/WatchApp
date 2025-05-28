@@ -36,7 +36,7 @@ final class MovieViewModel: ObservableObject {
                 let raw = try await service.fetchTrendingMovies()
                 return raw.map(ContentMapper.fromRaw)
             case .tv:
-                let shows = try await service.fetchTrendingTVSeries()
+                let shows = try await service.fetchTrendingTvSeries()
                 return shows.map(ContentMapper.fromTVShow)
             }
         }
@@ -62,7 +62,7 @@ final class MovieViewModel: ObservableObject {
                     let raw = try await service.searchMovies(query: trimmed)
                     fetched = raw.map(ContentMapper.fromRaw)
                 case .tv:
-                    let shows = try await service.searchTVSeries(query: trimmed)
+                    let shows = try await service.searchTvSeries(query: trimmed)
                     fetched = shows.map(ContentMapper.fromTVShow)
                 }
 
@@ -102,7 +102,7 @@ final class MovieViewModel: ObservableObject {
         do {
             switch selectedType {
             case .movie:
-                allGenres = try await service.fetchMoviesGenres()
+                allGenres = try await service.fetchMovieGenres()
             case .tv:
                 allGenres = try await service.fetchTvGenres()
             }

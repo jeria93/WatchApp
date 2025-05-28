@@ -21,7 +21,6 @@ struct MovieListView: View {
 
                 VStack(spacing: 0) {
 
-                    // Visa bara sökfältet om det inte är genre
                     if viewModel.selectedFilter != .genre {
                         SearchBarView(text: $viewModel.searchText, filterType: viewModel.selectedFilter) {
                             Task {
@@ -35,7 +34,6 @@ struct MovieListView: View {
                         .padding(.vertical)
                     }
 
-                    // Filterväljare (FilterType)
                     Picker("Filter", selection: $viewModel.selectedFilter) {
                         ForEach(FilterType.allCases) { filter in
                             Text(filter.rawValue).tag(filter)
@@ -64,7 +62,6 @@ struct MovieListView: View {
                             .padding(.top, 10)
                     }
 
-                    // Innehåll
                     Group {
                         if viewModel.isLoading {
                             LoadingView()
