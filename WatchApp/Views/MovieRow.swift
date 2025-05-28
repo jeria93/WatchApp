@@ -105,12 +105,20 @@ struct MovieRow: View {
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .shadow(radius: 1)
         .onAppear{
-                firestore.fetchUserRating(id: movie.id) { rating in
+                firestore.fetchUserRating(ratedMovieId: movie.id) { rating in
                     if let rating = rating {
                         movie.userRating = rating
                     } else {
                         print("not rated yet")
                     }
+                    
+                    firestore.snapshotRatingsListener(ratedMovieId: movie.id) {
+                        updatedRating in
+                        if let updatedRating = updatedRating {
+                            movie.userRating = updatedRating
+                        }
+                    }
+                    
             }
         }
         .onTapGesture {

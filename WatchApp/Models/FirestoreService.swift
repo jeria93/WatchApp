@@ -31,8 +31,8 @@ final class FirestoreMovieService {
         firestore.collection("ratedMovies").document("\(ratedMovieId)").setData(["rating": rating])
     }
     
-    func fetchUserRating(id: Int, completion: @escaping (Int?) -> Void){
-        firestore.collection("ratedMovies").document("\(id)").getDocument { (document, _) in
+    func fetchUserRating(ratedMovieId: Int, completion: @escaping (Int?) -> Void){
+        firestore.collection("ratedMovies").document("\(ratedMovieId)").getDocument { (document, _) in
             if let rating = document?.get("rating") as? Int {
                 completion(rating)
             } else {
@@ -40,5 +40,31 @@ final class FirestoreMovieService {
             }
         }
     }
+    
+    func snapshotRatingsListener(ratedMovieId: Int, completion: @escaping (Int?) -> Void) {
+        let ref = firestore.collection("ratedMovies").document("\(ratedMovieId)")
+        ref.addSnapshotListener { snapshot, error in
+            if let error = error {
+                print("error listening \(error)")
+                completion(nil)
+            } else {
+                if let document = snapshot, document.exists {
+                    if let userRating = document.get("userRating") as? Int {
+                        completion(userRating)
+                    } else {
+                        print("rating not found")
+                        completion(nil)
+                    }
+                } else {
+                    completion(nil)
+                }
+            }
+        
+        }
+    }
+    
+    
+    
+    
     
 }

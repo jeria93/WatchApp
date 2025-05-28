@@ -108,7 +108,7 @@ struct MovieDetailView: View {
     }
     
     func fetchRating() {
-        firestore.fetchUserRating(id: movie.id) { rating in
+        firestore.fetchUserRating(ratedMovieId: movie.id) { rating in
             if let rating = rating {
                 movie.userRating = rating
             } else {
