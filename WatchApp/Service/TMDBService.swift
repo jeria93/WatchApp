@@ -53,6 +53,18 @@ final class TMDBService {
         return result.genres
     }
 
+    func searchDirector(query: String) async throws -> [CrewCredit] {
+        let personResults: PersonSearchResult = try await request(path: "/search/person", queryItems: [URLQueryItem(name: "query", value: query)])
+
+        guard let director = personResults.results.first else {
+            return []
+        }
+
+        let credits: CombinedCredits = try await request(path: "/person/\(director.id)/combined_credits")
+
+        return credits.crew.filter { $0.job == "Director" }
+    }
+
     /// Generic method that sends a GET request to TMDB and decodes the response into any Decodable model.
     ///
     /// - Parameters:

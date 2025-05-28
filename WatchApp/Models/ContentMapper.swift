@@ -8,7 +8,7 @@
 import Foundation
 
 struct ContentMapper {
-    
+
     /// Converts a `MovieRaw` (from TMDB's movie endpoint) into a `Movie`.
     ///
     /// - Parameter raw: A decoded `MovieRaw` object from the API.
@@ -25,7 +25,7 @@ struct ContentMapper {
             contentType: .movie
         )
     }
-    
+
     /// Converts a `TVShow` (from TMDB's TV endpoint) into a `Movie` model.
     ///
     /// - Parameter show: A decoded `TVShow` object from the API.
@@ -40,6 +40,22 @@ struct ContentMapper {
             releaseDate: show.firstAirDate,
             genreIds: show.genreIds,
             contentType: .tv
+        )
+    }
+
+    static func fromCrewCredit(_ credit: CrewCredit) -> Movie? {
+        guard credit.mediaType == "movie",
+              let title = credit.title else { return nil }
+
+        return Movie(
+            id: credit.id,
+            title: title,
+            overview: credit.overview ?? "",
+            posterPath: credit.posterPath,
+            voteAverage: credit.voteAverage ?? 0.0,
+            releaseDate: credit.releaseDate,
+            genreIds: credit.genreIds ?? [],
+            contentType: .movie
         )
     }
 }

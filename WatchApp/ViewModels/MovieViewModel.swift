@@ -67,7 +67,8 @@ final class MovieViewModel: ObservableObject {
                 }
 
             case .director:
-                print("Filter not yet implemented")
+                let directedCredits = try await service.searchDirector(query: trimmed)
+                fetched = directedCredits.compactMap(ContentMapper.fromCrewCredit)
             case .genre:
                 fetched = movies
             }
@@ -79,7 +80,6 @@ final class MovieViewModel: ObservableObject {
         }
         isLoading = false
     }
-
 
     /// A reusable fetch wrapper used for trending or other content loaders.
     private func fetch(_ fetcher: () async throws -> [Movie]) async {

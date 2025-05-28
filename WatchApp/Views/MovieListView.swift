@@ -42,19 +42,16 @@ struct MovieListView: View {
                     .pickerStyle(.segmented)
                     .padding(.horizontal)
 
-                    // Typväljare (Movie eller TV)
                     ContentTypePickerView(selectedType: $viewModel.selectedType) {
                         Task { await viewModel.fetchTrendingContent() }
                     }
                     .padding(.vertical, 5)
 
-                    // Genre-väljare om genre är valt
                     if viewModel.selectedFilter == .genre {
                         GenrePickerView(genres: viewModel.allGenres, selectedGenre: $viewModel.selectedGenre)
                             .padding(.vertical, 5)
                     }
 
-                    // Resultattext
                     if !viewModel.movies.isEmpty {
                         Text(viewModel.searchText.isEmpty ? "Trending now" : "\(viewModel.totalResults) results found")
                             .font(.subheadline)
