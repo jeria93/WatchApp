@@ -112,19 +112,28 @@ struct MovieRow: View {
                         print("not rated yet")
                     }
                     
-                    firestore.snapshotRatingsListener(ratedMovieId: movie.id) {
-                        updatedRating in
-                        if let updatedRating = updatedRating {
-                            movie.userRating = updatedRating
-                        }
-                    }
-                    
             }
         }
         .onTapGesture {
             showDetails = true
         }
-        .sheet(isPresented: $showDetails){
+        .sheet(isPresented: $showDetails, onDismiss: {
+//            firestore.snapshotRatingsListener(ratedMovieId: movie.id) {
+//                updatedRating in
+//                if let updatedRating = updatedRating {
+//                    movie.userRating = updatedRating
+//                }
+            
+            firestore.fetchUserRating(ratedMovieId: movie.id) { rating in
+                if let rating = rating {
+                    movie.userRating = rating
+                } else {
+                    print("not rated yet")
+                }
+            
+            
+            }
+        }){
             MovieDetailView(movie: movie, contentType: contentType)
         }
     }
