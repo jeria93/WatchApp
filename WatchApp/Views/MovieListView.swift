@@ -33,7 +33,7 @@ struct MovieListView: View {
                         }
                         .padding(.vertical)
                     }
-//                    Extract to its own view later TODO: 
+                    //                    Extract to its own view later TODO:
                     Picker("Filter", selection: $viewModel.selectedFilter) {
                         ForEach(FilterType.allCases) { filter in
                             Text(filter.rawValue).tag(filter)
@@ -61,6 +61,8 @@ struct MovieListView: View {
                             LoadingView()
                         } else if let error = viewModel.errorMessage {
                             ErrorView(message: error)
+                        } else if viewModel.selectedFilter == .genre && viewModel.filteredMovies.isEmpty {
+                            EmptyGenreView()
                         } else if viewModel.movies.isEmpty {
                             EmptyStateView(searchText: viewModel.searchText)
                                 .frame(maxHeight: .infinity)

@@ -43,6 +43,10 @@ struct ContentMapper {
         )
     }
 
+    /// Converts a `CrewCredit` into a `Movie` object if it's a movie-type credit.
+    ///
+    /// - Parameter credit: A credit object representing a crew member's contribution.
+    /// - Returns: A `Movie` if the credit is for a movie, otherwise `nil`.
     static func fromCrewCreditMovie(_ credit: CrewCredit) -> Movie? {
         guard credit.mediaType == "movie",
               let title = credit.title else { return nil }
@@ -58,7 +62,10 @@ struct ContentMapper {
             contentType: .movie
         )
     }
-
+    /// Converts a `CrewCredit` into a `Movie` object if it's a TV-type credit.
+    ///
+    /// - Parameter credit: A credit object representing a crew member's contribution.
+    /// - Returns: A `Movie` if the credit is for a TV show, otherwise `nil`.
     static func fromCrewCreditTV(_ credit: CrewCredit) -> Movie? {
         guard credit.mediaType == "tv", let title = credit.title else { return nil }
         return Movie(

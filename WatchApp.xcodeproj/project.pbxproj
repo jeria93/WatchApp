@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		035757F62DE7A65000B955BF /* EmptyGenreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035757F52DE7A65000B955BF /* EmptyGenreView.swift */; };
 		0377633A2DDBBCD300777B8C /* MovieRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037763392DDBBCD300777B8C /* MovieRow.swift */; };
 		0377633C2DDBBFD000777B8C /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0377633B2DDBBFD000777B8C /* EmptyStateView.swift */; };
 		0377633E2DDBCB0300777B8C /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0377633D2DDBCB0300777B8C /* SearchBarView.swift */; };
@@ -55,6 +56,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		035757F52DE7A65000B955BF /* EmptyGenreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyGenreView.swift; sourceTree = "<group>"; };
 		037763392DDBBCD300777B8C /* MovieRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieRow.swift; sourceTree = "<group>"; };
 		0377633B2DDBBFD000777B8C /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
 		0377633D2DDBCB0300777B8C /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
@@ -222,6 +224,7 @@
 				5D7295302DE48E140067360A /* ResetPasswordView.swift */,
 				5D7295322DE48EE70067360A /* withLogoutButton.swift */,
 				A4A3BA652DE46676002BAADD /* MovieDetailView.swift */,
+				035757F52DE7A65000B955BF /* EmptyGenreView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -347,6 +350,7 @@
 				03FA39142DDB2206005F1EDC /* SecretManager.swift in Sources */,
 				03FA391A2DDB234E005F1EDC /* MovieViewModel.swift in Sources */,
 				5D7295332DE48EE70067360A /* withLogoutButton.swift in Sources */,
+				035757F62DE7A65000B955BF /* EmptyGenreView.swift in Sources */,
 				03908DAE2DDC8F690008C202 /* FirestoreViewModel.swift in Sources */,
 				A4A3BA662DE46676002BAADD /* MovieDetailView.swift in Sources */,
 				DD5C92992DDB7199009D633F /* SplashScreenView.swift in Sources */,

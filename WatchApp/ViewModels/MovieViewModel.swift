@@ -19,7 +19,19 @@ final class MovieViewModel: ObservableObject {
         didSet { Task { await onSearchTrigger() } }
     }
     @Published var selectedGenre: Genre?
-    @Published var selectedFilter: FilterType = .title
+    @Published var selectedFilter: FilterType = .title {
+        didSet {
+            if selectedFilter == .genre {
+                searchText = ""
+            } else {
+                selectedGenre = nil
+            }
+
+            Task {
+                await fetchTrendingContent()
+            }
+        }
+    }
     @Published var allGenres: [Genre] = []
     private var hasLoadedGenres = false
 
