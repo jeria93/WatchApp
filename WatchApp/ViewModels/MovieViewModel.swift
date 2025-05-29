@@ -15,34 +15,47 @@ final class MovieViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var searchText = ""
     @Published var totalResults: Int = 0
-    @Published var selectedType: ContentType = .movie {
-        didSet { Task { await onSearchTrigger() } }
-    }
     @Published var selectedGenre: Genre?
-    @Published var selectedFilter: FilterType = .title {
-        didSet {
-            if selectedFilter == .genre {
-                searchText = ""
-            } else {
-                selectedGenre = nil
-            }
+    @Published var allGenres: [Genre] = []
 
-            Task {
-                await fetchTrendingContent()
-            }
+    private var hasLoadedGenres = false
+    private let service = TMDBService()
+
+    @Published var selectedType: ContentType = .movie {
+        didSet {
+            Task { await handleSelectedTypeChange() }
         }
     }
-    @Published var allGenres: [Genre] = []
-    private var hasLoadedGenres = false
+
+    @Published var selectedFilter: FilterType = .title {
+        didSet {
+            Task { await handleSelectedFilterChange() }
+        }
+    }
 
     var filteredMovies: [Movie] {
         guard let selectedGenre else { return movies }
         return movies.filter { $0.genreIds.contains(selectedGenre.id) }
     }
 
-    private let service = TMDBService()
+    /// Handles changes to the selected content type (e.g., movie or TV show).
+    /// Triggers a new search based on the updated selection.
+    private func handleSelectedTypeChange() async {
+        await onSearchTrigger()
+    }
 
+    /// Handles changes to the selected filter type (e.g., title, genre, director).
+    /// Resets the appropriate search fields and fetches trending content.
+    private func handleSelectedFilterChange() async {
+        if selectedFilter == .genre {
+            searchText = ""
+        } else {
+            selectedGenre = nil
+        }
+        await fetchTrendingContent()
+    }
 
+    /// Determines whether to search or fetch trending content based on search text.
     func onSearchTrigger() async {
         let trimmed = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
         if trimmed.isEmpty {
@@ -66,6 +79,7 @@ final class MovieViewModel: ObservableObject {
         }
     }
 
+    /// Searches for content based on the selected filter and search text.
     func searchContent() async {
         let trimmed = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else {
@@ -99,15 +113,18 @@ final class MovieViewModel: ObservableObject {
                 case .tv:
                     fetched = directedCredits.compactMap(ContentMapper.fromCrewCreditTV)
                 }
+
             case .genre:
                 fetched = movies
             }
+
             movies = fetched
             totalResults = fetched.count
 
         } catch {
             errorMessage = "Search failed: \(error.localizedDescription)"
         }
+
         isLoading = false
     }
 
