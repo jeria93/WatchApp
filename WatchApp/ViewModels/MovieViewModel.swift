@@ -48,16 +48,32 @@ final class MovieViewModel: ObservableObject {
     /// Handles changes to the selected filter type (e.g., title, genre, director).
     /// Resets the appropriate search fields and fetches trending content.
     private func handleSelectedFilterChange() async {
-        if selectedFilter == .genre {
+        switch selectedFilter {
+        case .genre:
             searchText = ""
-        } else {
             selectedGenre = nil
+            await fetchTrendingContent()
+
+        case .releaseDate:
+            // don’t clear searchText here, we drive entirely off the date picker
+            await searchByReleaseYear(selectedDate)
+
+        default:
+            // title & director
+            searchText = ""
+            selectedGenre = nil
+            await fetchTrendingContent()
         }
-        await fetchTrendingContent()
     }
 
     /// Determines whether to search or fetch trending content based on search text.
     func onSearchTrigger() async {
+        // special case: always re-run the year search
+        if selectedFilter == .releaseDate {
+            await searchByReleaseYear(selectedDate)
+            return
+        }
+
         let trimmed = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
         if trimmed.isEmpty {
             await fetchTrendingContent()
@@ -165,7 +181,7 @@ final class MovieViewModel: ObservableObject {
     }
 
 
-    func searchByReleaseYear(_ date: Date) async {
+    func searchByReleaseYear(_ date: Date) asysnc {
         isLoading = true
         errorMessage = nil
 

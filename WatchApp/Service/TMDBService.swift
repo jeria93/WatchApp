@@ -75,14 +75,16 @@ final class TMDBService {
     }
 
     func searchTvSeriesByReleaseYear(year: String) async throws -> [TVShow] {
+        let start = "\(year)-01-01"
+        let end   = "\(year)-12-31"
         let queryItems = [
-            URLQueryItem(name: "first_air_date_year", value: year),
-            URLQueryItem(name: "sort_by", value: "popularity.desc")
+          URLQueryItem(name: "first_air_date.gte", value: start),
+          URLQueryItem(name: "first_air_date.lte", value: end),
+          URLQueryItem(name: "sort_by",          value: "popularity.desc")
         ]
         let result: TVShowResults = try await request(path: "/discover/tv", queryItems: queryItems)
         return result.results
     }
-
 
     /// Generic method that sends a GET request to TMDB and decodes the response into any Decodable model.
     ///
@@ -112,3 +114,5 @@ final class TMDBService {
         return try decoder.decode(Model.self, from: data)
     }
 }
+
+
