@@ -33,6 +33,26 @@ struct MovieListView: View {
                         }
                         .padding(.vertical)
                     }
+
+                    if viewModel.selectedFilter == .releaseDate {
+                        DatePicker(
+                            "Select year",
+                            selection: $viewModel.selectedDate,
+                            in: ...Date(),
+                            displayedComponents: .date
+                        )
+                        .datePickerStyle(.compact)
+                        .padding(.horizontal)
+                        .onChange(of: viewModel.selectedDate) { _ in
+                            Task { await viewModel.searchByReleaseYear(viewModel.selectedDate) }
+                        }
+
+                        Text("Showing results for year: \(Calendar.current.component(.year, from: viewModel.selectedDate))")
+                            .font(.subheadline)
+                            .foregroundColor(.popcornYellow)
+                            .padding(.top, 5)
+                    }
+
                     //                    Extract to its own view later TODO:
                     Picker("Filter", selection: $viewModel.selectedFilter) {
                         ForEach(FilterType.allCases) { filter in

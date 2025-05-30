@@ -17,6 +17,7 @@ final class MovieViewModel: ObservableObject {
     @Published var totalResults: Int = 0
     @Published var selectedGenre: Genre?
     @Published var allGenres: [Genre] = []
+    @Published var selectedDate = Date()
 
     private var hasLoadedGenres = false
     private let service = TMDBService()
@@ -116,6 +117,9 @@ final class MovieViewModel: ObservableObject {
 
             case .genre:
                 fetched = movies
+            case .releaseDate:
+                await searchByReleaseYear(selectedDate)
+                return
             }
 
             movies = fetched
@@ -158,5 +162,33 @@ final class MovieViewModel: ObservableObject {
             print("Failed to fetch genres: \(error.localizedDescription)")
             errorMessage = "Failed to load genres."
         }
+    }
+
+
+    func searchByReleaseYear(_ date: Date) async {
+        isLoading = true
+        errorMessage = nil
+
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy"
+        let year = formatter.string(from: date)
+
+        do {
+            var fetched: [Movie] = []
+            switch selectedType {
+            case .movie:
+                let raw = try await service.searchMoviesByReleaseYear(year: year)
+                fetched = raw.map(ContentMapper.fromRaw)
+            case .tv:
+                let shows = try await service.searchTvSeriesByReleaseYear(year: year)
+                fetched = shows.map(ContentMapper.fromTVShow)
+            }
+            movies = fetched
+            totalResults = fetched.count
+        } catch {
+            errorMessage = "Search by year failed: \(error.localizedDescription)"
+        }
+
+        isLoading = false
     }
 }
