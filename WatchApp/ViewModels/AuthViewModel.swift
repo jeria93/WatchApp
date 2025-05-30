@@ -18,34 +18,34 @@ class AuthViewModel: ObservableObject {
     private var previousEmail: String?
     
     init() {
-          Auth.auth().addStateDidChangeListener { [weak self] _, firebaseUser in
-              guard let self = self else { return }
-              
-              if let firebaseUser = firebaseUser {
-                  let newEmail = firebaseUser.email
-                  
-                  if self.isSignedIn, let previousEmail = self.previousEmail, let newEmail = newEmail, previousEmail != newEmail {
-                      self.updateEmailInFirestore(uid: firebaseUser.uid, newEmail: newEmail) { success in
-                          if success {
-                              self.signOut()
-                              self.successMessage = "Email updated. Please log in again with your new email."
-                          }
-                      }
-                      return
-                  }
-                  
-                  self.user = User(uid: firebaseUser.uid, email: firebaseUser.email, isAnonymous: firebaseUser.isAnonymous)
-                  self.previousEmail = newEmail
-                  self.isSignedIn = true
-                  self.fetchUsername(for: firebaseUser.uid)
-              } else {
-                  self.user = nil
-                  self.isSignedIn = false
-                  self.currentUsername = nil
-                  self.previousEmail = nil
-              }
-          }
-      }
+        Auth.auth().addStateDidChangeListener { [weak self] _, firebaseUser in
+            guard let self = self else { return }
+            
+            if let firebaseUser = firebaseUser {
+                let newEmail = firebaseUser.email
+                
+                if self.isSignedIn, let previousEmail = self.previousEmail, let newEmail = newEmail, previousEmail != newEmail {
+                    self.updateEmailInFirestore(uid: firebaseUser.uid, newEmail: newEmail) { success in
+                        if success {
+                            self.signOut()
+                            self.successMessage = "Email updated. Please log in again with your new email."
+                        }
+                    }
+                    return
+                }
+                
+                self.user = User(uid: firebaseUser.uid, email: firebaseUser.email, isAnonymous: firebaseUser.isAnonymous)
+                self.previousEmail = newEmail
+                self.isSignedIn = true
+                self.fetchUsername(for: firebaseUser.uid)
+            } else {
+                self.user = nil
+                self.isSignedIn = false
+                self.currentUsername = nil
+                self.previousEmail = nil
+            }
+        }
+    }
     
     func signInAnonymously() {
         Auth.auth().signInAnonymously { [weak self] result, error in
@@ -105,7 +105,7 @@ class AuthViewModel: ObservableObject {
                 completion(false)
                 return
             }
-        
+            
             self?.errorMessage = nil
             
             let userProfile = UserProfile(uid: firebaseUser.uid, email: firebaseUser.email ?? "", username: username)
@@ -157,7 +157,7 @@ class AuthViewModel: ObservableObject {
             self.errorMessage = "Error signing out: \(error.localizedDescription)"
         }
     }
-
+    
     
     func sendPasswordResetEmail(email: String) {
         Auth.auth().sendPasswordReset(withEmail: email) { [weak self] error in
@@ -179,7 +179,7 @@ class AuthViewModel: ObservableObject {
             return
         }
         
-       let docRef = Firestore.firestore().collection("users").document(uid)
+        let docRef = Firestore.firestore().collection("users").document(uid)
         
         docRef.updateData(["username": newUsername]){  error in
             if let error = error {
@@ -188,9 +188,9 @@ class AuthViewModel: ObservableObject {
                 return
             }
             
-                self.currentUsername = newUsername
-                completion(true)
-            }
+            self.currentUsername = newUsername
+            completion(true)
+        }
     }
     
     func updateEmail(newEmail: String, completion: @escaping (Bool) -> Void) {
@@ -199,7 +199,7 @@ class AuthViewModel: ObservableObject {
             completion(false)
             return
         }
-    
+        
         currentUser.sendEmailVerification(beforeUpdatingEmail: newEmail){  error in
             if let error = error as NSError? {
                 if error.code == AuthErrorCode.emailAlreadyInUse.rawValue {
@@ -211,24 +211,24 @@ class AuthViewModel: ObservableObject {
                 return
             }
             
-                self.successMessage = "Verification email sent to \(newEmail). Go to your mail and verify on the link to update your email. You will be automatically signed out in 10 seconds."
-                self.signOutAfterDelay(seconds: 10)
-                completion(true)
-            }
+            self.successMessage = "Verification email sent to \(newEmail). Go to your mail and verify on the link to update your email. You will be automatically signed out in 10 seconds."
+            self.signOutAfterDelay(seconds: 10)
+            completion(true)
+        }
     }
     
     private func updateEmailInFirestore(uid: String, newEmail: String, completion: @escaping (Bool) -> Void) {
         let docRef = Firestore.firestore().collection("users").document(uid)
-         
-         docRef.updateData(["email": newEmail]){  error in
-             if let error = error {
-                 self.errorMessage = "Failed to update email in database: \(error.localizedDescription)"
-                 completion(false)
-                             } else {
-                                 print("Email updated in Firestore successfully: \(newEmail)")
-                                 completion(true)
-             }
-         }
+        
+        docRef.updateData(["email": newEmail]){  error in
+            if let error = error {
+                self.errorMessage = "Failed to update email in database: \(error.localizedDescription)"
+                completion(false)
+            } else {
+                print("Email updated in Firestore successfully: \(newEmail)")
+                completion(true)
+            }
+        }
     }
     
     func signOutAfterDelay(seconds: Double = 10.0) {
@@ -236,4 +236,61 @@ class AuthViewModel: ObservableObject {
             self.signOut()
         }
     }
-}
+    
+    func deleteAccount(email: String? = nil, password: String? = nil, completion: @escaping (Bool) -> Void) {
+        guard let currentUser = Auth.auth().currentUser else {
+            self.errorMessage = "No user signed in"
+            completion(false)
+            return
+        }
+        
+        let uid = currentUser.uid
+        let userDocRef = Firestore.firestore().collection("users").document(uid)
+        
+        if let email = email, let password = password {
+            let credential = EmailAuthProvider.credential(withEmail: email, password: password)
+            currentUser.reauthenticate(with: credential) { [weak self] _, error in
+                if let error = error {
+                    self?.errorMessage = "Failed to reauthenticate: \(error.localizedDescription)"
+                    completion(false)
+                    return
+                }
+                
+                self?.accountDeletedSuccessfully(userDocRef: userDocRef, currentUser: currentUser, completion: completion)
+            }
+        } else {
+            accountDeletedSuccessfully(userDocRef: userDocRef, currentUser: currentUser, completion: completion)
+        }
+    }
+            
+            
+            private func accountDeletedSuccessfully(userDocRef: DocumentReference, currentUser: FirebaseAuth.User, completion: @escaping (Bool) -> Void) {
+                userDocRef.delete { [weak self] error in
+                    if let error = error {
+                        self?.errorMessage = "Failed to delete account from database: \(error.localizedDescription)"
+                        completion(false)
+                        return
+                    }
+                    
+                    currentUser.delete { [weak self] error in
+                        if let error = error as NSError? {
+                            if error.code == AuthErrorCode.requiresRecentLogin.rawValue {
+                                self?.errorMessage = "To delete account a recent login is needed. Please login again then delete your account."
+                                completion(false)
+                                return
+                            }
+                            self?.errorMessage = "Failed to delete user: \(error.localizedDescription)"
+                            completion(false)
+                            return
+                        }
+                        
+                        self?.user = nil
+                        self?.isSignedIn = false
+                        self?.currentUsername = nil
+                        self?.previousEmail = nil
+                        self?.errorMessage = nil
+                        completion(true)
+                    }
+                }
+            }
+        }

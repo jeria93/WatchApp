@@ -78,9 +78,9 @@ struct NavigationView: View {
         case 2:
             return "🎬 Library"
         case 3:
-            return "🏁 Watchlist"
+            return "🎞️ Watchlist"
         case 4:
-            return "👤 Profile"
+            return "🪞 Profile"
         default:
             return ""
         }
