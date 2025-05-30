@@ -10,8 +10,9 @@ import SwiftUI
 struct MovieRow: View {
 
     @State var movie: Movie
-    var onSave: (() -> Void)?
+    var onSave: ((Movie) -> Void)?
     let contentType: ContentType
+    let showWathedButton: Bool
     @EnvironmentObject var authVM: AuthViewModel
     
     let firestore = FirestoreMovieService()
@@ -54,14 +55,37 @@ struct MovieRow: View {
                     
                     Spacer()
                     
+                    if showWathedButton {
+                        Button(action: {
+                            movie.isWatched.toggle()
+                            Task {
+                                guard let userId = authVM.user?.uid else { return }
+                                do{
+                                    try await firestore.saveMovie(movie, userId: userId)
+                                    onSave?(movie)
+                                } catch {
+                                    print("Error saving movie of isWatched: \(error)")
+                                }
+                            }
+                        }) {
+                            Image(systemName: movie.isWatched ? "checkmark.circle.fill" : "circle")
+                                .resizable()
+                                .frame(width: 15, height: 15)
+                                .foregroundStyle(movie.isWatched ? .green : .white)
+                        }
+                        .buttonStyle(.plain)
+                        .padding(.trailing, 8)
+                    }
+                    
                     if let onSave = onSave {
                         Button {
                             Task {
                                 guard let userId = authVM.user?.uid else { return }
                             do {
-                                    onSave()
+
                                     try await firestore.saveMovie(movie, userId: userId)
                                     isSaved = true
+                                    onSave(movie)
                             }catch {
                                 print("Error updating movie save status: \(error)")
                             }
@@ -140,7 +164,7 @@ struct MovieRow: View {
 }
 
 #Preview("Movie Preview") {
-    MovieRow(movie: .preview, contentType: .movie)
+    MovieRow(movie: .preview, contentType: .movie, showWathedButton: false)
 }
 
 extension Movie {
@@ -153,7 +177,8 @@ extension Movie {
             voteAverage: 8.8,
             releaseDate: "2025-05-15",
             genreIds: [28, 12, 878],
-            contentType: .movie
+            contentType: .movie,
+            isWatched: false
         )
     }
 }

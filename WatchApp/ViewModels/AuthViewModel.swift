@@ -252,6 +252,7 @@ class AuthViewModel: ObservableObject {
             currentUser.reauthenticate(with: credential) { [weak self] _, error in
                 if let error = error {
                     self?.errorMessage = "Failed to reauthenticate: \(error.localizedDescription)"
+                    print("Reauthentication failed: \(error.localizedDescription)")
                     completion(false)
                     return
                 }
@@ -275,7 +276,7 @@ class AuthViewModel: ObservableObject {
                     currentUser.delete { [weak self] error in
                         if let error = error as NSError? {
                             if error.code == AuthErrorCode.requiresRecentLogin.rawValue {
-                                self?.errorMessage = "To delete account a recent login is needed. Please login again then delete your account."
+                                self?.errorMessage = "To delete account a recent login is needed. Please login again to delete your account."
                                 completion(false)
                                 return
                             }

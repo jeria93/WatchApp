@@ -10,6 +10,7 @@ import SwiftUI
 struct SavedMoviesView: View {
     @StateObject private var viewModel = FirestoreViewModel()
     @State private var selectedType: ContentType = .movie
+    @EnvironmentObject var authVM: AuthViewModel
     
     var body: some View {
     
@@ -26,21 +27,48 @@ struct SavedMoviesView: View {
                     if let error = viewModel.errorMessage {
                         ErrorView(message: error)
                     } else {
-                        let filtered = viewModel.movies.filter { $0.contentType == selectedType }
-                        if filtered.isEmpty {
-                           EmptySavedContentView(selectedType: selectedType)
+                        let unwatched = viewModel.movies.filter { $0.contentType == selectedType && !$0.isWatched }
+                        let watched = viewModel.movies.filter { $0.contentType == selectedType && $0.isWatched }
+                                                              
+                        if unwatched.isEmpty && watched.isEmpty {
+                            EmptySavedContentView(selectedType: selectedType)
                         } else {
-                            ContentListView(movies: filtered, contentType: selectedType)
+                            ScrollView {
+                                if !unwatched.isEmpty {
+                                    Section(header: Text("Unwatched").foregroundStyle(.popcornYellow).font(.headline).padding(.top)) {
+                                        ContentListView(movies: unwatched, contentType: selectedType, onSave: { movie in
+                                            Task {
+                                                await viewModel.saveMovie(movie)
+                                                await viewModel.fetchMovies()
+                                            }
+                                        },
+                                                        showWatchedButton: true)
+                                    }
+                                }
+                                
+                                if !watched.isEmpty {
+                                    Section(header: Text("Watched").foregroundStyle(.popcornYellow).font(.headline)) {
+                                        ContentListView(movies: watched,
+                                                        contentType: selectedType, onSave: { movie in
+                                            Task {
+                                                await viewModel.saveMovie(movie)
+                                                await viewModel.fetchMovies()
+                                            }
+                                        },
+                                                        showWatchedButton: true)
+                                    }
+                                }
+                            }
                         }
                     }
                 }
-                
-                Spacer()
-            }
-            .task { await viewModel.fetchMovies() }
-            .background(Color.BG.ignoresSafeArea(.all))
-        
-    }
+                                
+                                Spacer()
+                            }
+                            .task { await viewModel.fetchMovies() }
+                            .background(Color.BG.ignoresSafeArea(.all))
+                            
+                        }
 }
 
 #Preview {

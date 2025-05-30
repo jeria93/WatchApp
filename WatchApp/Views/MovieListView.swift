@@ -67,9 +67,10 @@ struct MovieListView: View {
                             EmptyStateView(searchText: viewModel.searchText)
                                 .frame(maxHeight: .infinity)
                         } else {
-                            ContentListView(movies: viewModel.filteredMovies, contentType: viewModel.selectedType) { movie in
+                            ContentListView(movies: viewModel.filteredMovies, contentType: viewModel.selectedType, onSave: { movie in
                                 Task { await firestoreVM.saveMovie(movie) }
-                            }
+                            }, showWatchedButton: false
+                            )
                         }
                     }
                     .frame(maxHeight: .infinity)

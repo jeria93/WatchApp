@@ -56,7 +56,7 @@ struct ProfileView: View {
                     }
                     .padding(.horizontal, 35)
                     .padding(.bottom, 20)
-                    .padding(.top, 20)
+                    
                     
                     VStack(alignment: .leading, spacing: 10) {
                         Button(action: {
@@ -362,10 +362,6 @@ struct ProfileView: View {
                     .fontWeight(.bold)
                 
                 if showReauthentication {
-                    Text("Confirm your userlogin to confirm account deletion.")
-                        .foregroundStyle(.red)
-                        .padding()
-                    
                     TextField("Email", text: $email)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding(.horizontal)
@@ -418,7 +414,7 @@ struct ProfileView: View {
                             }
                         }else {
                             authVM.deleteAccount { success in
-                                if !success, authVM.errorMessage?.contains("Login again") ?? false {
+                                if !success, authVM.errorMessage?.contains("recent login") ?? false {
                                     showReauthentication = true
                                 } else if success {
                                     withAnimation {
