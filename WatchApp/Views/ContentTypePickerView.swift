@@ -10,7 +10,6 @@ import SwiftUI
 struct ContentTypePickerView: View {
 
     @Binding var selectedType: ContentType
-    var onChange: (() -> Void)?
 
     var body: some View {
         Picker("Type", selection: $selectedType) {
@@ -21,9 +20,6 @@ struct ContentTypePickerView: View {
         }
         .pickerStyle(.segmented)
         .padding(.horizontal)
-        .onChange(of: selectedType) { _ in
-            onChange?()
-        }
     }
 }
 
