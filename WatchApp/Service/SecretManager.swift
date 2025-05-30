@@ -16,7 +16,7 @@ import Foundation
 /// let token = SecretManager.bearerToken
 /// ```
 enum SecretManager {
-    
+
     /// Loads a value from `Secrets.plist` based on the provided key.
     /// - Parameter key: The name of the key in `Secrets.plist`
     /// - Returns: The associated value as a `String`, or crashes the app if missing
