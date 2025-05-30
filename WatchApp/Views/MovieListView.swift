@@ -80,17 +80,6 @@ struct MovieListView: View {
                 await viewModel.fetchTrendingContent()
                 await viewModel.fetchGenresForSelectedType()
             }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        authVM.signOut()
-                    } label: {
-                        Image(systemName: "rectangle.portrait.and.arrow.right")
-                            .font(.title3)
-                            .foregroundColor(.yellow)
-                    }
-                }
-            }
         }
     }
 }
