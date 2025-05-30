@@ -13,6 +13,7 @@ struct MovieDetailView: View {
     let contentType: ContentType
     
     let firestore = FirestoreMovieService()
+    let authVM = AuthViewModel()
     
     
     var body: some View {
@@ -101,13 +102,29 @@ struct MovieDetailView: View {
     }
     
     private func setRating(id: Int, rating: Int) {
-//        let id = id
-//        let rating = rating
-        print("\(id), \(rating)")
-        firestore.addUserRating(ratedMovieId: id, rating: rating)
+        if authVM.isSignedIn {
+            if let userId = authVM.currentUserId {
+                firestore.addSignedInUserRating(userId: userId, ratedMovieId: id, rating: rating)
+                print("\(userId) gav betyget \(rating)")
+            }
+        } else {
+            firestore.addUserRating(ratedMovieId: id, rating: rating)
+        }
     }
     
     func fetchRating() {
+        if authVM.isSignedIn {
+            if let userId = authVM.currentUserId {
+                firestore.fetchSignedInUserRating(userId: userId, ratedMovieId: movie.id) { rating in
+                    if let rating = rating {
+                        movie.userRating = rating
+                    } else {
+                        print("cant fetch rating")
+                    }
+                }
+            }
+
+        }
         firestore.fetchUserRating(ratedMovieId: movie.id) { rating in
             if let rating = rating {
                 movie.userRating = rating

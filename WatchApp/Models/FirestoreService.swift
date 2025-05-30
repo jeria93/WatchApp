@@ -13,6 +13,8 @@ final class FirestoreMovieService {
     
     private let firestore = Firestore.firestore()
     
+    private let authVM = AuthViewModel()
+    
     /// Saves a movie to the `savedMovies` collection in Firestore
     func saveMovie(_ movie: Movie) async throws {
         try firestore.collection("savedMovies").document("\(movie.id)").setData(from: movie)
@@ -28,7 +30,14 @@ final class FirestoreMovieService {
     func addUserRating(ratedMovieId: Int, rating: Int) {
         let ratedMovieId = ratedMovieId
         let rating = rating
-        firestore.collection("ratedMovies").document("\(ratedMovieId)").setData(["rating": rating])
+            firestore.collection("ratedMovies").document("\(ratedMovieId)").setData(["rating": rating])
+    }
+    
+    func addSignedInUserRating(userId: String, ratedMovieId: Int, rating: Int) {
+        let userId = userId
+        let ratedMovieId = ratedMovieId
+        let rating = rating
+        firestore.collection("users").document(userId).collection("ratedMovies").document("\(ratedMovieId)").setData(["rating": rating])
     }
     
     func fetchUserRating(ratedMovieId: Int, completion: @escaping (Int?) -> Void){
@@ -40,6 +49,17 @@ final class FirestoreMovieService {
             }
         }
     }
+    
+    func fetchSignedInUserRating(userId: String, ratedMovieId: Int, completion: @escaping (Int?) -> Void){
+        firestore.collection("users").document(userId).collection("ratedMovies").document("\(ratedMovieId)").getDocument { (document, _) in
+            if let rating = document?.get("rating") as? Int {
+                completion(rating)
+            } else {
+                completion(nil)
+            }
+        }
+    }
+
     
     func snapshotRatingsListener(ratedMovieId: Int, completion: @escaping (Int?) -> Void) {
         let ref = firestore.collection("ratedMovies").document("\(ratedMovieId)")
