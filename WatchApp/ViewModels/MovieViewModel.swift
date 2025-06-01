@@ -181,7 +181,7 @@ final class MovieViewModel: ObservableObject {
     }
 
 
-    func searchByReleaseYear(_ date: Date) asysnc {
+    func searchByReleaseYear(_ date: Date) async {
         isLoading = true
         errorMessage = nil
 

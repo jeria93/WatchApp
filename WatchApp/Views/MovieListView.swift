@@ -35,32 +35,12 @@ struct MovieListView: View {
                     }
 
                     if viewModel.selectedFilter == .releaseDate {
-                        DatePicker(
-                            "Select year",
-                            selection: $viewModel.selectedDate,
-                            in: ...Date(),
-                            displayedComponents: .date
-                        )
-                        .datePickerStyle(.compact)
-                        .padding(.horizontal)
-                        .onChange(of: viewModel.selectedDate) { _ in
-                            Task { await viewModel.searchByReleaseYear(viewModel.selectedDate) }
-                        }
-
-                        Text("Showing results for year: \(Calendar.current.component(.year, from: viewModel.selectedDate))")
-                            .font(.subheadline)
-                            .foregroundColor(.popcornYellow)
-                            .padding(.top, 5)
-                    }
-
-                    //                    Extract to its own view later TODO:
-                    Picker("Filter", selection: $viewModel.selectedFilter) {
-                        ForEach(FilterType.allCases) { filter in
-                            Text(filter.rawValue).tag(filter)
+                        DateFilterView(selectedDate: $viewModel.selectedDate) { newDate in
+                            await viewModel.searchByReleaseYear(newDate)
                         }
                     }
-                    .pickerStyle(.segmented)
-                    .padding(.horizontal)
+
+                    FilterPickerView(selectedFilter: $viewModel.selectedFilter)
 
                     ContentTypePickerView(selectedType: $viewModel.selectedType)
 
@@ -70,10 +50,7 @@ struct MovieListView: View {
                     }
 
                     if !viewModel.movies.isEmpty {
-                        Text(viewModel.searchText.isEmpty ? "Trending now" : "\(viewModel.totalResults) results found")
-                            .font(.subheadline)
-                            .foregroundColor(.popcornYellow)
-                            .padding(.top, 10)
+                        ResultsHeaderView(searchText: viewModel.searchText, totalResults: viewModel.totalResults)
                     }
 
                     Group {
