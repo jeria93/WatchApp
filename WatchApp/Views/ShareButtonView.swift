@@ -9,17 +9,26 @@ import SwiftUI
 
 struct ShareButtonView: View {
     let movie: Movie
+    @State private var shareItem: MovieShareItem?
 
     var body: some View {
-        ShareLink(
-            item: "Check out \(movie.title) on TMDB: https://www.themoviedb.org/movie/\(movie.id)") {
-            Label("Share", systemImage: "square.and.arrow.up")
-                .padding()
-                .background(Color.blue.opacity(0.1))
-                .clipShape(RoundedRectangle(cornerRadius: 8))
+        if let shareItem {
+            ShareLink(item: shareItem.url, preview: SharePreview(shareItem.title, image: Image(uiImage: shareItem.image))) {
+                Label("Share", systemImage: "square.and.arrow.up")
+                    .padding()
+                    .background(Color.blue.opacity(0.1))
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+            }
+        } else {
+            ProgressView()
+                .onAppear {
+                    Task {
+                        shareItem = await ShareHelper.createShareItem(for: movie)
+                    }
+                }
         }
     }
 }
 #Preview {
-    ShareButtonView(movie: .preview)
+    ShareButtonView(movie: .preview).padding()
 }
