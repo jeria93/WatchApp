@@ -16,6 +16,10 @@ class AuthViewModel: ObservableObject {
     @Published var currentUsername: String?
     @Published var successMessage: String?
     
+    var currentUserId: String? {
+        return Auth.auth().currentUser?.uid
+    }
+    
     init() {
         Auth.auth().addStateDidChangeListener { [weak self] _, firebaseUser in
             if let firebaseUser = firebaseUser {

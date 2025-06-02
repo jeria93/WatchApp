@@ -14,6 +14,7 @@ struct MovieRow: View {
     let contentType: ContentType
     
     let firestore = FirestoreMovieService()
+    let authVM = AuthViewModel()
     
     @State private var showDetails = false
 
@@ -105,18 +106,47 @@ struct MovieRow: View {
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .shadow(radius: 1)
         .onAppear{
-                firestore.fetchUserRating(id: movie.id) { rating in
+                firestore.fetchUserRating(ratedMovieId: movie.id) { rating in
                     if let rating = rating {
                         movie.userRating = rating
                     } else {
                         print("not rated yet")
                     }
+                    
             }
         }
         .onTapGesture {
             showDetails = true
         }
-        .sheet(isPresented: $showDetails){
+        .sheet(isPresented: $showDetails, onDismiss: {
+//            firestore.snapshotRatingsListener(ratedMovieId: movie.id) {
+//                updatedRating in
+//                if let updatedRating = updatedRating {
+//                    movie.userRating = updatedRating
+//                }
+            if authVM.isSignedIn {
+                if let userId = authVM.currentUserId {
+                    firestore.fetchSignedInUserRating(userId: userId, ratedMovieId: movie.id) {
+                        rating in
+                        if let rating = rating {
+                            movie.userRating = rating
+                        } else {
+                            print("not rated yet")
+                        }
+                    }
+                }
+            } else {
+                firestore.fetchUserRating(ratedMovieId: movie.id) { rating in
+                    if let rating = rating {
+                        movie.userRating = rating
+                    } else {
+                        print("not rated yet")
+                    }
+                    
+                    
+                }
+            }
+        }){
             MovieDetailView(movie: movie, contentType: contentType)
         }
     }
