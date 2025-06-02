@@ -30,8 +30,8 @@ struct NavigationView: View {
                     .tabItem {
                         Image("movies_black_1x")
                         Text("Library")
-                        }
-                .tag(2)
+                    }
+                    .tag(2)
                 
                 SavedMoviesView()
                     .environmentObject(authVM)
@@ -40,34 +40,35 @@ struct NavigationView: View {
                     }
                     .tag(3)
                 
-                VStack {
-                    Text("Edit profile")
-                }
-                .tabItem {
-                    Image(systemName: "person.fill")
-                    Text("Profile")
-                }
-                .tag(4)
-            }
-            .onAppear() {
-                UITabBar.appearance().backgroundColor = .black
-                UITabBar.appearance().unselectedItemTintColor = .popcornYellow
-            }
-            .toolbar{
-                ToolbarItem(placement: .topBarLeading) {
-                    Text(navigationTitle)
-                        .foregroundStyle(.accent)
-                        .font(.title)
-                        .fontWeight(.bold)
-                        .fontDesign(.rounded)
-                        .padding(.top, 8)
-                        .padding(.bottom, 16)
-                }
-            }
-            .withLogoutButton(authVM: authVM)
-            .background(Color.BG.ignoresSafeArea(.all))
             
-        }
+                    ProfileView()
+                        .environmentObject(authVM)
+                        .tabItem {
+                            Image(systemName: "person.fill")
+                            Text("Profile")
+                        }
+                        .tag(4)
+                }
+                .onAppear() {
+                    UITabBar.appearance().backgroundColor = .black
+                    UITabBar.appearance().unselectedItemTintColor = .popcornYellow
+                }
+                .toolbar{
+                    ToolbarItem(placement: .topBarLeading) {
+                        Text(navigationTitle)
+                            .foregroundStyle(.accent)
+                            .font(.title)
+                            .fontWeight(.bold)
+                            .fontDesign(.rounded)
+                            .padding(.top, 8)
+                            .padding(.bottom, 16)
+                    }
+                }
+                .withLogoutButton(authVM: authVM)
+                .background(Color.BG.ignoresSafeArea(.all))
+                
+            }
+        
     }
     
     private var navigationTitle: String {
@@ -77,9 +78,9 @@ struct NavigationView: View {
         case 2:
             return "🎬 Library"
         case 3:
-            return "🏁 Watchlist"
+            return "🎞️ Watchlist"
         case 4:
-            return "👤 Profile"
+            return "🪞 Profile"
         default:
             return ""
         }

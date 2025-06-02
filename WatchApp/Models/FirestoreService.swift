@@ -16,16 +16,20 @@ final class FirestoreMovieService {
     private let authVM = AuthViewModel()
     
     /// Saves a movie to the `savedMovies` collection in Firestore
-    func saveMovie(_ movie: Movie) async throws {
-        try firestore.collection("savedMovies").document("\(movie.id)").setData(from: movie)
+    func saveMovie(_ movie: Movie, userId: String) async throws {
+        try firestore.collection("users").document(userId).collection("savedMovies").document("\(movie.id)").setData(from: movie)
     }
     
     /// Fetches all saved movies from the `savedMovies` collection in Firestore
-    func fetchSavedMovies() async throws -> [Movie] {
-        let snapshot = try await firestore.collection("savedMovies").getDocuments()
+    func fetchSavedMovies(userId: String) async throws -> [Movie] {
+        let snapshot = try await firestore.collection("users").document(userId).collection("savedMovies").getDocuments()
         return try snapshot.documents.compactMap { try $0.data(as: Movie.self)}
     }
     
+    func isMovieSaved(id: Int, userId: String) async throws -> Bool {
+        let doc = try await firestore.collection("users").document(userId).collection("savedMovies").document("\(id)").getDocument()
+        return doc.exists
+    }
     
     func addUserRating(ratedMovieId: Int, rating: Int) {
         let ratedMovieId = ratedMovieId
@@ -82,9 +86,4 @@ final class FirestoreMovieService {
         
         }
     }
-    
-    
-    
-    
-    
 }

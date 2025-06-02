@@ -36,6 +36,7 @@
 		5D7295312DE48E140067360A /* ResetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7295302DE48E140067360A /* ResetPasswordView.swift */; };
 		5D7295332DE48EE70067360A /* withLogoutButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7295322DE48EE70067360A /* withLogoutButton.swift */; };
 		5D81BD1C2DE5B8050059346F /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D81BD1B2DE5B8050059346F /* KeychainService.swift */; };
+		5DC46A812DE5E8AD002E5618 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC46A802DE5E8AD002E5618 /* ProfileView.swift */; };
 		5DEE6D7A2DDB2CF600C7DF1B /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5DEE6D792DDB2CF600C7DF1B /* Secrets.plist */; };
 		5DEE6D7C2DDB2D1100C7DF1B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5DEE6D7B2DDB2D1100C7DF1B /* GoogleService-Info.plist */; };
 		A42B66492DDF41EA00BDA4A0 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A42B66482DDF41EA00BDA4A0 /* User.swift */; };
@@ -86,6 +87,7 @@
 		5D7295302DE48E140067360A /* ResetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordView.swift; sourceTree = "<group>"; };
 		5D7295322DE48EE70067360A /* withLogoutButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = withLogoutButton.swift; sourceTree = "<group>"; };
 		5D81BD1B2DE5B8050059346F /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
+		5DC46A802DE5E8AD002E5618 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		5DEE6D792DDB2CF600C7DF1B /* Secrets.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Secrets.plist; sourceTree = "<group>"; };
 		5DEE6D7B2DDB2D1100C7DF1B /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A42B66462DDF41EA00BDA4A0 /* FirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreService.swift; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 				5D7295302DE48E140067360A /* ResetPasswordView.swift */,
 				5D7295322DE48EE70067360A /* withLogoutButton.swift */,
 				A4A3BA652DE46676002BAADD /* MovieDetailView.swift */,
+				5DC46A802DE5E8AD002E5618 /* ProfileView.swift */,
 				035757F52DE7A65000B955BF /* EmptyGenreView.swift */,
 			);
 			path = Views;
@@ -326,6 +329,7 @@
 			files = (
 				03B4CCC12DE5B4370086EE17 /* FilterType.swift in Sources */,
 				A45A5F512DDF63DD0092054A /* TVShow.swift in Sources */,
+				5DC46A812DE5E8AD002E5618 /* ProfileView.swift in Sources */,
 				A45A5F4F2DDF63B10092054A /* MovieRaw.swift in Sources */,
 				5D7295312DE48E140067360A /* ResetPasswordView.swift in Sources */,
 				03B7B2F12DECE699006D038B /* ResultsHeaderView.swift in Sources */,

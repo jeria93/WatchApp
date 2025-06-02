@@ -10,18 +10,18 @@ import SwiftUI
 struct MovieRow: View {
 
     @State var movie: Movie
-    var onSave: (() -> Void)?
+    var onSave: ((Movie) -> Void)?
     let contentType: ContentType
+    let showWathedButton: Bool
     
     let firestore = FirestoreMovieService()
     let authVM = AuthViewModel()
     
     @State private var showDetails = false
+    @State private var isSaved = false
 
     var body: some View {
-
         HStack(alignment: .top, spacing: 12) {
-
             AsyncImage(url: movie.posterURLSmall) { image in
                 image
                     .resizable()
@@ -57,14 +57,25 @@ struct MovieRow: View {
                     
                     if let onSave = onSave {
                         Button {
-                            onSave()
+                            Task {
+                                guard let userId = authVM.user?.uid else { return }
+                            do {
+
+                                    try await firestore.saveMovie(movie, userId: userId)
+                                    isSaved = true
+                                    onSave(movie)
+                            }catch {
+                                print("Error updating movie save status: \(error)")
+                            }
+                        }
                         } label: {
-                                Image(systemName: "bookmark.fill")
+                            Image(systemName: isSaved ? "bookmark.fill" : "bookmark")
                                     .resizable()
                                     .frame(width: 10, height: 15)
                                     .foregroundColor(.white)
                         }
                         .buttonStyle(.plain)
+                        .padding(.trailing, 10)
                     }
                     
                 }
@@ -95,6 +106,30 @@ struct MovieRow: View {
                             .resizable()
                             .frame(width: 20, height: 20)
                             .opacity(movie.userRating >= 5 ? 1.0 : 0.2)
+                        
+                        Spacer()
+                        
+                        if showWathedButton {
+                            Button(action: {
+                                movie.isWatched.toggle()
+                                Task {
+                                    guard let userId = authVM.user?.uid else { return }
+                                    do{
+                                        try await firestore.saveMovie(movie, userId: userId)
+                                        onSave?(movie)
+                                    } catch {
+                                        print("Error saving movie of isWatched: \(error)")
+                                    }
+                                }
+                            }) {
+                                Image(systemName: movie.isWatched ? "checkmark.circle.fill" : "circle")
+                                    .resizable()
+                                    .frame(width: 15, height: 15)
+                                    .foregroundStyle(movie.isWatched ? .green : .white)
+                            }
+                            .buttonStyle(.plain)
+                            .padding(.trailing, 8)
+                        }
                     }
                         
                     }
@@ -106,6 +141,14 @@ struct MovieRow: View {
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .shadow(radius: 1)
         .onAppear{
+            Task{
+                guard let userId = authVM.user?.uid else { return }
+                do {
+                    isSaved = try await firestore.isMovieSaved(id: movie.id, userId: userId)
+                } catch {
+                    print("Error checking saved status: \(error)")
+                }
+            }
                 firestore.fetchUserRating(ratedMovieId: movie.id) { rating in
                     if let rating = rating {
                         movie.userRating = rating
@@ -153,7 +196,7 @@ struct MovieRow: View {
 }
 
 #Preview("Movie Preview") {
-    MovieRow(movie: .preview, contentType: .movie)
+    MovieRow(movie: .preview, contentType: .movie, showWathedButton: false)
 }
 
 extension Movie {
@@ -166,7 +209,8 @@ extension Movie {
             voteAverage: 8.8,
             releaseDate: "2025-05-15",
             genreIds: [28, 12, 878],
-            contentType: .movie
+            contentType: .movie,
+            isWatched: false
         )
     }
 }
