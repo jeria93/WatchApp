@@ -18,6 +18,7 @@ struct Movie: Codable, Identifiable, Equatable {
     let genreIds: [Int]
     let contentType: ContentType
     var userRating = 0
+    var isWatched: Bool = false
 
     /// A helper property that builds a small-size poster image URL using the poster path.
     /// Not part of the original API response – used only for display convenience.
