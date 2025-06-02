@@ -11,5 +11,6 @@ enum FilterType: String, CaseIterable, Identifiable {
     case title = "Title"
     case genre = "Genre"
     case director = "Director"
+    case releaseDate = "Release Date"
     var id: String { rawValue }
 }

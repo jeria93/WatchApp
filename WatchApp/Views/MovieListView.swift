@@ -33,14 +33,14 @@ struct MovieListView: View {
                         }
                         .padding(.vertical)
                     }
-                    //                    Extract to its own view later TODO:
-                    Picker("Filter", selection: $viewModel.selectedFilter) {
-                        ForEach(FilterType.allCases) { filter in
-                            Text(filter.rawValue).tag(filter)
+
+                    if viewModel.selectedFilter == .releaseDate {
+                        DateFilterView(selectedDate: $viewModel.selectedDate) { newDate in
+                            await viewModel.searchByReleaseYear(newDate)
                         }
                     }
-                    .pickerStyle(.segmented)
-                    .padding(.horizontal)
+
+                    FilterPickerView(selectedFilter: $viewModel.selectedFilter)
 
                     ContentTypePickerView(selectedType: $viewModel.selectedType)
 
@@ -50,10 +50,7 @@ struct MovieListView: View {
                     }
 
                     if !viewModel.movies.isEmpty {
-                        Text(viewModel.searchText.isEmpty ? "Trending now" : "\(viewModel.totalResults) results found")
-                            .font(.subheadline)
-                            .foregroundColor(.popcornYellow)
-                            .padding(.top, 10)
+                        ResultsHeaderView(searchText: viewModel.searchText, totalResults: viewModel.totalResults)
                     }
 
                     Group {

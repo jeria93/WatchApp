@@ -46,6 +46,7 @@ struct SearchBarView: View {
         case .title: return "Search by title..."
         case .genre: return "Filter by genre below"
         case .director: return "Search for a director by name..."
+        case .releaseDate: return "Search by release date..."
         }
     }
 }

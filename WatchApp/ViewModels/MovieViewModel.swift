@@ -17,6 +17,7 @@ final class MovieViewModel: ObservableObject {
     @Published var totalResults: Int = 0
     @Published var selectedGenre: Genre?
     @Published var allGenres: [Genre] = []
+    @Published var selectedDate = Date()
 
     private var hasLoadedGenres = false
     private let service = TMDBService()
@@ -47,16 +48,32 @@ final class MovieViewModel: ObservableObject {
     /// Handles changes to the selected filter type (e.g., title, genre, director).
     /// Resets the appropriate search fields and fetches trending content.
     private func handleSelectedFilterChange() async {
-        if selectedFilter == .genre {
+        switch selectedFilter {
+        case .genre:
             searchText = ""
-        } else {
             selectedGenre = nil
+            await fetchTrendingContent()
+
+        case .releaseDate:
+            // don’t clear searchText here, we drive entirely off the date picker
+            await searchByReleaseYear(selectedDate)
+
+        default:
+            // title & director
+            searchText = ""
+            selectedGenre = nil
+            await fetchTrendingContent()
         }
-        await fetchTrendingContent()
     }
 
     /// Determines whether to search or fetch trending content based on search text.
     func onSearchTrigger() async {
+        // special case: always re-run the year search
+        if selectedFilter == .releaseDate {
+            await searchByReleaseYear(selectedDate)
+            return
+        }
+
         let trimmed = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
         if trimmed.isEmpty {
             await fetchTrendingContent()
@@ -116,6 +133,9 @@ final class MovieViewModel: ObservableObject {
 
             case .genre:
                 fetched = movies
+            case .releaseDate:
+                await searchByReleaseYear(selectedDate)
+                return
             }
 
             movies = fetched
@@ -158,5 +178,33 @@ final class MovieViewModel: ObservableObject {
             print("Failed to fetch genres: \(error.localizedDescription)")
             errorMessage = "Failed to load genres."
         }
+    }
+
+
+    func searchByReleaseYear(_ date: Date) async {
+        isLoading = true
+        errorMessage = nil
+
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy"
+        let year = formatter.string(from: date)
+
+        do {
+            var fetched: [Movie] = []
+            switch selectedType {
+            case .movie:
+                let raw = try await service.searchMoviesByReleaseYear(year: year)
+                fetched = raw.map(ContentMapper.fromRaw)
+            case .tv:
+                let shows = try await service.searchTvSeriesByReleaseYear(year: year)
+                fetched = shows.map(ContentMapper.fromTVShow)
+            }
+            movies = fetched
+            totalResults = fetched.count
+        } catch {
+            errorMessage = "Search by year failed: \(error.localizedDescription)"
+        }
+
+        isLoading = false
     }
 }
