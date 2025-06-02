@@ -12,16 +12,14 @@ struct ShareButtonView: View {
 
     var body: some View {
         ShareLink(
-            item: "Check out \(movie.title) on TMDB: https://www.themoviedb.org/movie/\(movie.id)"
-        ) {
+            item: "Check out \(movie.title) on TMDB: https://www.themoviedb.org/movie/\(movie.id)") {
             Label("Share", systemImage: "square.and.arrow.up")
                 .padding()
                 .background(Color.blue.opacity(0.1))
-                .cornerRadius(8)
+                .clipShape(RoundedRectangle(cornerRadius: 8))
         }
     }
 }
-
 #Preview {
     ShareButtonView(movie: .preview)
 }
