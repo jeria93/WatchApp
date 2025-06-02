@@ -241,6 +241,7 @@ class AuthViewModel: ObservableObject {
         }
     }
     
+    //function to delete account with reauthentication is user stayed logged in for a while
     func deleteAccount(email: String? = nil, password: String? = nil, completion: @escaping (Bool) -> Void) {
         guard let currentUser = Auth.auth().currentUser else {
             self.errorMessage = "No user signed in"
@@ -267,34 +268,86 @@ class AuthViewModel: ObservableObject {
             accountDeletedSuccessfully(userDocRef: userDocRef, currentUser: currentUser, completion: completion)
         }
     }
-            
-            
+    
+    //Functions to make sure all user data deletes, both the user and their saved and rated movie collections
             private func accountDeletedSuccessfully(userDocRef: DocumentReference, currentUser: FirebaseAuth.User, completion: @escaping (Bool) -> Void) {
-                userDocRef.delete { [weak self] error in
-                    if let error = error {
-                        self?.errorMessage = "Failed to delete account from database: \(error.localizedDescription)"
+                let db = Firestore.firestore()
+                let batch = db.batch()
+                
+                func deleteCollection(_ collectionRef: CollectionReference, completion: @escaping (Error?) -> Void) {
+                    collectionRef.getDocuments { (snapshot, error) in
+                        if let error = error {
+                            completion(error)
+                            return
+                        }
+                        
+                        guard let documents = snapshot?.documents else {
+                            completion(nil)
+                            return
+                        }
+                        for document in documents {
+                            batch.deleteDocument(document.reference)
+                        }
+                        completion(nil)
+                    }
+                }
+                
+            //Collects all the documents for user to delete all
+                batch.deleteDocument(userDocRef)
+                
+                let collectionsToDelete = [
+                    userDocRef.collection("savedMovies"),
+                    userDocRef.collection("ratedMovies")
+                ]
+                
+                let group = DispatchGroup()
+                var deletionError: Error?
+                
+                //Delete these subcollections
+                for collectionRef in collectionsToDelete {
+                    group.enter()
+                    deleteCollection(collectionRef) { error in
+                        if let error = error {
+                            deletionError = error
+                        }
+                        group.leave()
+                    }
+                }
+                
+                group.notify(queue: .main) {
+                    if let error = deletionError {
+                        self.errorMessage = "Failed to delete user data: \(error.localizedDescription)"
                         completion(false)
                         return
                     }
                     
-                    currentUser.delete { [weak self] error in
-                        if let error = error as NSError? {
-                            if error.code == AuthErrorCode.requiresRecentLogin.rawValue {
-                                self?.errorMessage = "To delete account a recent login is needed. Please login again to delete your account."
-                                completion(false)
-                                return
-                            }
-                            self?.errorMessage = "Failed to delete user: \(error.localizedDescription)"
+                    batch.commit { [weak self] error in
+                        if let error = error {
+                            self?.errorMessage = "Failed to delete all user data: \(error.localizedDescription)"
                             completion(false)
                             return
                         }
-                        
-                        self?.user = nil
-                        self?.isSignedIn = false
-                        self?.currentUsername = nil
-                        self?.previousEmail = nil
-                        self?.errorMessage = nil
-                        completion(true)
+                
+                //Delete user from Firebase authentication
+                        currentUser.delete { [weak self] error in
+                            if let error = error as NSError? {
+                                if error.code == AuthErrorCode.requiresRecentLogin.rawValue {
+                                    self?.errorMessage = "To delete account a recent login is needed. Please login again to delete your account."
+                                    completion(false)
+                                    return
+                                }
+                                self?.errorMessage = "Failed to delete user: \(error.localizedDescription)"
+                                completion(false)
+                                return
+                            }
+                            
+                            self?.user = nil
+                            self?.isSignedIn = false
+                            self?.currentUsername = nil
+                            self?.previousEmail = nil
+                            self?.errorMessage = nil
+                            completion(true)
+                        }
                     }
                 }
             }

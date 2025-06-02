@@ -13,7 +13,6 @@ struct MovieRow: View {
     var onSave: ((Movie) -> Void)?
     let contentType: ContentType
     let showWathedButton: Bool
-    @EnvironmentObject var authVM: AuthViewModel
     
     let firestore = FirestoreMovieService()
     let authVM = AuthViewModel()
