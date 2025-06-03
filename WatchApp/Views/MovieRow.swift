@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MovieRow: View {
-
+    
     @State var movie: Movie
     @State private var averageRating: Double? = nil
     
@@ -34,7 +34,7 @@ struct MovieRow: View {
         self.disableAfterSave = disableAfterSave
         self._isSaved = State(initialValue: movie.isSaved)
     }
-
+    
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
             AsyncImage(url: movie.posterURLSmall) { image in
@@ -67,7 +67,6 @@ struct MovieRow: View {
                             .foregroundColor(.white)
                     }
                     
-                    
                     Spacer()
                     
                     if let onSave = onSave {
@@ -90,58 +89,64 @@ struct MovieRow: View {
                         .padding(.trailing, 10)
                         .disabled(isButtonDisabled)
                     }
-                    
                 }
-
-                    Text(movie.overview.isEmpty ? "No description available" : movie.overview)
-                        .font(.caption)
-                        .lineLimit(3)
-                        .foregroundColor(.white)
+                
+                Text(movie.overview.isEmpty ? "No description available" : movie.overview)
+                    .font(.caption)
+                    .lineLimit(3)
+                    .foregroundColor(.white)
+                
+                HStack{
+                    Image("pop_white")
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                        .opacity(movie.userRating >= 1 ? 1.0 : 0.2)
+                    Image("pop_white")
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                        .opacity(movie.userRating >= 2 ? 1.0 : 0.2)
+                    Image("pop_white")
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                        .opacity(movie.userRating >= 3 ? 1.0 : 0.2)
+                    Image("pop_white")
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                        .opacity(movie.userRating >= 4 ? 1.0 : 0.2)
+                    Image("pop_white")
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                        .opacity(movie.userRating >= 5 ? 1.0 : 0.2)
                     
-                    HStack{
-                        Image("pop_white")
-                            .resizable()
-                            .frame(width: 20, height: 20)
-                            .opacity(movie.userRating >= 1 ? 1.0 : 0.2)
-                        Image("pop_white")
-                            .resizable()
-                            .frame(width: 20, height: 20)
-                            .opacity(movie.userRating >= 2 ? 1.0 : 0.2)
-                        Image("pop_white")
-                            .resizable()
-                            .frame(width: 20, height: 20)
-                            .opacity(movie.userRating >= 3 ? 1.0 : 0.2)
-                        Image("pop_white")
-                            .resizable()
-                            .frame(width: 20, height: 20)
-                            .opacity(movie.userRating >= 4 ? 1.0 : 0.2)
-                        Image("pop_white")
-                            .resizable()
-                            .frame(width: 20, height: 20)
-                            .opacity(movie.userRating >= 5 ? 1.0 : 0.2)
-                        
-                        Text(averageRating != nil ? "\(averageRating!, specifier: "%.1f")" : "")
-                            .onAppear{
-                                firestore.fetchAverageRating(movieId: movie.id) { rating in
-                                    DispatchQueue.main.async {
-                                        self.averageRating = rating
-                                    }
+                    Text(averageRating != nil ? "\(averageRating!, specifier: "%.1f")" : "")
+                        .fontWeight(.semibold)
+                        .padding(.horizontal)
+                        .background{
+                            Circle()
+                                .fill(Color(.popcornYellow))
+                                .frame(width: 30, height: 25)
+                                .shadow(radius: 10)
+                        }
+                        .onAppear{
+                            firestore.fetchAverageRating(movieId: movie.id) { rating in
+                                DispatchQueue.main.async {
+                                    self.averageRating = rating
                                 }
                             }
-                        
-                        Spacer()
-                        
-                        if showWathedButton {
-                            Button(action: {
-                                movie.isWatched.toggle()
-                                Task {
-                                    guard let userId = authVM.user?.uid else { return }
-                                    do{
-                                        try await firestore.saveMovie(movie, userId: userId)
-                                        onSave?(movie)
-                                    } catch {
-                                        print("Error saving movie of isWatched: \(error)")
-                                    }
+                        }
+                    
+                    Spacer()
+                    
+                    if showWatchedButton {
+                        Button(action: {
+                            movie.isWatched.toggle()
+                            Task {
+                                guard let userId = authVM.user?.uid else { return }
+                                do{
+                                    try await firestore.saveMovie(movie, userId: userId)
+                                    onSave?(movie)
+                                } catch {
+                                    print("Error saving movie of isWatched: \(error)")
                                 }
                             }
                         }) {
@@ -194,17 +199,11 @@ struct MovieRow: View {
                     }
                 }
             }
-}
+        }
         .onTapGesture {
             showDetails = true
         }
         .sheet(isPresented: $showDetails, onDismiss: {
-            
-//            firestore.snapshotRatingsListener(ratedMovieId: movie.id) {
-//                updatedRating in
-//                if let updatedRating = updatedRating {
-//                    movie.userRating = updatedRating
-//                }
             if authVM.isSignedIn {
                 if let userId = authVM.currentUserId {
                     firestore.fetchSignedInUserRating(userId: userId, ratedMovieId: movie.id) {
@@ -215,13 +214,12 @@ struct MovieRow: View {
                             print("not rated yet")
                         }
                     }
-                }
-                firestore.fetchAverageRating(movieId: movie.id) { rating in
-                    DispatchQueue.main.async {
-                        self.averageRating = rating
+                    firestore.fetchAverageRating(movieId: movie.id) { rating in
+                        DispatchQueue.main.async {
+                            self.averageRating = rating
+                        }
                     }
                 }
-                
             } else {
                 firestore.fetchUserRating(ratedMovieId: movie.id) { rating in
                     if let rating = rating {
