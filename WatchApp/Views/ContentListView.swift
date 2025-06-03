@@ -12,7 +12,9 @@ struct ContentListView: View {
     let movies: [Movie]
     let contentType: ContentType
     var onSave: ((Movie) -> Void)?
+    var onDelete: ((Int) -> Void)?
     let showWatchedButton: Bool
+    let disableAfterSave: Bool
     
     var body: some View {
         ScrollView {
@@ -20,9 +22,12 @@ struct ContentListView: View {
                 ForEach(movies) { movie in
                     MovieRow(
                         movie: movie,
-                        onSave: onSave,
+                        onSave: { movie in
+                            onSave?(movie) },
+                        onDelete: onDelete,
                         contentType: contentType,
-                        showWathedButton: showWatchedButton
+                        showWatchedButton: showWatchedButton,
+                        disableAfterSave: disableAfterSave
                     )
                 }
             }
@@ -43,11 +48,14 @@ struct ContentListView: View {
                     releaseDate: "1999-03-31",
                     genreIds: [28, 12, 878],
                     contentType: .movie,
-                    isWatched: false
+                    isWatched: false,
+                    isSaved: false
                  )],
         contentType: .movie,
         onSave: {_ in },
-        showWatchedButton: false
+        onDelete: nil,
+        showWatchedButton: false,
+        disableAfterSave: false
     )
     .environmentObject(AuthViewModel())
 }
