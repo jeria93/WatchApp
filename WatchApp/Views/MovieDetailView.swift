@@ -1,21 +1,13 @@
-//
-//  MovieDetailView.swift
-//  WatchApp
-//
-//  Created by David Kalitzki on 2025-05-26.
-//
-
 import SwiftUI
 
 struct MovieDetailView: View {
-    
+
     @State var movie: Movie
     let contentType: ContentType
     let firestore = FirestoreMovieService()
     let authVM = AuthViewModel()
-    
-    var body: some View {
 
+    var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 12) {
                 AsyncImage(url: movie.posterURLSmall) { image in
@@ -29,12 +21,12 @@ struct MovieDetailView: View {
                         .frame(width: 80, height: 120)
                         .overlay(Text("🍿"))
                 }
-                
-                HStack(alignment: .lastTextBaseline){
+
+                HStack(alignment: .lastTextBaseline) {
                     Text(movie.title)
                         .font(.title)
                         .foregroundColor(.white)
-                    
+
                     Text(contentType == .movie ? "🎬" : "📺")
                     if let releaseDate = movie.releaseDate {
                         let displayYear = String(releaseDate.prefix(4))
@@ -43,8 +35,8 @@ struct MovieDetailView: View {
                             .foregroundColor(.white)
                     }
                 }
-                
-                HStack{
+
+                HStack {
                     Image("pop_white")
                         .resizable()
                         .frame(width: 20, height: 20)
@@ -86,25 +78,23 @@ struct MovieDetailView: View {
                             fetchRating()
                         }
                 }
-                
+
                 Text(movie.overview)
                     .font(.subheadline)
                     .foregroundColor(.white)
-                
             }
             .padding()
             .frame(maxWidth: .infinity, alignment: .leading)
         }
-            .background(Color.BG
-                .ignoresSafeArea(.all))
-            .presentationBackground(Color.BG)
-            .onAppear{
-                fetchRating()
-                firestore.fetchAverageRating(movieId: movie.id)
-            }
+        .padding()
+        .background(Color.BG.ignoresSafeArea(.all))
+        .onAppear {
+            fetchRating()
         }
-    
-    
+
+        ShareButtonView(movie: movie)
+    }
+
     private func setRating(id: Int, rating: Int) {
         if authVM.isSignedIn {
             if let userId = authVM.currentUserId {
@@ -115,7 +105,7 @@ struct MovieDetailView: View {
             firestore.addUserRating(ratedMovieId: id, rating: rating)
         }
     }
-    
+
     func fetchRating() {
         if authVM.isSignedIn {
             if let userId = authVM.currentUserId {
@@ -127,7 +117,6 @@ struct MovieDetailView: View {
                     }
                 }
             }
-
         }
         firestore.fetchUserRating(ratedMovieId: movie.id) { rating in
             if let rating = rating {
@@ -137,7 +126,6 @@ struct MovieDetailView: View {
             }
         }
     }
-    
 }
 
 #Preview {
