@@ -21,6 +21,10 @@ struct Movie: Codable, Identifiable, Equatable {
     var isWatched: Bool = false
     var isSaved: Bool = false
 
+    var tmdbURL: URL {
+        URL(string: "https://www.themoviedb.org/movie/\(id)")!
+    }
+
     /// A helper property that builds a small-size poster image URL using the poster path.
     /// Not part of the original API response – used only for display convenience.
     var posterURLSmall: URL? {
