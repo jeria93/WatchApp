@@ -110,7 +110,7 @@ struct MovieRow: View {
                             .frame(width: 20, height: 20)
                             .opacity(movie.userRating >= 5 ? 1.0 : 0.2)
                         
-                        Text("\(averageRating ?? 0.0, specifier: "%.1f")")
+                        Text(averageRating != nil ? "\(averageRating!, specifier: "%.1f")" : "")
                             .onAppear{
                                 firestore.fetchAverageRating(movieId: movie.id) { rating in
                                     DispatchQueue.main.async {
@@ -186,6 +186,7 @@ struct MovieRow: View {
             showDetails = true
         }
         .sheet(isPresented: $showDetails, onDismiss: {
+            
 //            firestore.snapshotRatingsListener(ratedMovieId: movie.id) {
 //                updatedRating in
 //                if let updatedRating = updatedRating {
@@ -202,12 +203,23 @@ struct MovieRow: View {
                         }
                     }
                 }
+                firestore.fetchAverageRating(movieId: movie.id) { rating in
+                    DispatchQueue.main.async {
+                        self.averageRating = rating
+                    }
+                }
+                
             } else {
                 firestore.fetchUserRating(ratedMovieId: movie.id) { rating in
                     if let rating = rating {
                         movie.userRating = rating
                     } else {
                         print("not rated yet")
+                    }
+                }
+                firestore.fetchAverageRating(movieId: movie.id) { rating in
+                    DispatchQueue.main.async {
+                        self.averageRating = rating
                     }
                 }
             }
