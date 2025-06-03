@@ -99,10 +99,11 @@ struct MovieDetailView: View {
         if authVM.isSignedIn {
             if let userId = authVM.currentUserId {
                 firestore.addSignedInUserRating(userId: userId, ratedMovieId: id, rating: rating)
-                print("\(userId) gav betyget \(rating)")
+                firestore.addRatingForAverage(ratedMovieId: id, rating: rating)
             }
         } else {
             firestore.addUserRating(ratedMovieId: id, rating: rating)
+            firestore.addRatingForAverage(ratedMovieId: id, rating: rating)
         }
     }
 
