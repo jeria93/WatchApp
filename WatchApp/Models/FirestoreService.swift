@@ -91,21 +91,27 @@ final class FirestoreMovieService {
 
         documentRef.getDocument { (document, error) in
             if let document = document, document.exists {
-                let data = document.data() ?? [:]
-                let suffix = data.count + 1
-                let newFieldName = "rating\(suffix)"
+                let ratingsDb = document.data() ?? [:]
                 
-                documentRef.updateData([
-                    newFieldName: rating
-                ]) { error in
-                    if let error = error {
-                        print("Error updating document: \(error.localizedDescription)")
-                    } else {
-                        print("Document successfully updated with new field: \(newFieldName)")
+                if ratingsDb.keys.contains("rating"){
+                    
+                    let suffix = ratingsDb.count + 1
+                    let newFieldName = "rating\(suffix)"
+                    
+                    documentRef.updateData([
+                        newFieldName: rating
+                    ]) { error in
+                        if let error = error {
+                            print("Error updating document: \(error.localizedDescription)")
+                        } else {
+                            print("Document successfully updated with new field: \(newFieldName)")
+                        }
                     }
+                } else {
+                    documentRef.updateData(["rating": rating])
                 }
             } else {
-                print("Document does not exist or there was an error: \(error?.localizedDescription ?? "unknown error")")
+                documentRef.setData(["rating": rating])
             }
         }
     }
@@ -128,9 +134,13 @@ final class FirestoreMovieService {
                     let average = Double(sum) / Double(allRatings.count)
                     print("Alla betyg: \(allRatings)")
                     print("Snittbetyg: \(average)")
+                    completion(average)
+                } else {
+                    completion(nil)
                 }
             } else {
                 print("Document does not exist or there was an error: \(error?.localizedDescription ?? "unknown error")")
+                completion(nil)
             }
         }
     }

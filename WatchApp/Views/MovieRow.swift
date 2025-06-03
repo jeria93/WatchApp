@@ -10,6 +10,8 @@ import SwiftUI
 struct MovieRow: View {
 
     @State var movie: Movie
+    @State private var averageRating: Double? = nil
+    
     var onSave: ((Movie) -> Void)?
     let contentType: ContentType
     let showWathedButton: Bool
@@ -108,7 +110,14 @@ struct MovieRow: View {
                             .frame(width: 20, height: 20)
                             .opacity(movie.userRating >= 5 ? 1.0 : 0.2)
                         
-                        Text(
+                        Text("\(averageRating ?? 0.0, specifier: "%.1f")")
+                            .onAppear{
+                                firestore.fetchAverageRating(movieId: movie.id) { rating in
+                                    DispatchQueue.main.async {
+                                        self.averageRating = rating
+                                    }
+                                }
+                            }
                         
                         Spacer()
                         
