@@ -10,6 +10,8 @@ import SwiftUI
 struct MovieRow: View {
 
     @State var movie: Movie
+    @State private var averageRating: Double? = nil
+    
     var onSave: ((Movie) -> Void)?
     let contentType: ContentType
     let showWathedButton: Bool
@@ -52,6 +54,7 @@ struct MovieRow: View {
                             .font(.caption)
                             .foregroundColor(.white)
                     }
+                    
                     
                     Spacer()
                     
@@ -107,6 +110,15 @@ struct MovieRow: View {
                             .frame(width: 20, height: 20)
                             .opacity(movie.userRating >= 5 ? 1.0 : 0.2)
                         
+                        Text(averageRating != nil ? "\(averageRating!, specifier: "%.1f")" : "")
+                            .onAppear{
+                                firestore.fetchAverageRating(movieId: movie.id) { rating in
+                                    DispatchQueue.main.async {
+                                        self.averageRating = rating
+                                    }
+                                }
+                            }
+                        
                         Spacer()
                         
                         if showWathedButton {
@@ -149,24 +161,6 @@ struct MovieRow: View {
                     print("Error checking saved status: \(error)")
                 }
             }
-                firestore.fetchUserRating(ratedMovieId: movie.id) { rating in
-                    if let rating = rating {
-                        movie.userRating = rating
-                    } else {
-                        print("not rated yet")
-                    }
-                    
-            }
-        }
-        .onTapGesture {
-            showDetails = true
-        }
-        .sheet(isPresented: $showDetails, onDismiss: {
-//            firestore.snapshotRatingsListener(ratedMovieId: movie.id) {
-//                updatedRating in
-//                if let updatedRating = updatedRating {
-//                    movie.userRating = updatedRating
-//                }
             if authVM.isSignedIn {
                 if let userId = authVM.currentUserId {
                     firestore.fetchSignedInUserRating(userId: userId, ratedMovieId: movie.id) {
@@ -185,8 +179,48 @@ struct MovieRow: View {
                     } else {
                         print("not rated yet")
                     }
-                    
-                    
+                }
+            }
+}
+        .onTapGesture {
+            showDetails = true
+        }
+        .sheet(isPresented: $showDetails, onDismiss: {
+            
+//            firestore.snapshotRatingsListener(ratedMovieId: movie.id) {
+//                updatedRating in
+//                if let updatedRating = updatedRating {
+//                    movie.userRating = updatedRating
+//                }
+            if authVM.isSignedIn {
+                if let userId = authVM.currentUserId {
+                    firestore.fetchSignedInUserRating(userId: userId, ratedMovieId: movie.id) {
+                        rating in
+                        if let rating = rating {
+                            movie.userRating = rating
+                        } else {
+                            print("not rated yet")
+                        }
+                    }
+                }
+                firestore.fetchAverageRating(movieId: movie.id) { rating in
+                    DispatchQueue.main.async {
+                        self.averageRating = rating
+                    }
+                }
+                
+            } else {
+                firestore.fetchUserRating(ratedMovieId: movie.id) { rating in
+                    if let rating = rating {
+                        movie.userRating = rating
+                    } else {
+                        print("not rated yet")
+                    }
+                }
+                firestore.fetchAverageRating(movieId: movie.id) { rating in
+                    DispatchQueue.main.async {
+                        self.averageRating = rating
+                    }
                 }
             }
         }){
