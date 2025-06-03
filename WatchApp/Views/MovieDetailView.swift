@@ -100,6 +100,7 @@ struct MovieDetailView: View {
             .presentationBackground(Color.BG)
             .onAppear{
                 fetchRating()
+                firestore.fetchAverageRating(movieId: movie.id)
             }
         }
     

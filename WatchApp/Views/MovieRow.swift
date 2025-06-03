@@ -53,6 +53,7 @@ struct MovieRow: View {
                             .foregroundColor(.white)
                     }
                     
+                    
                     Spacer()
                     
                     if let onSave = onSave {
@@ -107,6 +108,8 @@ struct MovieRow: View {
                             .frame(width: 20, height: 20)
                             .opacity(movie.userRating >= 5 ? 1.0 : 0.2)
                         
+                        Text(
+                        
                         Spacer()
                         
                         if showWathedButton {
@@ -149,15 +152,27 @@ struct MovieRow: View {
                     print("Error checking saved status: \(error)")
                 }
             }
+            if authVM.isSignedIn {
+                if let userId = authVM.currentUserId {
+                    firestore.fetchSignedInUserRating(userId: userId, ratedMovieId: movie.id) {
+                        rating in
+                        if let rating = rating {
+                            movie.userRating = rating
+                        } else {
+                            print("not rated yet")
+                        }
+                    }
+                }
+            } else {
                 firestore.fetchUserRating(ratedMovieId: movie.id) { rating in
                     if let rating = rating {
                         movie.userRating = rating
                     } else {
                         print("not rated yet")
                     }
-                    
+                }
             }
-        }
+}
         .onTapGesture {
             showDetails = true
         }
@@ -185,8 +200,6 @@ struct MovieRow: View {
                     } else {
                         print("not rated yet")
                     }
-                    
-                    
                 }
             }
         }){
