@@ -50,7 +50,7 @@ final class FirestoreMovieService {
         Task {
             do {
                 let isSaved = try await isMovieSaved(id: ratedMovieId, userId: "userId")
-                try await firestore.collection("users").document(userId).collection("savedMovies").document("\(ratedMovieId)").setData(["userRating": rating])
+                try await firestore.collection("users").document(userId).collection("savedMovies").document("\(ratedMovieId)").updateData(["userRating": rating])
             } catch {
                 print("not sparad")
             }
@@ -97,16 +97,16 @@ final class FirestoreMovieService {
 //    }
     
     
-    func addRatingForAverage(ratedMovieId: Int, rating: Int){
+    func addRatingForAverage(userId: String, ratedMovieId: Int, rating: Int){
         let documentRef = firestore.collection("ratingsForAverage").document("\(ratedMovieId)")
 
         documentRef.getDocument { (document, error) in
             if let document = document, document.exists {
                 let ratingsDb = document.data() ?? [:]
                 
-                if ratingsDb.keys.contains("rating"){
+                if ratingsDb.keys.contains("rating") && !ratingsDb.keys.contains(userId){
                     
-                    let suffix = ratingsDb.count + 1
+                    let suffix = userId
                     let newFieldName = "rating\(suffix)"
                     
                     documentRef.updateData([

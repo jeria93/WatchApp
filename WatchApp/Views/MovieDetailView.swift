@@ -5,7 +5,7 @@ struct MovieDetailView: View {
     @State var movie: Movie
     let contentType: ContentType
     let firestore = FirestoreMovieService()
-    let authVM = AuthViewModel()
+    @EnvironmentObject var authVM: AuthViewModel
 
     var body: some View {
         ScrollView {
@@ -42,8 +42,8 @@ struct MovieDetailView: View {
                         .frame(width: 20, height: 20)
                         .opacity(movie.userRating >= 1 ? 1.0 : 0.2)
                         .onTapGesture {
-                            setRating(id: movie.id, rating: 1)
-                            fetchRating()
+                                setRating(id: movie.id, rating: 1)
+                                fetchRating()
                         }
                     Image("pop_white")
                         .resizable()
@@ -101,37 +101,33 @@ struct MovieDetailView: View {
     }
 
     private func setRating(id: Int, rating: Int) {
-        if authVM.isSignedIn {
+        if !authVM.isAnonymous {
             if let userId = authVM.currentUserId {
                 firestore.addSignedInUserRating(userId: userId, ratedMovieId: id, rating: rating)
-                firestore.addRatingForAverage(ratedMovieId: id, rating: rating)
+                firestore.addRatingForAverage(userId: userId, ratedMovieId: id, rating: rating)
             }
         } else {
-            firestore.addUserRating(ratedMovieId: id, rating: rating)
-            firestore.addRatingForAverage(ratedMovieId: id, rating: rating)
+            print("Not signed in. Cant set rating")
+            return
         }
     }
 
     func fetchRating() {
-        if authVM.isSignedIn {
+        if !authVM.isAnonymous {
             if let userId = authVM.currentUserId {
                 firestore.fetchSignedInUserRating(userId: userId, ratedMovieId: movie.id) { rating in
                     if let rating = rating {
                         movie.userRating = rating
                     } else {
-                        print("cant fetch rating")
+                        return
                     }
                 }
             }
-        }
-        firestore.fetchUserRating(ratedMovieId: movie.id) { rating in
-            if let rating = rating {
-                movie.userRating = rating
             } else {
-                print("cant fetch rating")
+                print("Not signed in. Cant fetch rating")
+                return
             }
         }
-    }
 }
 
 #Preview {
