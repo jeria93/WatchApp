@@ -11,6 +11,7 @@
 		031F02592DEEE76C0014D5DB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 031F02582DEEE76C0014D5DB /* GoogleService-Info.plist */; };
 		031F025C2DEEEA7D0014D5DB /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 031F025B2DEEEA7D0014D5DB /* GoogleSignIn */; };
 		031F025E2DEEEA7D0014D5DB /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 031F025D2DEEEA7D0014D5DB /* GoogleSignInSwift */; };
+		031F02632DEF266E0014D5DB /* GoogleAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031F02622DEF266E0014D5DB /* GoogleAuthManager.swift */; };
 		0335B82C2DEDE13A00A95C31 /* ShareHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0335B82B2DEDE13A00A95C31 /* ShareHelper.swift */; };
 		0335B82E2DEDE16C00A95C31 /* MovieShareItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0335B82D2DEDE16C00A95C31 /* MovieShareItem.swift */; };
 		035757F62DE7A65000B955BF /* EmptyGenreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035757F52DE7A65000B955BF /* EmptyGenreView.swift */; };
@@ -67,6 +68,8 @@
 /* Begin PBXFileReference section */
 		031957BB2DED98DF004AAC47 /* ShareButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareButtonView.swift; sourceTree = "<group>"; };
 		031F02582DEEE76C0014D5DB /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		031F025F2DEEEFE80014D5DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		031F02622DEF266E0014D5DB /* GoogleAuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleAuthManager.swift; sourceTree = "<group>"; };
 		0335B82B2DEDE13A00A95C31 /* ShareHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareHelper.swift; sourceTree = "<group>"; };
 		0335B82D2DEDE16C00A95C31 /* MovieShareItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieShareItem.swift; sourceTree = "<group>"; };
 		035757F52DE7A65000B955BF /* EmptyGenreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyGenreView.swift; sourceTree = "<group>"; };
@@ -169,6 +172,7 @@
 		03FA39092DDB219D005F1EDC /* WatchApp */ = {
 			isa = PBXGroup;
 			children = (
+				031F025F2DEEEFE80014D5DB /* Info.plist */,
 				03B4CCC22DE5E1190086EE17 /* Search */,
 				DD5C92A72DDBAC68009D633F /* Components */,
 				DD5C929A2DDBA125009D633F /* Utilits */,
@@ -191,6 +195,7 @@
 			children = (
 				03FA39132DDB2206005F1EDC /* SecretManager.swift */,
 				03FA39152DDB221F005F1EDC /* TMDBService.swift */,
+				031F02622DEF266E0014D5DB /* GoogleAuthManager.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -387,6 +392,7 @@
 				035757F62DE7A65000B955BF /* EmptyGenreView.swift in Sources */,
 				03908DAE2DDC8F690008C202 /* FirestoreViewModel.swift in Sources */,
 				A4A3BA662DE46676002BAADD /* MovieDetailView.swift in Sources */,
+				031F02632DEF266E0014D5DB /* GoogleAuthManager.swift in Sources */,
 				DD5C92992DDB7199009D633F /* SplashScreenView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -525,6 +531,7 @@
 				DEVELOPMENT_TEAM = N693GNQH6J;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WatchApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -555,6 +562,7 @@
 				DEVELOPMENT_TEAM = N693GNQH6J;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WatchApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
