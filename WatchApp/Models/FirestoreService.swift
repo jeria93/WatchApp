@@ -43,8 +43,15 @@ final class FirestoreMovieService {
         let ratedMovieId = ratedMovieId
         let rating = rating
         firestore.collection("users").document(userId).collection("ratedMovies").document("\(ratedMovieId)").setData(["rating": rating])
+        Task {
+            do {
+                let isSaved = try await isMovieSaved(id: ratedMovieId, userId: "userId")
+                try await firestore.collection("users").document(userId).collection("savedMovies").document("\(ratedMovieId)").setData(["userRating": rating])
+            } catch {
+                print("not sparad")
+            }
+        }
         addRatingForAverage(ratedMovieId: ratedMovieId, rating: rating)
-
     }
     
     func fetchUserRating(ratedMovieId: Int, completion: @escaping (Int?) -> Void){
