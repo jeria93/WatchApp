@@ -85,6 +85,11 @@ final class TMDBService {
         let result: TVShowResults = try await request(path: "/discover/tv", queryItems: queryItems)
         return result.results
     }
+    
+    func fetchMovieById(_ movieId: Int) async throws -> MovieRaw {
+        let result: MovieRaw = try await request(path: "/movie/\(movieId)")
+        return result
+    }
 
     /// Generic method that sends a GET request to TMDB and decodes the response into any Decodable model.
     ///

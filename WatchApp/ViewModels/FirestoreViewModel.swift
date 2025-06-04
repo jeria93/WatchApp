@@ -15,6 +15,7 @@ final class FirestoreViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var showUndoMessage: Bool = false
     @Published var lastDeletedMovie: Movie?
+    @Published var topRatedMovies: [Movie] = []
     
     private let firestoreService = FirestoreMovieService()
     
@@ -99,6 +100,24 @@ final class FirestoreViewModel: ObservableObject {
             movies = []
         } catch {
             self.errorMessage = "Failed to delete everything saved: \(error.localizedDescription)"
+        }
+    }
+    
+    func fetchTopRatedMovies() {
+        guard let userId = Auth.auth().currentUser?.uid else {
+            topRatedMovies = []
+            return
+        }
+        
+        Task {
+            do{
+                let movies = try await firestoreService.fetchTopRatedMovies(userId: userId)
+                topRatedMovies = movies
+                print("Fetched top 5 movies: \(movies.map { ($0.title, $0.userRating) })")
+            } catch {
+                print("Error fetching top rated movies: \(error)")
+                topRatedMovies = []
+            }
         }
     }
 }

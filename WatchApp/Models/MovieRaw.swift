@@ -14,5 +14,5 @@ struct MovieRaw: Codable, Identifiable {
     let posterPath: String?
     let voteAverage: Double
     let releaseDate: String?
-    let genreIds: [Int]
+    let genreIds: [Int]?
 }
