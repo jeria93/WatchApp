@@ -15,9 +15,11 @@ struct ShareButtonView: View {
         if let shareItem {
             ShareLink(item: shareItem.url, preview: SharePreview(shareItem.title, image: Image(uiImage: shareItem.image))) {
                 Label("Share", systemImage: "square.and.arrow.up")
-                    .padding()
-                    .background(Color.blue.opacity(0.1))
-                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                    .padding(5)
+                    .fontWeight(.bold)
+                    .foregroundStyle(.accent)
+                    .background(Color.popcornYellow.opacity(0.2))
+                    .clipShape(RoundedRectangle(cornerRadius: 7))
             }
         } else {
             ProgressView()
@@ -27,6 +29,7 @@ struct ShareButtonView: View {
                     }
                 }
         }
+        
     }
 }
 #Preview {
