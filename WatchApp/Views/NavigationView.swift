@@ -14,7 +14,6 @@ struct NavigationView: View {
     
     var body: some View {
         NavigationStack {
-            
             TabView(selection:$selection) {
                 VStack {
                     Text("POPular movies (coming soon...)")
@@ -52,6 +51,8 @@ struct NavigationView: View {
                 .onAppear() {
                     UITabBar.appearance().backgroundColor = .black
                     UITabBar.appearance().unselectedItemTintColor = .popcornYellow
+                    UINavigationBar.appearance().barTintColor = UIColor(Color.BG)
+                    UINavigationBar.appearance().isTranslucent = false
                 }
                 .toolbar{
                     ToolbarItem(placement: .topBarLeading) {

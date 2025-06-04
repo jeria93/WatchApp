@@ -8,7 +8,7 @@
 import Foundation
 
 
-struct Movie: Codable, Identifiable, Equatable {
+struct Movie: Codable, Identifiable, Equatable, Hashable {
     let id: Int
     let title: String
     let overview: String
@@ -37,6 +37,35 @@ struct Movie: Codable, Identifiable, Equatable {
     var posterURLLarge: URL? {
         guard let path = posterPath else { return nil }
         return URL(string: "https://image.tmdb.org/t/p/w500\(path)")
+    }
+    
+    init(id: Int, title: String, overview: String, posterPath: String?, voteAverage: Double,
+         releaseDate: String?, genreIds: [Int], contentType: ContentType = .movie, userRating: Int = 0, isWatched: Bool = false, isSaved: Bool = false) {
+                self.id = id
+                self.title = title
+                self.overview = overview
+                self.posterPath = posterPath
+                self.voteAverage = voteAverage
+                self.releaseDate = releaseDate
+                self.genreIds = genreIds
+                self.contentType = contentType
+                self.userRating = userRating
+                self.isWatched = isWatched
+                self.isSaved = isSaved
+    }
+    
+    init(from raw: MovieRaw, contentType: ContentType = .movie, userRating: Int = 0, isWatched: Bool = false, isSaved: Bool = false) {
+        self.id = raw.id
+        self.title = raw.title
+        self.overview = raw.overview
+        self.posterPath = raw.posterPath
+        self.voteAverage = raw.voteAverage
+        self.releaseDate = raw.releaseDate
+        self.genreIds = raw.genreIds ?? []
+        self.contentType = contentType
+        self.userRating = userRating
+        self.isSaved = isSaved
+        self.isWatched = isWatched
     }
 }
 
