@@ -9,9 +9,11 @@ import SwiftUI
 
 struct ProfileView: View {
     @EnvironmentObject var authVM: AuthViewModel
+    @StateObject private var firestoreVM = FirestoreViewModel()
     @State private var showEditEmail = false
     @State private var showEditUsername = false
     @State private var showDeleteAccount = false
+    @State private var selectedMovie: Movie?
     
     var body: some View {
         ZStack{
@@ -42,7 +44,6 @@ struct ProfileView: View {
                                         .frame(width: 128, height: 128)
                                         .shadow(radius: 10)
                                 }
-                            
                             Image(systemName: "pencil")
                                 .imageScale(.small)
                                 .foregroundStyle(.red)
@@ -107,63 +108,8 @@ struct ProfileView: View {
                     }
                     .padding(.horizontal)
                     
-                    ZStack {
-                        Image("popbox_white")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(maxWidth: .infinity, maxHeight: 500)
-                            .opacity(0.8)
-                        
-                        VStack{
-                            Text("Your Top 5")
-                                .foregroundStyle(.popcornYellow)
-                                .font(.title2)
-                                .fontWeight(.bold)
-                                .fontDesign(.rounded)
-                                .padding(.top)
-                            
-                            
-                            //Byt ut mot lista med personliga top 5 highest rated
-                            Image(systemName: "photo")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 60, height: 60)
-                                .foregroundStyle(.gray)
-                                
-                            
-                            HStack {
-                                Image(systemName: "photo")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 60, height: 60)
-                                    .foregroundStyle(.gray)
-                                    
-                                
-                                Image(systemName: "photo")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 60, height: 60)
-                                    .foregroundStyle(.gray)
-                            }
-                            .padding()
-                            
-                            HStack {
-                                Image(systemName: "photo")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 60, height: 60)
-                                    .foregroundStyle(.gray)
-                                
-                                Image(systemName: "photo")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 60, height: 60)
-                                    .foregroundStyle(.gray)
-                            }
-                        }
-                        .padding()
-                    }
-                    .frame(maxWidth: .infinity)
+                    TopRatedMoviesListView(movies: firestoreVM.topRatedMovies, selectedMovie: $selectedMovie)
+                        .frame(maxWidth: .infinity)
                     
                     HStack {
                         Spacer()
@@ -183,9 +129,9 @@ struct ProfileView: View {
                         Spacer()
                     }
                 }
-                .ignoresSafeArea(.all, edges: .top)
                 .padding(.top, 44)
             }
+            .background(Color.BG)
             
             if showEditEmail {
                 Color.black.opacity(0.4)
@@ -234,8 +180,124 @@ struct ProfileView: View {
                     .transition(.scale)
             }
         }
+        .sheet(item: $selectedMovie) { movie in
+            MovieDetailView(movie: movie, contentType: .movie)
+                .environmentObject(authVM)
+                .onDisappear {
+                    firestoreVM.fetchTopRatedMovies()
+                }
+        }
+        .onAppear {
+            firestoreVM.fetchTopRatedMovies()
+        }
     }
-
+    
+    struct TopRatedMoviesListView: View {
+        let movies: [Movie]
+        @Binding var selectedMovie: Movie?
+        
+        var body: some View {
+            ZStack {
+                Image("popbox_white")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(maxWidth: .infinity)
+                    .opacity(0.8)
+                    .padding(.top, 10)
+                
+                Spacer()
+                
+                VStack(spacing: 16){
+                    Text("Your Top 5")
+                        .foregroundStyle(.popcornYellow)
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .fontDesign(.rounded)
+                        .padding(.top, 94)
+                    
+                    if movies.isEmpty {
+                        Text("No rated movies yet")
+                            .font(.caption)
+                            .foregroundStyle(.gray)
+                            .padding(.vertical, 40)
+                    } else {
+                        if movies.count >= 1 {
+                            HStack(spacing: 16) {
+                                MovieItemView(movie: movies[0], selectedMovie: $selectedMovie)
+                                if movies.count >= 2 {
+                                    MovieItemView(movie: movies[1], selectedMovie: $selectedMovie)
+                                } else {
+                                    Spacer()
+                                }
+                            }
+                            .padding(.horizontal)
+                        }
+                        
+                        if movies.count >= 3 {
+                            HStack(spacing: 16) {
+                                MovieItemView(movie: movies[2], selectedMovie: $selectedMovie)
+                                if movies.count >= 4 {
+                                    MovieItemView(movie: movies[3], selectedMovie: $selectedMovie)
+                                } else {
+                                    Spacer()
+                                }
+                            }
+                            .padding(.horizontal)
+                        }
+                        
+                        if movies.count >= 5 {
+                            HStack {
+                                Spacer()
+                                MovieItemView(movie: movies[4], selectedMovie: $selectedMovie)
+                                Spacer()
+                            }
+                            .padding(.horizontal)
+                        }
+                    }
+                }
+                .padding(.bottom, 5)
+            }
+        }
+    }
+               
+    struct MovieItemView: View {
+        let movie: Movie
+        @Binding var selectedMovie: Movie?
+        
+        var body: some View {
+                VStack(spacing: 4) {
+                    AsyncImage(url: movie.posterURLSmall) { image in
+                        image
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 80, height: 100)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                            .overlay(RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color.popcornYellow, lineWidth: 1))
+                    } placeholder: {
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(.gray.opacity(0.3))
+                            .frame(width: 80, height: 100)
+                            .overlay(Text("🍿"))
+                            .overlay(RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color.popcornYellow, lineWidth: 1))
+                    }
+                    
+                    Text(movie.title)
+                        .font(.caption)
+                        .foregroundStyle(.white)
+                        .lineLimit(1)
+                        .frame(maxWidth: 90)
+                    Text("\(movie.userRating)/5")
+                        .font(.caption2)
+                        .foregroundStyle(.popcornYellow)
+                }
+                
+                .onTapGesture {
+                    selectedMovie = movie
+                }
+            }
+    }
     
     struct EditUsernameView: View {
         @Binding var username: String?
@@ -294,7 +356,6 @@ struct ProfileView: View {
         @Binding var showModal: Bool
     
         var body: some View {
-            
             VStack(spacing: 20){
                 Text("Edit Email")
                     .font(.title2)
@@ -325,7 +386,6 @@ struct ProfileView: View {
                             showModal = false
                         }
                     }
-                    
                     Button("Save") {
                         authVM.updateEmail(newEmail: newEmail) { success in
                             if success {
@@ -438,9 +498,7 @@ struct ProfileView: View {
     }
 }
 
-
-
-#Preview {
-    ProfileView()
-        .environmentObject(AuthViewModel())
-}
+//#Preview {
+//    ProfileView()
+//        .environmentObject(AuthViewModel())
+//}

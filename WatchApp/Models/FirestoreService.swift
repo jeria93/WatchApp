@@ -12,7 +12,7 @@ import FirebaseFirestore
 final class FirestoreMovieService {
     
     private let firestore = Firestore.firestore()
-    
+    private let tmdbService = TMDBService()
     private let authVM = AuthViewModel()
     
     /// Saves a movie to the `savedMovies` collection in Firestore
@@ -78,24 +78,30 @@ final class FirestoreMovieService {
         }
     }
     
-//    func createAverageRating(userId: String, ratedMovieId: Int, completion: @escaping (Double?) -> Void) {
-//        let collectionRef = firestore.collection("ratingsForAverage")
-//        let allRatings = collectionRef.getDocuments { (allMovies, error) in
-//            
-//            if let error = error  {
-//                print("error fetching: \(error.localizedDescription)")
-//            } else {
-//                var allRating: [MyObject] = []
-//                for document in allMovies!.documents {
-//                    let data = document.data()
-//                    let ratedMovie = MyObject(data: data)
-//                    allRatings.append(ratedMovie)
-//                }
-//            }
-//            
-//        }
-//    }
+    func fetchAllUserRatings(userId: String) async throws -> [(movieId: Int, rating: Int)] {
+        let snapshot = try await firestore.collection("users").document(userId).collection("ratedMovies").getDocuments()
+        return snapshot.documents.compactMap { doc in
+            guard let rating = doc.data()["rating"] as? Int,
+                  let movieId = Int(doc.documentID) else { return nil }
+            return (movieId: movieId, rating: rating)
+        }
+    }
     
+    func fetchTopRatedMovies(userId: String, limit: Int = 5) async throws -> [Movie] {
+        let ratings = try await fetchAllUserRatings(userId: userId)
+        let sortedRatings = ratings.sorted { $0.rating > $1.rating}.prefix(limit)
+        var movies: [Movie] = []
+        for rating in sortedRatings {
+            do{
+                let movieRaw = try await tmdbService.fetchMovieById(rating.movieId)
+                var movie = Movie(from: movieRaw, userRating: rating.rating)
+                movies.append(movie)
+            }catch {
+                print("Error fetching movie \(rating.movieId): \(error)")
+            }
+        }
+        return movies
+    }
     
     func addRatingForAverage(userId: String, ratedMovieId: Int, rating: Int){
         let documentRef = firestore.collection("ratingsForAverage").document("\(ratedMovieId)")
@@ -179,3 +185,21 @@ final class FirestoreMovieService {
         }
     }
 }
+
+//    func createAverageRating(userId: String, ratedMovieId: Int, completion: @escaping (Double?) -> Void) {
+//        let collectionRef = firestore.collection("ratingsForAverage")
+//        let allRatings = collectionRef.getDocuments { (allMovies, error) in
+//
+//            if let error = error  {
+//                print("error fetching: \(error.localizedDescription)")
+//            } else {
+//                var allRating: [MyObject] = []
+//                for document in allMovies!.documents {
+//                    let data = document.data()
+//                    let ratedMovie = MyObject(data: data)
+//                    allRatings.append(ratedMovie)
+//                }
+//            }
+//
+//        }
+//    }
