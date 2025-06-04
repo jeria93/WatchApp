@@ -149,8 +149,6 @@ final class FirestoreMovieService {
                 if !allRatings.isEmpty {
                     let sum = allRatings.reduce(0, +)
                     let average = Double(sum) / Double(allRatings.count)
-                    print("Alla betyg: \(allRatings)")
-                    print("Snittbetyg: \(average)")
                     completion(average)
                 } else {
                     completion(nil)
@@ -161,29 +159,54 @@ final class FirestoreMovieService {
             }
         }
     }
-
     
-    func snapshotRatingsListener(ratedMovieId: Int, completion: @escaping (Int?) -> Void) {
-        let ref = firestore.collection("ratedMovies").document("\(ratedMovieId)")
-        ref.addSnapshotListener { snapshot, error in
+    func fetchTopAverage(completion: @escaping ([Int: Double]) -> Void ) {
+        var topFive: [Int: Double] = [:]
+        let collectionRef = firestore.collection("ratingsForAverage")
+
+        collectionRef.getDocuments { (querySnapshot, error) in
             if let error = error {
-                print("error listening \(error)")
-                completion(nil)
+                print("Error getting documents: \(error.localizedDescription)")
             } else {
-                if let document = snapshot, document.exists {
-                    if let userRating = document.get("userRating") as? Int {
-                        completion(userRating)
-                    } else {
-                        print("rating not found")
-                        completion(nil)
+                for document in querySnapshot!.documents {
+                    if let movieId = Int(document.documentID) {
+                        self.fetchAverageRating(movieId: movieId) { average in
+                            if let average = average {
+                                topFive[movieId] = average
+                                
+                                if topFive.count == querySnapshot!.documents.count {
+                                    completion(topFive)
+                                }
+                            }
+                        }
                     }
-                } else {
-                    completion(nil)
                 }
             }
-        
         }
     }
+
+    
+//    func snapshotRatingsListener(ratedMovieId: Int, completion: @escaping (Int?) -> Void) {
+//        let ref = firestore.collection("ratedMovies").document("\(ratedMovieId)")
+//        ref.addSnapshotListener { snapshot, error in
+//            if let error = error {
+//                print("error listening \(error)")
+//                completion(nil)
+//            } else {
+//                if let document = snapshot, document.exists {
+//                    if let userRating = document.get("userRating") as? Int {
+//                        completion(userRating)
+//                    } else {
+//                        print("rating not found")
+//                        completion(nil)
+//                    }
+//                } else {
+//                    completion(nil)
+//                }
+//            }
+//        
+//        }
+//    }
 }
 
 //    func createAverageRating(userId: String, ratedMovieId: Int, completion: @escaping (Double?) -> Void) {
