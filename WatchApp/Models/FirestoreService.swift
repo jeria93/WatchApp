@@ -35,12 +35,12 @@ final class FirestoreMovieService {
         return doc.exists
     }
     
-    func addUserRating(ratedMovieId: Int, rating: Int) {
-        let ratedMovieId = ratedMovieId
-        let rating = rating
-            firestore.collection("ratedMovies").document("\(ratedMovieId)").setData(["rating": rating])
-            addRatingForAverage(ratedMovieId: ratedMovieId, rating: rating)
-    }
+//    func addUserRating(userId: String, ratedMovieId: Int, rating: Int) {
+//        let ratedMovieId = ratedMovieId
+//        let rating = rating
+//            firestore.collection("ratedMovies").document("\(ratedMovieId)").setData(["rating": rating])
+//        addRatingForAverage(userId: userId, ratedMovieId: ratedMovieId, rating: rating)
+//    }
     
     func addSignedInUserRating(userId: String, ratedMovieId: Int, rating: Int) {
         let userId = userId
@@ -55,7 +55,7 @@ final class FirestoreMovieService {
                 print("not sparad")
             }
         }
-        addRatingForAverage(ratedMovieId: ratedMovieId, rating: rating)
+        addRatingForAverage(userId: userId, ratedMovieId: ratedMovieId, rating: rating)
     }
     
     func fetchUserRating(ratedMovieId: Int, completion: @escaping (Int?) -> Void){
