@@ -14,7 +14,6 @@ struct MovieListView: View {
     @EnvironmentObject var authVM: AuthViewModel
 
     var body: some View {
-        NavigationStack {
             ZStack {
                 Color.BG
                     .ignoresSafeArea(.all)
@@ -66,15 +65,15 @@ struct MovieListView: View {
                         } else {
                             ContentListView(movies: viewModel.filteredMovies, contentType: viewModel.selectedType, onSave: { movie in
                                 Task { await firestoreVM.saveMovie(movie) }
-                            }, showWatchedButton: false
+                            }, onDelete: nil,
+                            showWatchedButton: false,
+                            disableAfterSave: true
                             )
                         }
                     }
                     .frame(maxHeight: .infinity)
                 }
-            }
-            .navigationTitle("🎬 Trending Movies")
-            .task {
+                .task {
                 await viewModel.fetchTrendingContent()
                 await viewModel.fetchGenresForSelectedType()
             }

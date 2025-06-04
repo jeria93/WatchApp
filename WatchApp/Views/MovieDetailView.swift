@@ -77,6 +77,11 @@ struct MovieDetailView: View {
                             setRating(id: movie.id, rating: 5)
                             fetchRating()
                         }
+                    
+                    Spacer()
+                    
+                    ShareButtonView(movie: movie)
+                        .padding(.horizontal, 7)
                 }
 
                 Text(movie.overview)
@@ -92,7 +97,7 @@ struct MovieDetailView: View {
             fetchRating()
         }
 
-        ShareButtonView(movie: movie)
+//        ShareButtonView(movie: movie)
     }
 
     private func setRating(id: Int, rating: Int) {

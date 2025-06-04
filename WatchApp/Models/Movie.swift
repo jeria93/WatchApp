@@ -19,6 +19,7 @@ struct Movie: Codable, Identifiable, Equatable {
     let contentType: ContentType
     var userRating = 0
     var isWatched: Bool = false
+    var isSaved: Bool = false
 
     var tmdbURL: URL {
         URL(string: "https://www.themoviedb.org/movie/\(id)")!

@@ -20,6 +20,10 @@ final class FirestoreMovieService {
         try firestore.collection("users").document(userId).collection("savedMovies").document("\(movie.id)").setData(from: movie)
     }
     
+    func deleteMovie(movieId: Int, userId: String) async throws {
+        try await firestore.collection("users").document(userId).collection("savedMovies").document("\(movieId)").delete()
+    }
+    
     /// Fetches all saved movies from the `savedMovies` collection in Firestore
     func fetchSavedMovies(userId: String) async throws -> [Movie] {
         let snapshot = try await firestore.collection("users").document(userId).collection("savedMovies").getDocuments()
