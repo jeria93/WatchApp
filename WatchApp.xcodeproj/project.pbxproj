@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		031957BC2DED98DF004AAC47 /* ShareButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031957BB2DED98DF004AAC47 /* ShareButtonView.swift */; };
+		031F02592DEEE76C0014D5DB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 031F02582DEEE76C0014D5DB /* GoogleService-Info.plist */; };
+		031F025C2DEEEA7D0014D5DB /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 031F025B2DEEEA7D0014D5DB /* GoogleSignIn */; };
+		031F025E2DEEEA7D0014D5DB /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 031F025D2DEEEA7D0014D5DB /* GoogleSignInSwift */; };
+		031F02632DEF266E0014D5DB /* GoogleAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031F02622DEF266E0014D5DB /* GoogleAuthManager.swift */; };
+		0335B82C2DEDE13A00A95C31 /* ShareHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0335B82B2DEDE13A00A95C31 /* ShareHelper.swift */; };
+		0335B82E2DEDE16C00A95C31 /* MovieShareItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0335B82D2DEDE16C00A95C31 /* MovieShareItem.swift */; };
 		035757F62DE7A65000B955BF /* EmptyGenreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035757F52DE7A65000B955BF /* EmptyGenreView.swift */; };
 		0377633A2DDBBCD300777B8C /* MovieRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037763392DDBBCD300777B8C /* MovieRow.swift */; };
 		0377633C2DDBBFD000777B8C /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0377633B2DDBBFD000777B8C /* EmptyStateView.swift */; };
@@ -37,6 +44,7 @@
 		5D7295332DE48EE70067360A /* withLogoutButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7295322DE48EE70067360A /* withLogoutButton.swift */; };
 		5D81BD1C2DE5B8050059346F /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D81BD1B2DE5B8050059346F /* KeychainService.swift */; };
 		5DC46A812DE5E8AD002E5618 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC46A802DE5E8AD002E5618 /* ProfileView.swift */; };
+		5DEE6D7A2DDB2CF600C7DF1B /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5DEE6D792DDB2CF600C7DF1B /* Secrets.plist */; };
 		A42B66492DDF41EA00BDA4A0 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A42B66482DDF41EA00BDA4A0 /* User.swift */; };
 		A42B664A2DDF41EA00BDA4A0 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = A42B66472DDF41EA00BDA4A0 /* Movie.swift */; };
 		A42B664B2DDF41EA00BDA4A0 /* FirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A42B66462DDF41EA00BDA4A0 /* FirestoreService.swift */; };
@@ -60,6 +68,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		031957BB2DED98DF004AAC47 /* ShareButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareButtonView.swift; sourceTree = "<group>"; };
+		031F02582DEEE76C0014D5DB /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		031F025F2DEEEFE80014D5DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		031F02622DEF266E0014D5DB /* GoogleAuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleAuthManager.swift; sourceTree = "<group>"; };
+		0335B82B2DEDE13A00A95C31 /* ShareHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareHelper.swift; sourceTree = "<group>"; };
+		0335B82D2DEDE16C00A95C31 /* MovieShareItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieShareItem.swift; sourceTree = "<group>"; };
 		035757F52DE7A65000B955BF /* EmptyGenreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyGenreView.swift; sourceTree = "<group>"; };
 		037763392DDBBCD300777B8C /* MovieRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieRow.swift; sourceTree = "<group>"; };
 		0377633B2DDBBFD000777B8C /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
@@ -88,6 +102,7 @@
 		5D7295322DE48EE70067360A /* withLogoutButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = withLogoutButton.swift; sourceTree = "<group>"; };
 		5D81BD1B2DE5B8050059346F /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		5DC46A802DE5E8AD002E5618 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		5DEE6D792DDB2CF600C7DF1B /* Secrets.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Secrets.plist; sourceTree = "<group>"; };
 		A42B66462DDF41EA00BDA4A0 /* FirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreService.swift; sourceTree = "<group>"; };
 		A42B66472DDF41EA00BDA4A0 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		A42B66482DDF41EA00BDA4A0 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -120,7 +135,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				031F025E2DEEEA7D0014D5DB /* GoogleSignInSwift in Frameworks */,
 				03BE72B22DD221FE00DD7805 /* FirebaseCore in Frameworks */,
+				031F025C2DEEEA7D0014D5DB /* GoogleSignIn in Frameworks */,
 				03BE72B02DD221FE00DD7805 /* FirebaseAuth in Frameworks */,
 				03BE72B42DD221FE00DD7805 /* FirebaseFirestore in Frameworks */,
 			);
@@ -159,6 +176,7 @@
 		03FA39092DDB219D005F1EDC /* WatchApp */ = {
 			isa = PBXGroup;
 			children = (
+				031F025F2DEEEFE80014D5DB /* Info.plist */,
 				03B4CCC22DE5E1190086EE17 /* Search */,
 				DD5C92A72DDBAC68009D633F /* Components */,
 				DD5C929A2DDBA125009D633F /* Utilits */,
@@ -169,6 +187,7 @@
 				03FA39042DDB219D005F1EDC /* Assets.xcassets */,
 				03FA39082DDB219D005F1EDC /* WatchAppApp.swift */,
 				DD5C92962DDB6FFB009D633F /* LaunchScreen.storyboard */,
+				5DEE6D792DDB2CF600C7DF1B /* Secrets.plist */,
 				03B7B2EE2DECE3DC006D038B /* FilterPickerView.swift */,
 				DDBAB45E2DEDD5A5000AC356 /* Secrets.plist */,
 				DDBAB4602DEDD5B0000AC356 /* GoogleService-Info.plist */,
@@ -181,6 +200,7 @@
 			children = (
 				03FA39132DDB2206005F1EDC /* SecretManager.swift */,
 				03FA39152DDB221F005F1EDC /* TMDBService.swift */,
+				031F02622DEF266E0014D5DB /* GoogleAuthManager.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -198,6 +218,8 @@
 				A45A5F502DDF63DD0092054A /* TVShow.swift */,
 				03A50DFE2DE46E4E004DFF62 /* Genre.swift */,
 				5D81BD1B2DE5B8050059346F /* KeychainService.swift */,
+				0335B82B2DEDE13A00A95C31 /* ShareHelper.swift */,
+				0335B82D2DEDE16C00A95C31 /* MovieShareItem.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -237,6 +259,7 @@
 				A4A3BA652DE46676002BAADD /* MovieDetailView.swift */,
 				5DC46A802DE5E8AD002E5618 /* ProfileView.swift */,
 				035757F52DE7A65000B955BF /* EmptyGenreView.swift */,
+				031957BB2DED98DF004AAC47 /* ShareButtonView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -265,6 +288,8 @@
 				03BE72AF2DD221FE00DD7805 /* FirebaseAuth */,
 				03BE72B12DD221FE00DD7805 /* FirebaseCore */,
 				03BE72B32DD221FE00DD7805 /* FirebaseFirestore */,
+				031F025B2DEEEA7D0014D5DB /* GoogleSignIn */,
+				031F025D2DEEEA7D0014D5DB /* GoogleSignInSwift */,
 			);
 			productName = WatchApp;
 			productReference = 03BE729E2DD21E3300DD7805 /* WatchApp.app */;
@@ -297,6 +322,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				03BE72AE2DD221FE00DD7805 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				031F025A2DEEEA7D0014D5DB /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 			);
 			productRefGroup = 03BE729F2DD21E3300DD7805 /* Products */;
 			projectDirPath = "";
@@ -330,6 +356,7 @@
 				A45A5F512DDF63DD0092054A /* TVShow.swift in Sources */,
 				5DC46A812DE5E8AD002E5618 /* ProfileView.swift in Sources */,
 				A45A5F4F2DDF63B10092054A /* MovieRaw.swift in Sources */,
+				0335B82E2DEDE16C00A95C31 /* MovieShareItem.swift in Sources */,
 				5D7295312DE48E140067360A /* ResetPasswordView.swift in Sources */,
 				03B7B2F12DECE699006D038B /* ResultsHeaderView.swift in Sources */,
 				A4B100BD2DDCA7040032B48E /* NavigationView.swift in Sources */,
@@ -351,10 +378,12 @@
 				5D81BD1C2DE5B8050059346F /* KeychainService.swift in Sources */,
 				03FA390E2DDB219D005F1EDC /* WatchAppApp.swift in Sources */,
 				A45A5F532DDF644E0092054A /* ContentListView.swift in Sources */,
+				031957BC2DED98DF004AAC47 /* ShareButtonView.swift in Sources */,
 				A42B66492DDF41EA00BDA4A0 /* User.swift in Sources */,
 				A42B664A2DDF41EA00BDA4A0 /* Movie.swift in Sources */,
 				03A50E012DE47534004DFF62 /* GenrePickerView.swift in Sources */,
 				A42B664B2DDF41EA00BDA4A0 /* FirestoreService.swift in Sources */,
+				0335B82C2DEDE13A00A95C31 /* ShareHelper.swift in Sources */,
 				03A50DFF2DE46E4E004DFF62 /* Genre.swift in Sources */,
 				A45A5F592DDF64A60092054A /* LoadingView.swift in Sources */,
 				03B4CD002DE5E6CF0086EE17 /* Person.swift in Sources */,
@@ -368,6 +397,7 @@
 				035757F62DE7A65000B955BF /* EmptyGenreView.swift in Sources */,
 				03908DAE2DDC8F690008C202 /* FirestoreViewModel.swift in Sources */,
 				A4A3BA662DE46676002BAADD /* MovieDetailView.swift in Sources */,
+				031F02632DEF266E0014D5DB /* GoogleAuthManager.swift in Sources */,
 				DD5C92992DDB7199009D633F /* SplashScreenView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -503,9 +533,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = RWWZFZD8G2;
+				DEVELOPMENT_TEAM = N693GNQH6J;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WatchApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -533,9 +564,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = RWWZFZD8G2;
+				DEVELOPMENT_TEAM = N693GNQH6J;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WatchApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -580,6 +612,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		031F025A2DEEEA7D0014D5DB /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.0.0;
+			};
+		};
 		03BE72AE2DD221FE00DD7805 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -591,6 +631,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		031F025B2DEEEA7D0014D5DB /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 031F025A2DEEEA7D0014D5DB /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		031F025D2DEEEA7D0014D5DB /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 031F025A2DEEEA7D0014D5DB /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
+		};
 		03BE72AF2DD221FE00DD7805 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 03BE72AE2DD221FE00DD7805 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

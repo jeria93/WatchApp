@@ -10,12 +10,15 @@ import SwiftUI
                   
 struct ProfileView: View {
     @EnvironmentObject var authVM: AuthViewModel
+    @StateObject private var firestoreVM = FirestoreViewModel()
     @State private var showEditEmail = false
     @State private var showEditUsername = false
     @State private var showDeleteAccount = false
     @State private var showImagePicker = false
     @State private var selectedImage: UIImage?
 
+    @State private var selectedMovie: Movie?
+    
     var body: some View {
         ZStack{
             Color.BG
@@ -69,134 +72,82 @@ struct ProfileView: View {
                     }
                     .padding(.horizontal, 35)
                     .padding(.bottom, 20)
-                  
-                  VStack(alignment: .leading, spacing: 10) {
-                  Button(action: {
-                      showEditUsername = true
-                  }) {
-                      HStack(spacing: 10) {
-                          Image(systemName: "person")
-                              .resizable()
-                              .frame(width: 40, height: 40)
-                              .foregroundStyle(.white)
-                              .padding(.horizontal)
-                          VStack(alignment: .leading, spacing: 10) {
-                              Text("Username")
-                                  .foregroundStyle(.white)
-                                  .fontWeight(.semibold)
-                              Text(authVM.currentUsername ?? "No user")
-                                  .foregroundStyle(.white)
-                          }
-                      }
-                      .frame(maxWidth: .infinity, alignment: .leading)
-                      .padding()
-                      .background(Color.primary)
-                      .cornerRadius(10)
-                  }
-
-                  Button(action: {
-                      showEditEmail = true
-                  }) {
-                      HStack(spacing: 10) {
-                          Image(systemName: "envelope")
-                              .resizable()
-                              .frame(width: 40, height: 30)
-                              .foregroundStyle(.white)
-                              .padding(.horizontal)
-                          VStack(alignment: .leading, spacing: 10) {
-                              Text("Email")
-                                  .foregroundStyle(.white)
-                                  .fontWeight(.semibold)
-                              Text(authVM.user?.email ?? "No user")
-                                  .foregroundStyle(.white)
-                          }
-                      }
-                      .frame(maxWidth: .infinity, alignment: .leading)
-                      .padding()
-                      .background(Color.primary)
-                      .cornerRadius(10)
-                  }
-              }
-              .padding(.horizontal)
-                  
-                  
-                  ZStack {
-                    Image("popbox_white")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(maxWidth: .infinity, maxHeight: 500)
-                        .opacity(0.8)
-
-                    VStack{
-                        Text("Your Top 5")
-                            .foregroundStyle(.popcornYellow)
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .fontDesign(.rounded)
-                            .padding(.top)
-
-                        //Byt ut mot lista med personliga top 5 highest rated
-                        Image(systemName: "photo")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 60, height: 60)
-                            .foregroundStyle(.gray)
-
-                        HStack {
-                            Image(systemName: "photo")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 60, height: 60)
-                                .foregroundStyle(.gray)
-
-                            Image(systemName: "photo")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 60, height: 60)
-                                .foregroundStyle(.gray)
+                    
+                    
+                    VStack(alignment: .leading, spacing: 10) {
+                        Button(action: {
+                            showEditUsername = true
+                        }) {
+                            HStack(spacing: 10) {
+                                Image(systemName: "person")
+                                    .resizable()
+                                    .frame(width: 40, height: 40)
+                                    .foregroundStyle(.white)
+                                    .padding(.horizontal)
+                                VStack(alignment: .leading, spacing: 10) {
+                                    Text("Username")
+                                        .foregroundStyle(.white)
+                                        .fontWeight(.semibold)
+                                    Text(authVM.currentUsername ?? "No user")
+                                        .foregroundStyle(.white)
+                                }
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding()
+                            .background(Color.primary)
+                            .cornerRadius(10)
                         }
-                        .padding()
-
-                        HStack {
-                            Image(systemName: "photo")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 60, height: 60)
-                                .foregroundStyle(.gray)
-
-                            Image(systemName: "photo")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 60, height: 60)
-                                .foregroundStyle(.gray)
+                        
+                        Button(action: {
+                            showEditEmail = true
+                        }) {
+                            HStack(spacing: 10) {
+                                Image(systemName: "envelope")
+                                    .resizable()
+                                    .frame(width: 40, height: 30)
+                                    .foregroundStyle(.white)
+                                    .padding(.horizontal)
+                                VStack(alignment: .leading, spacing: 10) {
+                                    Text("Email")
+                                        .foregroundStyle(.white)
+                                        .fontWeight(.semibold)
+                                    Text(authVM.user?.email ?? "No user")
+                                        .foregroundStyle(.white)
+                                }
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding()
+                            .background(Color.primary)
+                            .cornerRadius(10)
                         }
                     }
-                    .padding()
-                }
-                .frame(maxWidth: .infinity)
-                  
-                HStack {
-                    Spacer()
-                    Button(action: {
-                        showDeleteAccount = true
-                    }) {
-                        HStack{
-                            Image(systemName: "trash")
-                                .resizable()
-                                .frame(width: 25, height: 25)
-                                .foregroundStyle(.red)
-                            Text("Delete Account")
-                                .foregroundStyle(.red)
+                    .padding(.horizontal)
+                    
+                    TopRatedMoviesListView(movies: firestoreVM.topRatedMovies, selectedMovie: $selectedMovie)
+                        .frame(maxWidth: .infinity)
+                    
+                    HStack {
+                        Spacer()
+                        Button(action: {
+                            showDeleteAccount = true
+                        }) {
+                            HStack{
+                                Image(systemName: "trash")
+                                    .resizable()
+                                    .frame(width: 25, height: 25)
+                                    .foregroundStyle(.red)
+                                Text("Delete Account")
+                                    .foregroundStyle(.red)
+                            }
+                            .padding()
                         }
-                        .padding()
+                        Spacer()
                     }
-                    Spacer()
                 }
+                .padding(.top, 44)
             }
-            .ignoresSafeArea(.all, edges: .top)
-            .padding(.top, 44)
-            }
-
+            .background(Color.BG)
+            
             if showEditEmail {
                 Color.black.opacity(0.4)
                     .ignoresSafeArea()
@@ -244,6 +195,13 @@ struct ProfileView: View {
                     .transition(.scale)
             }
         }
+        .sheet(item: $selectedMovie) { movie in
+            MovieDetailView(movie: movie, contentType: .movie)
+                .environmentObject(authVM)
+                .onDisappear {
+                    firestoreVM.fetchTopRatedMovies()
+                }
+        }
         .onAppear {
             selectedImage = loadSavedImage()
         }
@@ -264,6 +222,9 @@ struct EditUsernameView: View {
     @Binding var username: String?
     @EnvironmentObject var authVM: AuthViewModel
     @Binding var showModal: Bool
+            firestoreVM.fetchTopRatedMovies()
+        }
+    }
     
     var body: some View {
         VStack(spacing: 20){
@@ -279,52 +240,129 @@ struct EditUsernameView: View {
             .textFieldStyle(RoundedBorderTextFieldStyle())
             .padding()
             .foregroundStyle(.black)
+    struct TopRatedMoviesListView: View {
+        let movies: [Movie]
+        @Binding var selectedMovie: Movie?
         
-            HStack{
-                Button("Cancel") {
-                    withAnimation{
-                        showModal = false
-                    }
-                }
-                Button("Save") {
-                    authVM.updateUsername(newUsername: username ?? "") { success in
-                        if success {
-                            withAnimation{
-                                showModal = false
+        var body: some View {
+            ZStack {
+                Image("popbox_white")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(maxWidth: .infinity)
+                    .opacity(0.8)
+                    .padding(.top, 10)
+                
+                Spacer()
+                
+                VStack(spacing: 16){
+                    Text("Your Top 5")
+                        .foregroundStyle(.popcornYellow)
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .fontDesign(.rounded)
+                        .padding(.top, 94)
+                    
+                    if movies.isEmpty {
+                        Text("No rated movies yet")
+                            .font(.caption)
+                            .foregroundStyle(.gray)
+                            .padding(.vertical, 40)
+                    } else {
+                        if movies.count >= 1 {
+                            HStack(spacing: 16) {
+                                MovieItemView(movie: movies[0], selectedMovie: $selectedMovie)
+                                if movies.count >= 2 {
+                                    MovieItemView(movie: movies[1], selectedMovie: $selectedMovie)
+                                } else {
+                                    Spacer()
+                                }
                             }
+                            .padding(.horizontal)
+                        }
+                        
+                        if movies.count >= 3 {
+                            HStack(spacing: 16) {
+                                MovieItemView(movie: movies[2], selectedMovie: $selectedMovie)
+                                if movies.count >= 4 {
+                                    MovieItemView(movie: movies[3], selectedMovie: $selectedMovie)
+                                } else {
+                                    Spacer()
+                                }
+                            }
+                            .padding(.horizontal)
+                        }
+                        
+                        if movies.count >= 5 {
+                            HStack {
+                                Spacer()
+                                MovieItemView(movie: movies[4], selectedMovie: $selectedMovie)
+                                Spacer()
+                            }
+                            .padding(.horizontal)
                         }
                     }
                 }
-                .padding(.horizontal)
-                .background(.BG)
-                .foregroundStyle(.popcornYellow)
-                .cornerRadius(20)
-                .fontWeight(.semibold)
-    
+                .padding(.bottom, 5)
             }
         }
-        .frame(height: 300)
-        .background(.black)
-        .cornerRadius(20)
-        .shadow(radius: 10)
-        .padding()
     }
-}
-
-struct EditEmailView: View {
-    @State var newEmail: String
-    @EnvironmentObject var authVM: AuthViewModel
-    @Binding var showModal: Bool
-
-    var body: some View {
+               
+    struct MovieItemView: View {
+        let movie: Movie
+        @Binding var selectedMovie: Movie?
         
-        VStack(spacing: 20){
-            Text("Edit Email")
-                .font(.title2)
-                .foregroundStyle(.popcornYellow)
-                .fontWeight(.bold)
-            
-            TextField("Email", text: $newEmail)
+        var body: some View {
+                VStack(spacing: 4) {
+                    AsyncImage(url: movie.posterURLSmall) { image in
+                        image
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 80, height: 100)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                            .overlay(RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color.popcornYellow, lineWidth: 1))
+                    } placeholder: {
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(.gray.opacity(0.3))
+                            .frame(width: 80, height: 100)
+                            .overlay(Text("🍿"))
+                            .overlay(RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color.popcornYellow, lineWidth: 1))
+                    }
+                    
+                    Text(movie.title)
+                        .font(.caption)
+                        .foregroundStyle(.white)
+                        .lineLimit(1)
+                        .frame(maxWidth: 90)
+                    Text("\(movie.userRating)/5")
+                        .font(.caption2)
+                        .foregroundStyle(.popcornYellow)
+                }
+                
+                .onTapGesture {
+                    selectedMovie = movie
+                }
+            }
+    }
+    
+    struct EditUsernameView: View {
+        @Binding var username: String?
+        @EnvironmentObject var authVM: AuthViewModel
+        @Binding var showModal: Bool
+        
+        var body: some View {
+            VStack(spacing: 20){
+                Text("Edit Username")
+                    .font(.title2)
+                    .foregroundStyle(.popcornYellow)
+                    .fontWeight(.bold)
+                
+                Divider()
+                
+                TextField("Username", text: Binding(get: { username ?? "" },
+                                                    set: { username = $0.isEmpty ? nil : $0}))
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
                 .textContentType(.emailAddress)
@@ -368,28 +406,107 @@ struct EditEmailView: View {
         .shadow(radius: 10)
         .padding()
     }
-}
-
-struct DeleteAccountView: View {
-    @EnvironmentObject var authVM: AuthViewModel
-    @Binding var showModal: Bool
-    @State private var email: String = ""
-    @State private var password: String = ""
-    @State private var showReauthentication: Bool = false
     
-    var body: some View {
-        VStack(spacing: 20){
-            Text("Delete Account")
-                .font(.title2)
-                .foregroundStyle(.popcornYellow)
-                .fontWeight(.bold)
-            
-            if showReauthentication {
-                TextField("Email", text: $email)
+    struct EditEmailView: View {
+        @State var newEmail: String
+        @EnvironmentObject var authVM: AuthViewModel
+        @Binding var showModal: Bool
+    
+        var body: some View {
+            VStack(spacing: 20){
+                Text("Edit Email")
+                    .font(.title2)
+                    .foregroundStyle(.popcornYellow)
+                    .fontWeight(.bold)
+                
+                TextField("Email", text: $newEmail)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding(.horizontal)
                     .textContentType(.emailAddress)
                     .autocapitalization(.none)
+                
+                if let successMessage = authVM.successMessage {
+                    Text(successMessage)
+                        .foregroundStyle(.green)
+                        .padding()
+                }
+                
+                if let errorMessage = authVM.errorMessage {
+                    Text(errorMessage)
+                        .foregroundStyle(.red)
+                        .padding()
+                }
+                
+                HStack{
+                    Button("Cancel") {
+                        withAnimation{
+                            showModal = false
+                        }
+                    }
+                    Button("Save") {
+                        authVM.updateEmail(newEmail: newEmail) { success in
+                            if success {
+                            }
+                        }
+                    }
+                    .padding(.horizontal)
+                    .background(.BG)
+                    .foregroundStyle(.popcornYellow)
+                    .cornerRadius(20)
+                    .fontWeight(.semibold)
+                }
+            }
+            .frame(height: 300)
+            .background(.black)
+            .cornerRadius(20)
+            .shadow(radius: 10)
+            .padding()
+        }
+    }
+    
+    struct DeleteAccountView: View {
+        @EnvironmentObject var authVM: AuthViewModel
+        @Binding var showModal: Bool
+        @State private var email: String = ""
+        @State private var password: String = ""
+        @State private var showReauthentication: Bool = false
+        
+        var body: some View {
+            VStack(spacing: 20){
+                Text("Delete Account")
+                    .font(.title2)
+                    .foregroundStyle(.popcornYellow)
+                    .fontWeight(.bold)
+                
+                if showReauthentication {
+                    TextField("Email", text: $email)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .padding(.horizontal)
+                        .textContentType(.emailAddress)
+                        .autocapitalization(.none)
+                    
+                    SecureField("Password", text: $password)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .padding(.horizontal)
+                        .textContentType(.password)
+                } else{
+                    Text("Are you sure you want to delete your account? This action cannot be undone.")
+                        .foregroundStyle(.white)
+                        .multilineTextAlignment(.center)
+                        .padding()
+                }
+                
+                if let successMessage = authVM.successMessage {
+                    Text(successMessage)
+                        .foregroundStyle(.green)
+                        .padding()
+                }
+                
+                if let errorMessage = authVM.errorMessage {
+                    Text(errorMessage)
+                        .foregroundStyle(.red)
+                        .padding()
+                }
                 
                 SecureField("Password", text: $password)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -460,7 +577,7 @@ struct DeleteAccountView: View {
     }
 }
 
-#Preview {
-    ProfileView()
-        .environmentObject(AuthViewModel())
-}
+//#Preview {
+//    ProfileView()
+//        .environmentObject(AuthViewModel())
+//}
