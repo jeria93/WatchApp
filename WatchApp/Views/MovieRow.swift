@@ -88,6 +88,7 @@ struct MovieRow: View {
                         .buttonStyle(.plain)
                         .padding(.trailing, 10)
                         .disabled(isButtonDisabled)
+                        .disabled(authVM.user?.isAnonymous ?? true)
                     }
                 }
                 
@@ -244,6 +245,7 @@ struct MovieRow: View {
         }){
             MovieDetailView(movie: movie, contentType: contentType)
         }
+
     }
 }
 
