@@ -65,6 +65,8 @@
 		DD5C92992DDB7199009D633F /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5C92982DDB7199009D633F /* SplashScreenView.swift */; };
 		DDAD79B62DDCB2AD00C97EA6 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAD79B52DDCB2AD00C97EA6 /* SignUpView.swift */; };
 		DDAD79B82DDCF72C00C97EA6 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAD79B72DDCF72C00C97EA6 /* UserProfile.swift */; };
+		DDBAB45F2DEDD5A5000AC356 /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = DDBAB45E2DEDD5A5000AC356 /* Secrets.plist */; };
+		DDBAB4612DEDD5B0000AC356 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DDBAB4602DEDD5B0000AC356 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -123,6 +125,8 @@
 		DD5C92982DDB7199009D633F /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
 		DDAD79B52DDCB2AD00C97EA6 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		DDAD79B72DDCF72C00C97EA6 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		DDBAB45E2DEDD5A5000AC356 /* Secrets.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Secrets.plist; sourceTree = "<group>"; };
+		DDBAB4602DEDD5B0000AC356 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -189,7 +193,8 @@
 				DD5C92962DDB6FFB009D633F /* LaunchScreen.storyboard */,
 				5DEE6D792DDB2CF600C7DF1B /* Secrets.plist */,
 				03B7B2EE2DECE3DC006D038B /* FilterPickerView.swift */,
-				031F02582DEEE76C0014D5DB /* GoogleService-Info.plist */,
+				DDBAB45E2DEDD5A5000AC356 /* Secrets.plist */,
+				DDBAB4602DEDD5B0000AC356 /* GoogleService-Info.plist */,
 			);
 			path = WatchApp;
 			sourceTree = "<group>";
@@ -340,9 +345,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				03FA390A2DDB219D005F1EDC /* Assets.xcassets in Resources */,
-				031F02592DEEE76C0014D5DB /* GoogleService-Info.plist in Resources */,
+				DDBAB4612DEDD5B0000AC356 /* GoogleService-Info.plist in Resources */,
 				DD5C92972DDB6FFB009D633F /* LaunchScreen.storyboard in Resources */,
-				5DEE6D7A2DDB2CF600C7DF1B /* Secrets.plist in Resources */,
+				DDBAB45F2DEDD5A5000AC356 /* Secrets.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -552,7 +557,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.nicholasjeria.WatchApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Jonas.WatchApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -583,7 +588,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.nicholasjeria.WatchApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Jonas.WatchApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
