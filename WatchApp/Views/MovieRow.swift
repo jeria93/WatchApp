@@ -165,6 +165,7 @@ struct MovieRow: View {
                         .padding(.trailing, 8)
                     }
                 }
+                
             }
         }
         .frame(height: 120)

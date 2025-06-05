@@ -11,6 +11,7 @@ struct NavigationView: View {
     
     @State private var selection = 2
     @EnvironmentObject var authVM: AuthViewModel
+    @State private var showAlert = false
     
     var body: some View {
         NavigationStack {
@@ -38,6 +39,8 @@ struct NavigationView: View {
                         Label("Watchlist", systemImage: "bookmark.fill")
                     }
                     .tag(3)
+                    .disabled(authVM.user?.isAnonymous ?? true)
+                    .opacity(authVM.user?.isAnonymous ?? true ? 0.5 : 1.0)
                 
             
                     ProfileView()
@@ -47,11 +50,25 @@ struct NavigationView: View {
                             Text("Profile")
                         }
                         .tag(4)
+                        .disabled(authVM.user?.isAnonymous ?? true)
+                        .opacity(authVM.user?.isAnonymous ?? true ? 0.5 : 1.0)
                 }
+            .onChange(of: selection) { newSelection in
+                if authVM.user?.isAnonymous ?? true {
+                    if newSelection == 3 || newSelection == 4 {
+                        showAlert = true
+                    }
+                }
+            }
                 .onAppear() {
                     UITabBar.appearance().backgroundColor = .black
                     UITabBar.appearance().unselectedItemTintColor = .popcornYellow
                     UINavigationBar.appearance().barTintColor = UIColor(Color.BG)
+                }
+                .alert("Restricted Access", isPresented: $showAlert) {
+                    Button("OK") {}
+                } message: {
+                    Text("You must sign in with an account to access this feature.")
                 }
                 .toolbar{
                     ToolbarItem(placement: .topBarLeading) {
@@ -66,9 +83,7 @@ struct NavigationView: View {
                 }
                 .withLogoutButton(authVM: authVM)
                 .background(Color.BG.ignoresSafeArea(.all))
-                
             }
-        
     }
     
     private var navigationTitle: String {
