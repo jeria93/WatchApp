@@ -10,24 +10,91 @@ import SwiftUI
 struct PopularView: View {
     
     @State private var topFive: [Int: Double] = [:]
+    @State private var movies: [Movie] = []
     
     let firestore = FirestoreMovieService()
+    let tmdbService = TMDBService()
     
     var body: some View {
         
-        VStack {
-            ForEach(topFive.sorted(by: {$0.value > $1.value}).prefix(10), id: \.key) {
-                movieId, average in
-                Text("MovieId: \(movieId), Average Rating: \(String(format: "%.1f", average))")
-            }
-        }
-        .onAppear {
-            firestore.fetchTopAverage { result in
-            topFive = result }
+            VStack {
+                ForEach(movies, id: \.id) { movie in
+                    VStack {
+                        VStack(spacing: 4) {
+                            AsyncImage(url: movie.posterURLSmall) { image in
+                                image
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 80, height: 100)
+                                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                                    .overlay(RoundedRectangle(cornerRadius: 8)
+                                        .stroke(Color.popcornYellow, lineWidth: 1))
+                            } placeholder: {
+                                RoundedRectangle(cornerRadius: 8)
+                                    .fill(.gray.opacity(0.3))
+                                    .frame(width: 80, height: 100)
+                                    .overlay(Text("🍿"))
+                                    .overlay(RoundedRectangle(cornerRadius: 8)
+                                        .stroke(Color.popcornYellow, lineWidth: 1))
+                            }
+                        }
+                            
+                            Text(movie.title)
+                                .font(.caption)
+                                .foregroundStyle(.black)
+                                .lineLimit(1)
+                                .frame(maxWidth: 90)
+                            
+                            Text((String(format: "%.1f", movie.averageRating)))
+                                .font(.caption2)
+                                .foregroundStyle(.popcornYellow)
+                            
+                        }
+                    }
+                }
+                .onAppear {
+                    firestore.fetchTopAverage { result in
+                        topFive = result
+                        
+                        for (movieId, rating) in topFive.sorted(by: { $0.value > $1.value }).prefix(5) {
+                            
+                            Task {
+                                do {
+                                    let movieRaw = try await tmdbService.fetchMovieById(movieId)
+                                    var movie = Movie(from: movieRaw, userRating: 0)
+                                    movie.averageRating = rating
+                                    DispatchQueue.main.async {
+                                        self.movies.append(movie)
+                                    }
+                                } catch {
+                                    print("Error fetching movie: \(error)")
+                                }
+                            }
+                            
+                        }
+                        movies = []
+                    }
+                }
+            .background(Color.BG)
+            
         }
     }
-}
-
-#Preview {
-    PopularView()
-}
+    
+    
+    //        VStack {
+    //            ForEach(topFive.sorted(by: {$0.value > $1.value}).prefix(10), id: \.key) {
+    //                movieId, average in
+    //
+    //
+    //                Text("MovieId: \(movieId), Average Rating: \(String(format: "%.1f", average))")
+    //            }
+    //        }
+    //        .onAppear {
+    //
+    //            firestore.fetchTopAverage { result in
+    //            topFive = result }
+    //        }
+    
+    //#Preview {
+    //    PopularView()
+    //}

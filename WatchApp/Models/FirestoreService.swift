@@ -184,45 +184,7 @@ final class FirestoreMovieService {
             }
         }
     }
-
     
-//    func snapshotRatingsListener(ratedMovieId: Int, completion: @escaping (Int?) -> Void) {
-//        let ref = firestore.collection("ratedMovies").document("\(ratedMovieId)")
-//        ref.addSnapshotListener { snapshot, error in
-//            if let error = error {
-//                print("error listening \(error)")
-//                completion(nil)
-//            } else {
-//                if let document = snapshot, document.exists {
-//                    if let userRating = document.get("userRating") as? Int {
-//                        completion(userRating)
-//                    } else {
-//                        print("rating not found")
-//                        completion(nil)
-//                    }
-//                } else {
-//                    completion(nil)
-//                }
-//            }
-//        
-//        }
-//    }
-}
+    
 
-//    func createAverageRating(userId: String, ratedMovieId: Int, completion: @escaping (Double?) -> Void) {
-//        let collectionRef = firestore.collection("ratingsForAverage")
-//        let allRatings = collectionRef.getDocuments { (allMovies, error) in
-//
-//            if let error = error  {
-//                print("error fetching: \(error.localizedDescription)")
-//            } else {
-//                var allRating: [MyObject] = []
-//                for document in allMovies!.documents {
-//                    let data = document.data()
-//                    let ratedMovie = MyObject(data: data)
-//                    allRatings.append(ratedMovie)
-//                }
-//            }
-//
-//        }
-//    }
+}
