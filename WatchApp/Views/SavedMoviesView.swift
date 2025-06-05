@@ -11,6 +11,8 @@ struct SavedMoviesView: View {
     @StateObject private var viewModel = FirestoreViewModel()
     @State private var selectedType: ContentType = .movie
     @State private var showDeleteAllConfirmation = false
+    @State private var selectedMovie: Movie?
+    @State private var showRandomPicker = false
     @EnvironmentObject var authVM: AuthViewModel
     
     var body: some View {
@@ -28,7 +30,16 @@ struct SavedMoviesView: View {
                 .padding(.horizontal)
                 
                 HStack{
+                    Button(action: {
+                        showRandomPicker = true }) {
+                            Text("Pick Random")
+                                .foregroundStyle(.popcornYellow)
+                                .padding(.top, 4)
+                        }
+                        .padding(.horizontal)
+                        .disabled(viewModel.movies.filter { $0.contentType == selectedType }.isEmpty)
                     Spacer()
+                    
                     Button(action: {
                         showDeleteAllConfirmation = true
                     }) {
@@ -55,9 +66,7 @@ struct SavedMoviesView: View {
                                     Section(header: Text("Unwatched").foregroundStyle(.popcornYellow).font(.headline).padding(.top)) {
                                         ContentListView(movies: unwatched, contentType: selectedType, onSave: { movie in
                                             Task {
-                                                print("Bookmark toggled for movie: \(movie.title), id: \(movie.id)")
                                                 let wasRemoved = await viewModel.saveMovie(movie)
-                                                print("Bookmark result: wasRemoved = \(wasRemoved)")
                                                 await viewModel.fetchMovies()
                                             }
                                         },
@@ -72,9 +81,7 @@ struct SavedMoviesView: View {
                                         ContentListView(movies: watched,
                                                         contentType: selectedType, onSave: { movie in
                                             Task {
-                                                print("Bookmark toggled for movie: \(movie.title), id: \(movie.id)")
                                                 let wasRemoved = await viewModel.saveMovie(movie)
-                                                print("Bookmark result: wasRemoved = \(wasRemoved)")
                                                 await viewModel.fetchMovies()
                                             }
                                         },                   onDelete: nil,
@@ -103,7 +110,20 @@ struct SavedMoviesView: View {
             } message: {
                 Text("Are you sure you want to delete all saved content? This action cannot be undone.")
             }
-            
+            .sheet(isPresented: $showRandomPicker) {
+                RandomPickerView(movies: viewModel.movies.filter { $0.contentType == selectedType}, onSelect: { movie in
+                    selectedMovie = movie
+                showRandomPicker = false},
+                                 onCancel: {showRandomPicker = false }
+                )
+            }
+            .sheet(item: $selectedMovie) { movie in
+                MovieDetailView(movie: movie, contentType: movie.contentType)
+                    .environmentObject(authVM)
+                    .onDisappear {
+                        selectedMovie = nil
+                    }
+            }
             .task { await viewModel.fetchMovies() }
         }
     }

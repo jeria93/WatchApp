@@ -15,6 +15,7 @@ struct ContentListView: View {
     var onDelete: ((Int) -> Void)?
     let showWatchedButton: Bool
     let disableAfterSave: Bool
+    @EnvironmentObject var authVM: AuthViewModel
     
     var body: some View {
         ScrollView {
