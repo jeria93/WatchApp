@@ -20,7 +20,7 @@ struct Movie: Codable, Identifiable, Equatable, Hashable {
     var userRating = 0
     var isWatched: Bool = false
     var isSaved: Bool = false
-
+    var averageRating: Double = 0.0
     var tmdbURL: URL {
         URL(string: "https://www.themoviedb.org/movie/\(id)")!
     }
