@@ -11,4 +11,6 @@ struct UserProfile: Codable {
     let uid: String
     let email: String
     let username: String
+    var displayName: String?
+    var photoURL: String?
 }

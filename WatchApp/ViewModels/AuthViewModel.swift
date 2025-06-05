@@ -12,6 +12,8 @@ import GoogleSignIn
 import GoogleSignInSwift
 import FirebaseCore
 
+
+// final? mainactor?
 class AuthViewModel: ObservableObject {
     @Published var user: User?
     @Published var isSignedIn: Bool = false
@@ -20,8 +22,11 @@ class AuthViewModel: ObservableObject {
     @Published var successMessage: String?
     private var previousEmail: String?
 
-
+/// Google
     private let googleAuth = GoogleAuthManager.shared
+    @Published var displayName: String?
+    @Published var photoURL: String?
+
 
     var currentUserId: String? {
         return Auth.auth().currentUser?.uid
@@ -48,11 +53,15 @@ class AuthViewModel: ObservableObject {
                 self.previousEmail = newEmail
                 self.isSignedIn = true
                 self.fetchUsername(for: firebaseUser.uid)
+                self.displayName = firebaseUser.displayName
+                self.photoURL = firebaseUser.photoURL?.absoluteString
             } else {
                 self.user = nil
                 self.isSignedIn = false
                 self.currentUsername = nil
                 self.previousEmail = nil
+                self.displayName = nil
+                self.photoURL = nil
             }
         }
     }

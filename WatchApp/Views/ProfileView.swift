@@ -14,12 +14,12 @@ struct ProfileView: View {
     @State private var showEditUsername = false
     @State private var showDeleteAccount = false
     @State private var selectedMovie: Movie?
-    
+
     var body: some View {
         ZStack{
             Color.BG
                 .ignoresSafeArea(.all)
-            
+
             ScrollView {
                 VStack(alignment: .leading, spacing: 10){
                     HStack(alignment: .center, spacing: 10) {
@@ -29,21 +29,22 @@ struct ProfileView: View {
                             .font(.title)
                             .fontWeight(.bold)
                             .padding(.top, 85)
-                        
+
                         Spacer()
-                        
+
                         ZStack(alignment: .topTrailing) {
-                            Image(systemName: "photo.circle.fill")
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 120, height: 120)
-                                .clipShape(Circle())
-                                .background{
-                                    Circle()
-                                        .fill(Color(.systemGray6))
-                                        .frame(width: 128, height: 128)
-                                        .shadow(radius: 10)
-                                }
+                            ProfileImageView()
+//                            Image(systemName: "photo.circle.fill")
+//                                .resizable()
+//                                .scaledToFill()
+//                                .frame(width: 120, height: 120)
+//                                .clipShape(Circle())
+//                                .background{
+//                                    Circle()
+//                                        .fill(Color(.systemGray6))
+//                                        .frame(width: 128, height: 128)
+//                                        .shadow(radius: 10)
+//                                }
                             Image(systemName: "pencil")
                                 .imageScale(.small)
                                 .foregroundStyle(.red)
@@ -82,7 +83,7 @@ struct ProfileView: View {
                             .background(Color.primary)
                             .cornerRadius(10)
                         }
-                        
+
                         Button(action: {
                             showEditEmail = true
                         }) {
@@ -107,10 +108,10 @@ struct ProfileView: View {
                         }
                     }
                     .padding(.horizontal)
-                    
+
                     TopRatedMoviesListView(movies: firestoreVM.topRatedMovies, selectedMovie: $selectedMovie)
                         .frame(maxWidth: .infinity)
-                    
+
                     HStack {
                         Spacer()
                         Button(action: {
@@ -132,7 +133,7 @@ struct ProfileView: View {
                 .padding(.top, 44)
             }
             .background(Color.BG)
-            
+
             if showEditEmail {
                 Color.black.opacity(0.4)
                     .ignoresSafeArea()
@@ -141,7 +142,7 @@ struct ProfileView: View {
                             showEditEmail = false
                         }
                     }
-                
+
                 EditEmailView(
                     newEmail: authVM.user?.email ?? "",
                     showModal: $showEditEmail
@@ -149,7 +150,7 @@ struct ProfileView: View {
                 .environmentObject(authVM)
                 .transition(.scale)
             }
-            
+
             if showEditUsername {
                 Color.black.opacity(0.4)
                     .ignoresSafeArea()
@@ -158,7 +159,7 @@ struct ProfileView: View {
                             showEditUsername = false
                         }
                     }
-                
+
                 EditUsernameView(
                     username: Binding(get: {authVM.currentUsername}, set: { authVM.currentUsername = $0}),
                     showModal: $showEditUsername
@@ -174,7 +175,7 @@ struct ProfileView: View {
                             showDeleteAccount = false
                         }
                     }
-                
+
                 DeleteAccountView(showModal: $showDeleteAccount)
                     .environmentObject(authVM)
                     .transition(.scale)
@@ -191,11 +192,11 @@ struct ProfileView: View {
             firestoreVM.fetchTopRatedMovies()
         }
     }
-    
+
     struct TopRatedMoviesListView: View {
         let movies: [Movie]
         @Binding var selectedMovie: Movie?
-        
+
         var body: some View {
             ZStack {
                 Image("popbox_white")
@@ -204,9 +205,9 @@ struct ProfileView: View {
                     .frame(maxWidth: .infinity)
                     .opacity(0.8)
                     .padding(.top, 10)
-                
+
                 Spacer()
-                
+
                 VStack(spacing: 16){
                     Text("Your Top 5")
                         .foregroundStyle(.popcornYellow)
@@ -214,7 +215,7 @@ struct ProfileView: View {
                         .fontWeight(.bold)
                         .fontDesign(.rounded)
                         .padding(.top, 94)
-                    
+
                     if movies.isEmpty {
                         Text("No rated movies yet")
                             .font(.caption)
@@ -232,7 +233,7 @@ struct ProfileView: View {
                             }
                             .padding(.horizontal)
                         }
-                        
+
                         if movies.count >= 3 {
                             HStack(spacing: 16) {
                                 MovieItemView(movie: movies[2], selectedMovie: $selectedMovie)
@@ -244,7 +245,7 @@ struct ProfileView: View {
                             }
                             .padding(.horizontal)
                         }
-                        
+
                         if movies.count >= 5 {
                             HStack {
                                 Spacer()
@@ -259,66 +260,66 @@ struct ProfileView: View {
             }
         }
     }
-               
+
     struct MovieItemView: View {
         let movie: Movie
         @Binding var selectedMovie: Movie?
-        
+
         var body: some View {
-                VStack(spacing: 4) {
-                    AsyncImage(url: movie.posterURLSmall) { image in
-                        image
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 80, height: 100)
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
-                            .overlay(RoundedRectangle(cornerRadius: 8)
-                                .stroke(Color.popcornYellow, lineWidth: 1))
-                    } placeholder: {
-                        RoundedRectangle(cornerRadius: 8)
-                            .fill(.gray.opacity(0.3))
-                            .frame(width: 80, height: 100)
-                            .overlay(Text("🍿"))
-                            .overlay(RoundedRectangle(cornerRadius: 8)
-                                .stroke(Color.popcornYellow, lineWidth: 1))
-                    }
-                    
-                    Text(movie.title)
-                        .font(.caption)
-                        .foregroundStyle(.white)
-                        .lineLimit(1)
-                        .frame(maxWidth: 90)
-                    Text("\(movie.userRating)/5")
-                        .font(.caption2)
-                        .foregroundStyle(.popcornYellow)
+            VStack(spacing: 4) {
+                AsyncImage(url: movie.posterURLSmall) { image in
+                    image
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 80, height: 100)
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                        .overlay(RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.popcornYellow, lineWidth: 1))
+                } placeholder: {
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(.gray.opacity(0.3))
+                        .frame(width: 80, height: 100)
+                        .overlay(Text("🍿"))
+                        .overlay(RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.popcornYellow, lineWidth: 1))
                 }
-                
-                .onTapGesture {
-                    selectedMovie = movie
-                }
+
+                Text(movie.title)
+                    .font(.caption)
+                    .foregroundStyle(.white)
+                    .lineLimit(1)
+                    .frame(maxWidth: 90)
+                Text("\(movie.userRating)/5")
+                    .font(.caption2)
+                    .foregroundStyle(.popcornYellow)
             }
+
+            .onTapGesture {
+                selectedMovie = movie
+            }
+        }
     }
-    
+
     struct EditUsernameView: View {
         @Binding var username: String?
         @EnvironmentObject var authVM: AuthViewModel
         @Binding var showModal: Bool
-        
+
         var body: some View {
             VStack(spacing: 20){
                 Text("Edit Username")
                     .font(.title2)
                     .foregroundStyle(.popcornYellow)
                     .fontWeight(.bold)
-                
+
                 Divider()
-                
+
                 TextField("Username", text: Binding(get: { username ?? "" },
                                                     set: { username = $0.isEmpty ? nil : $0}))
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
                 .foregroundStyle(.black)
-            
+
                 HStack{
                     Button("Cancel") {
                         withAnimation{
@@ -339,7 +340,7 @@ struct ProfileView: View {
                     .foregroundStyle(.popcornYellow)
                     .cornerRadius(20)
                     .fontWeight(.semibold)
-        
+
                 }
             }
             .frame(height: 300)
@@ -349,37 +350,37 @@ struct ProfileView: View {
             .padding()
         }
     }
-    
+
     struct EditEmailView: View {
         @State var newEmail: String
         @EnvironmentObject var authVM: AuthViewModel
         @Binding var showModal: Bool
-    
+
         var body: some View {
             VStack(spacing: 20){
                 Text("Edit Email")
                     .font(.title2)
                     .foregroundStyle(.popcornYellow)
                     .fontWeight(.bold)
-                
+
                 TextField("Email", text: $newEmail)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
                     .textContentType(.emailAddress)
                     .autocapitalization(.none)
-                
+
                 if let successMessage = authVM.successMessage {
                     Text(successMessage)
                         .foregroundStyle(.green)
                         .padding()
                 }
-                
+
                 if let errorMessage = authVM.errorMessage {
                     Text(errorMessage)
                         .foregroundStyle(.red)
                         .padding()
                 }
-                
+
                 HStack{
                     Button("Cancel") {
                         withAnimation{
@@ -406,28 +407,28 @@ struct ProfileView: View {
             .padding()
         }
     }
-    
+
     struct DeleteAccountView: View {
         @EnvironmentObject var authVM: AuthViewModel
         @Binding var showModal: Bool
         @State private var email: String = ""
         @State private var password: String = ""
         @State private var showReauthentication: Bool = false
-        
+
         var body: some View {
             VStack(spacing: 20){
                 Text("Delete Account")
                     .font(.title2)
                     .foregroundStyle(.popcornYellow)
                     .fontWeight(.bold)
-                
+
                 if showReauthentication {
                     TextField("Email", text: $email)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding(.horizontal)
                         .textContentType(.emailAddress)
                         .autocapitalization(.none)
-                    
+
                     SecureField("Password", text: $password)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding(.horizontal)
@@ -438,19 +439,19 @@ struct ProfileView: View {
                         .multilineTextAlignment(.center)
                         .padding()
                 }
-                
+
                 if let successMessage = authVM.successMessage {
                     Text(successMessage)
                         .foregroundStyle(.green)
                         .padding()
                 }
-                
+
                 if let errorMessage = authVM.errorMessage {
                     Text(errorMessage)
                         .foregroundStyle(.red)
                         .padding()
                 }
-                
+
                 HStack{
                     Button("Cancel") {
                         withAnimation{
@@ -462,7 +463,7 @@ struct ProfileView: View {
                     .foregroundStyle(.popcornYellow)
                     .cornerRadius(20)
                     .fontWeight(.semibold)
-                    
+
                     Button("Delete") {
                         if showReauthentication {
                             authVM.deleteAccount(email: email, password: password) { success in
@@ -498,7 +499,7 @@ struct ProfileView: View {
     }
 }
 
-//#Preview {
-//    ProfileView()
-//        .environmentObject(AuthViewModel())
-//}
+#Preview {
+    ProfileView()
+        .environmentObject(AuthViewModel())
+}
