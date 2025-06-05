@@ -13,8 +13,7 @@ final class FirestoreMovieService {
     
     private let firestore = Firestore.firestore()
     private let tmdbService = TMDBService()
-    private let authVM = AuthViewModel()
-    
+
     /// Saves a movie to the `savedMovies` collection in Firestore
     func saveMovie(_ movie: Movie, userId: String) async throws {
         try firestore.collection("users").document(userId).collection("savedMovies").document("\(movie.id)").setData(from: movie)

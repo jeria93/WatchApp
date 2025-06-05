@@ -33,18 +33,9 @@ struct ProfileView: View {
                         Spacer()
 
                         ZStack(alignment: .topTrailing) {
+
                             ProfileImageView()
-//                            Image(systemName: "photo.circle.fill")
-//                                .resizable()
-//                                .scaledToFill()
-//                                .frame(width: 120, height: 120)
-//                                .clipShape(Circle())
-//                                .background{
-//                                    Circle()
-//                                        .fill(Color(.systemGray6))
-//                                        .frame(width: 128, height: 128)
-//                                        .shadow(radius: 10)
-//                                }
+
                             Image(systemName: "pencil")
                                 .imageScale(.small)
                                 .foregroundStyle(.red)
