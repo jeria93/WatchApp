@@ -52,7 +52,6 @@ struct NavigationView: View {
                     UITabBar.appearance().backgroundColor = .black
                     UITabBar.appearance().unselectedItemTintColor = .popcornYellow
                     UINavigationBar.appearance().barTintColor = UIColor(Color.BG)
-                    UINavigationBar.appearance().isTranslucent = false
                 }
                 .toolbar{
                     ToolbarItem(placement: .topBarLeading) {
