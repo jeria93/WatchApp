@@ -92,6 +92,7 @@ struct PopularView: View {
             .background(Color.BG)
             
         }
+        
     }
     }
     
