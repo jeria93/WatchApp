@@ -13,6 +13,8 @@ struct ProfileView: View {
     @State private var showEditEmail = false
     @State private var showEditUsername = false
     @State private var showDeleteAccount = false
+    @State private var showImagePicker = false
+    @State private var selectedImage: UIImage?
     @State private var selectedMovie: Movie?
     
     var body: some View {
@@ -33,27 +35,39 @@ struct ProfileView: View {
                         Spacer()
                         
                         ZStack(alignment: .topTrailing) {
-                            Image(systemName: "photo.circle.fill")
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 120, height: 120)
-                                .clipShape(Circle())
-                                .background{
-                                    Circle()
-                                        .fill(Color(.systemGray6))
-                                        .frame(width: 128, height: 128)
-                                        .shadow(radius: 10)
-                                }
-                            Image(systemName: "pencil")
-                                .imageScale(.small)
-                                .foregroundStyle(.red)
-                                .background{
-                                    Circle()
-                                        .fill(.white)
-                                        .frame(width: 32, height: 32)
-                                }
-                                .offset(x: -8, y: 10)
+                          if let image = selectedImage {
+                              Image(uiImage: image)
+                                  .resizable()
+                                  .scaledToFill()
+                                  .frame(width: 120, height: 120)
+                                  .clipShape(Circle())
+                          } else {
+                              Image(systemName: "photo.circle.fill")
+                                  .resizable()
+                                  .scaledToFill()
+                                  .frame(width: 120, height: 120)
+                                  .clipShape(Circle())
+                                  .foregroundStyle(.white)
+                          }
+                          
+                          Button {
+                                   showImagePicker = true
+                               } label: {
+                                   Image(systemName: "pencil")
+                                       .imageScale(.small)
+                                       .foregroundStyle(.red)
+                                       .background {
+                                           Circle()
+                                               .fill(.white)
+                                               .frame(width: 32, height: 32)
+                                       }
+                               }
+                               .offset(x: -8, y: 10)
+
                         }
+                        .sheet(isPresented: $showImagePicker) {
+                              ImagePicker(selectedImage: $selectedImage)
+                          }
                     }
                     .padding(.horizontal, 35)
                     .padding(.bottom, 20)
@@ -189,9 +203,22 @@ struct ProfileView: View {
         }
         .onAppear {
             firestoreVM.fetchTopRatedMovies()
+            selectedImage = loadSavedImage()
         }
     }
     
+  
+    func loadSavedImage() -> UIImage? {
+        let filename = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            .appendingPathComponent("selected_image.jpg")
+        if let data = try? Data(contentsOf: filename) {
+            return UIImage(data: data)
+        }
+        return nil
+    }
+
+  }
+
     struct TopRatedMoviesListView: View {
         let movies: [Movie]
         @Binding var selectedMovie: Movie?
@@ -496,9 +523,9 @@ struct ProfileView: View {
             .padding()
         }
     }
-}
 
-//#Preview {
-//    ProfileView()
-//        .environmentObject(AuthViewModel())
-//}
+
+#Preview {
+    ProfileView()
+        .environmentObject(AuthViewModel())
+}
