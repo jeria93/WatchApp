@@ -34,19 +34,27 @@ final class FirestoreMovieService {
         return doc.exists
     }
     
-    func addUserRating(ratedMovieId: Int, rating: Int) {
-        let ratedMovieId = ratedMovieId
-        let rating = rating
-            firestore.collection("ratedMovies").document("\(ratedMovieId)").setData(["rating": rating])
-            addRatingForAverage(ratedMovieId: ratedMovieId, rating: rating)
-    }
+//    func addUserRating(userId: String, ratedMovieId: Int, rating: Int) {
+//        let ratedMovieId = ratedMovieId
+//        let rating = rating
+//            firestore.collection("ratedMovies").document("\(ratedMovieId)").setData(["rating": rating])
+//        addRatingForAverage(userId: userId, ratedMovieId: ratedMovieId, rating: rating)
+//    }
     
     func addSignedInUserRating(userId: String, ratedMovieId: Int, rating: Int) {
         let userId = userId
         let ratedMovieId = ratedMovieId
         let rating = rating
         firestore.collection("users").document(userId).collection("ratedMovies").document("\(ratedMovieId)").setData(["rating": rating])
-        addRatingForAverage(ratedMovieId: ratedMovieId, rating: rating)
+        Task {
+            do {
+                let isSaved = try await isMovieSaved(id: ratedMovieId, userId: "userId")
+                try await firestore.collection("users").document(userId).collection("savedMovies").document("\(ratedMovieId)").updateData(["userRating": rating])
+            } catch {
+                print("not sparad")
+            }
+        }
+        addRatingForAverage(userId: userId, ratedMovieId: ratedMovieId, rating: rating)
     }
     
     func fetchUserRating(ratedMovieId: Int, completion: @escaping (Int?) -> Void){
@@ -94,16 +102,16 @@ final class FirestoreMovieService {
         return movies
     }
     
-    func addRatingForAverage(ratedMovieId: Int, rating: Int){
+    func addRatingForAverage(userId: String, ratedMovieId: Int, rating: Int){
         let documentRef = firestore.collection("ratingsForAverage").document("\(ratedMovieId)")
 
         documentRef.getDocument { (document, error) in
             if let document = document, document.exists {
                 let ratingsDb = document.data() ?? [:]
                 
-                if ratingsDb.keys.contains("rating"){
+                if ratingsDb.keys.contains("rating") && !ratingsDb.keys.contains(userId){
                     
-                    let suffix = ratingsDb.count + 1
+                    let suffix = userId
                     let newFieldName = "rating\(suffix)"
                     
                     documentRef.updateData([
@@ -140,8 +148,6 @@ final class FirestoreMovieService {
                 if !allRatings.isEmpty {
                     let sum = allRatings.reduce(0, +)
                     let average = Double(sum) / Double(allRatings.count)
-                    print("Alla betyg: \(allRatings)")
-                    print("Snittbetyg: \(average)")
                     completion(average)
                 } else {
                     completion(nil)
@@ -152,45 +158,32 @@ final class FirestoreMovieService {
             }
         }
     }
-
     
-    func snapshotRatingsListener(ratedMovieId: Int, completion: @escaping (Int?) -> Void) {
-        let ref = firestore.collection("ratedMovies").document("\(ratedMovieId)")
-        ref.addSnapshotListener { snapshot, error in
+    func fetchTopAverage(completion: @escaping ([Int: Double]) -> Void ) {
+        var topFive: [Int: Double] = [:]
+        let collectionRef = firestore.collection("ratingsForAverage")
+
+        collectionRef.getDocuments { (querySnapshot, error) in
             if let error = error {
-                print("error listening \(error)")
-                completion(nil)
+                print("Error getting documents: \(error.localizedDescription)")
             } else {
-                if let document = snapshot, document.exists {
-                    if let userRating = document.get("userRating") as? Int {
-                        completion(userRating)
-                    } else {
-                        print("rating not found")
-                        completion(nil)
+                for document in querySnapshot!.documents {
+                    if let movieId = Int(document.documentID) {
+                        self.fetchAverageRating(movieId: movieId) { average in
+                            if let average = average {
+                                topFive[movieId] = average
+                                
+                                if topFive.count == querySnapshot!.documents.count {
+                                    completion(topFive)
+                                }
+                            }
+                        }
                     }
-                } else {
-                    completion(nil)
                 }
             }
-        
         }
     }
-}
+    
+    
 
-//    func createAverageRating(userId: String, ratedMovieId: Int, completion: @escaping (Double?) -> Void) {
-//        let collectionRef = firestore.collection("ratingsForAverage")
-//        let allRatings = collectionRef.getDocuments { (allMovies, error) in
-//
-//            if let error = error  {
-//                print("error fetching: \(error.localizedDescription)")
-//            } else {
-//                var allRating: [MyObject] = []
-//                for document in allMovies!.documents {
-//                    let data = document.data()
-//                    let ratedMovie = MyObject(data: data)
-//                    allRatings.append(ratedMovie)
-//                }
-//            }
-//
-//        }
-//    }
+}

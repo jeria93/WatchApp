@@ -27,6 +27,8 @@ final class AuthViewModel: ObservableObject {
     @Published var photoURL: String?
 
 
+    @Published var isAnonymous: Bool = false
+    
     var currentUserId: String? {
         return Auth.auth().currentUser?.uid
     }
@@ -74,6 +76,9 @@ final class AuthViewModel: ObservableObject {
 
             if let firebaseUser = result?.user {
                 self?.errorMessage = nil
+                print("inloggad anonymt")
+                self?.isAnonymous = true
+                print(self?.isAnonymous ?? false)
             }
         }
     }
@@ -102,6 +107,7 @@ final class AuthViewModel: ObservableObject {
                     UserDefaults.standard.set(email, forKey: "savedEmail")
                     KeychainService.shared.save(password, forKey: "savedPassword")
                 }
+                self?.isAnonymous = false
             }
         }
     }

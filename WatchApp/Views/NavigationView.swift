@@ -17,7 +17,7 @@ struct NavigationView: View {
         NavigationStack {
             TabView(selection:$selection) {
                 VStack {
-                    Text("POPular movies (coming soon...)")
+                    PopularView()
                 }
                 .tabItem {
                     Image("pop_black_icon1x")
