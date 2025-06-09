@@ -62,12 +62,12 @@
 		A45A5F5B2DDF64E80092054A /* SavedMoviesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45A5F5A2DDF64E80092054A /* SavedMoviesView.swift */; };
 		A4A3BA662DE46676002BAADD /* MovieDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A3BA652DE46676002BAADD /* MovieDetailView.swift */; };
 		A4B100BD2DDCA7040032B48E /* NavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B100BC2DDCA7040032B48E /* NavigationView.swift */; };
+		A4E193F42DF6CB700073EE90 /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = DDBAB45E2DEDD5A5000AC356 /* Secrets.plist */; };
 		A4F921432DDF4CB8003B8C41 /* ContentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F921422DDF4CB8003B8C41 /* ContentType.swift */; };
 		DD5C92972DDB6FFB009D633F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD5C92962DDB6FFB009D633F /* LaunchScreen.storyboard */; };
 		DD5C92992DDB7199009D633F /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5C92982DDB7199009D633F /* SplashScreenView.swift */; };
 		DDAD79B62DDCB2AD00C97EA6 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAD79B52DDCB2AD00C97EA6 /* SignUpView.swift */; };
 		DDAD79B82DDCF72C00C97EA6 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAD79B72DDCF72C00C97EA6 /* UserProfile.swift */; };
-		DDBAB45F2DEDD5A5000AC356 /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = DDBAB45E2DEDD5A5000AC356 /* Secrets.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -92,7 +92,7 @@
 		03B7B2EE2DECE3DC006D038B /* FilterPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPickerView.swift; sourceTree = "<group>"; };
 		03B7B2F02DECE699006D038B /* ResultsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsHeaderView.swift; sourceTree = "<group>"; };
 		03B7B2F22DECE8E4006D038B /* DateFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFilterView.swift; sourceTree = "<group>"; };
-		03BE729E2DD21E3300DD7805 /* WatchApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WatchApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		03BE729E2DD21E3300DD7805 /* WatchApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = WatchApp.app; path = "/Users/davidkalitzki/Desktop/Skola/XCode/WatchApp/build/Debug-iphoneos/WatchApp.app"; sourceTree = "<absolute>"; };
 		03FA39042DDB219D005F1EDC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		03FA39052DDB219D005F1EDC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		03FA39082DDB219D005F1EDC /* WatchAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchAppApp.swift; sourceTree = "<group>"; };
@@ -167,17 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				03FA39092DDB219D005F1EDC /* WatchApp */,
-				03BE729F2DD21E3300DD7805 /* Products */,
-				A42D53D72DF6C4E3001818BD /* Recovered References */,
 			);
-			sourceTree = "<group>";
-		};
-		03BE729F2DD21E3300DD7805 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				03BE729E2DD21E3300DD7805 /* WatchApp.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		03FA39092DDB219D005F1EDC /* WatchApp */ = {
@@ -196,7 +186,7 @@
 				DD5C92962DDB6FFB009D633F /* LaunchScreen.storyboard */,
 				03B7B2EE2DECE3DC006D038B /* FilterPickerView.swift */,
 				5DD459C32DF0869100BA7A69 /* GoogleService-Info.plist */,
-				A42D53EB2DF6C5AE001818BD /* Secrets.plist */,
+				DDBAB45E2DEDD5A5000AC356 /* Secrets.plist */,
 			);
 			path = WatchApp;
 			sourceTree = "<group>";
@@ -275,14 +265,6 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		A42D53D72DF6C4E3001818BD /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-				DDBAB45E2DEDD5A5000AC356 /* Secrets.plist */,
-			);
-			name = "Recovered References";
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -343,7 +325,7 @@
 				03BE72AE2DD221FE00DD7805 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				031F025A2DEEEA7D0014D5DB /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 			);
-			productRefGroup = 03BE729F2DD21E3300DD7805 /* Products */;
+			productRefGroup = 03BE72952DD21E3300DD7805;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -357,11 +339,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A4E193F42DF6CB700073EE90 /* Secrets.plist in Resources */,
 				03FA390A2DDB219D005F1EDC /* Assets.xcassets in Resources */,
-				A42D53EC2DF6C5AE001818BD /* Secrets.plist in Resources */,
 				5DD459C42DF0869100BA7A69 /* GoogleService-Info.plist in Resources */,
 				DD5C92972DDB6FFB009D633F /* LaunchScreen.storyboard in Resources */,
-				DDBAB45F2DEDD5A5000AC356 /* Secrets.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
