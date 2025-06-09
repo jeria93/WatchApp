@@ -12,7 +12,8 @@ import GoogleSignIn
 import GoogleSignInSwift
 import FirebaseCore
 
-class AuthViewModel: ObservableObject {
+@MainActor
+final class AuthViewModel: ObservableObject {
     @Published var user: User?
     @Published var isSignedIn: Bool = false
     @Published var errorMessage: String?
@@ -20,8 +21,11 @@ class AuthViewModel: ObservableObject {
     @Published var successMessage: String?
     private var previousEmail: String?
 
-
+    /// Google
     private let googleAuth = GoogleAuthManager.shared
+    @Published var displayName: String?
+    @Published var photoURL: String?
+
 
     @Published var isAnonymous: Bool = false
     
@@ -50,11 +54,15 @@ class AuthViewModel: ObservableObject {
                 self.previousEmail = newEmail
                 self.isSignedIn = true
                 self.fetchUsername(for: firebaseUser.uid)
+                self.displayName = firebaseUser.displayName
+                self.photoURL = firebaseUser.photoURL?.absoluteString
             } else {
                 self.user = nil
                 self.isSignedIn = false
                 self.currentUsername = nil
                 self.previousEmail = nil
+                self.displayName = nil
+                self.photoURL = nil
             }
         }
     }
@@ -366,14 +374,25 @@ class AuthViewModel: ObservableObject {
 
     /// Initiates the Google-Sign-In flow and updates the local error state.
     func signInWithGoogle(from vc: UIViewController) {
-        googleAuth.signIn(presenting: vc) { [weak self] result in
-            switch result {
-            case .success:
-                self?.errorMessage = nil
-            case .failure(let error):
-                self?.errorMessage = error.localizedDescription
+        let googleRepo = GoogleAuthRepository()
+        Task {
+
+            do {
+                let userProfile = try await googleRepo.signInWithGoogle(from: vc)
+
+                self.currentUsername = userProfile.username
+                self.displayName = userProfile.displayName
+                self.photoURL = userProfile.photoURL
+                self.isSignedIn = true
+                self.user = User(uid: userProfile.uid, email: userProfile.email, isAnonymous: false)
+
+                print("Google Sign-in successful for: \(userProfile.username)")
+
+            } catch {
+
+                self.errorMessage = error.localizedDescription
+                print("Google Sign-in error: \(error.localizedDescription)")
             }
         }
     }
-
 }

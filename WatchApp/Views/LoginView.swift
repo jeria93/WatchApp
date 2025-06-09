@@ -18,7 +18,6 @@ struct LoginView: View {
     @State private var showSignUpSheet = false
     @State private var showResetPasswordSheet: Bool = false
 
-
     var body: some View {
         NavigationStack {
             ZStack {
@@ -195,14 +194,32 @@ struct LoginView: View {
                             .shadow(radius: 30)
                     }
                     .padding(.horizontal)
-
-                    GoogleSignInButton(scheme: .light, style: .wide) {
+                    
+                    Button(action: {
                         if let vc = UIApplication.shared.rootViewController {
                             authVM.signInWithGoogle(from: vc)
                         }
-                    }
+                    }) {
+                        ZStack{
+                            Image("google_sign_in")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(height: 50)
+                            
+                            Spacer()
+                            }
+                        }
                     .frame(height: 50)
                     .padding(.horizontal)
+                    
+
+//                    GoogleSignInButton(scheme: .light, style: .wide) {
+//                        if let vc = UIApplication.shared.rootViewController {
+//                            authVM.signInWithGoogle(from: vc)
+//                        }
+//                    }
+//                    .frame(height: 50)
+//                    .padding(.horizontal)
 
                 }
             }
