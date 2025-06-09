@@ -9,32 +9,32 @@ import SwiftUI
 
 struct SignUpView: View {
     @Environment(\.dismiss) var dismiss
-    @ObservedObject var authVM: AuthViewModel
-    
+    @EnvironmentObject var authVM: AuthViewModel
+
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var confirmPassword: String = ""
     @State private var username: String = ""
-  
+
     @State private var emailError: String?
     @State private var passwordError: String?
     @State private var confirmPasswordError: String?
     @State private var usernameError: String?
-    
+
     var body: some View {
         NavigationStack {
             ZStack {
                 Color.popcornYellow
                     .ignoresSafeArea(.all)
-                
+
                 VStack(spacing: 16) {
-                    
+
                     Text("Create Account")
                         .font(.title)
                         .fontWeight(.semibold)
-                    
+
                     VStack(spacing: 8) {
-                        
+
                         ClearableTextField(
                             title: "Email",
                             text: $email,
@@ -48,7 +48,7 @@ struct SignUpView: View {
                                 return nil
                             }
                         )
-                        
+
                         ClearableTextField(
                             title: "Password",
                             text: $password,
@@ -62,7 +62,7 @@ struct SignUpView: View {
                                 return nil
                             }
                         )
-                        
+
                         ClearableTextField(
                             title: "Confirm Password",
                             text: $confirmPassword,
@@ -74,7 +74,7 @@ struct SignUpView: View {
                                 return nil
                             }
                         )
-                        
+
                         ClearableTextField(
                             title: "Username",
                             text: $username,
@@ -84,21 +84,21 @@ struct SignUpView: View {
                             }
                         )
                     }
-                    
+
                     Button("JOIN!") {
                         SoundPlayer.play("pop")
                         emailError = nil
                         passwordError = nil
                         confirmPasswordError = nil
                         usernameError = nil
-                        
+
                         var isValid = true
-                        
+
                         if email.isEmpty {
                             emailError = "Email får inte vara tomt"
                             isValid = false
                         }
-                        
+
                         if password.isEmpty {
                             passwordError = "Lösenord krävs"
                             isValid = false
@@ -106,19 +106,19 @@ struct SignUpView: View {
                             passwordError = "Minst 6 tecken"
                             isValid = false
                         }
-                        
+
                         if confirmPassword != password {
                             confirmPasswordError = "Lösenorden matchar inte"
                             isValid = false
                         }
-                        
+
                         if username.isEmpty {
                             usernameError = "Användarnamn krävs"
                             isValid = false
                         }
-                        
+
                         guard isValid else { return }
-                        
+
                         authVM.signUpWithEmail(email: email, password: password, username: username) { success in
                             if success {
                                 dismiss()
@@ -131,7 +131,7 @@ struct SignUpView: View {
                     .font(.title3.bold())
                     .foregroundColor(.popcornYellow)
                     .cornerRadius(30)
-                    
+
                     Spacer()
                 }
                 .padding(.horizontal, 34)
@@ -147,16 +147,16 @@ struct SignUpView: View {
             }
         }
     }
-  
-  func isValidEmail(_ email: String) -> Bool {
-      let regex = #"^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"#
-      return NSPredicate(format: "SELF MATCHES %@", regex).evaluate(with: email)
-  }
+
+    func isValidEmail(_ email: String) -> Bool {
+        let regex = #"^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"#
+        return NSPredicate(format: "SELF MATCHES %@", regex).evaluate(with: email)
+    }
 }
 
 
 #Preview {
-    SignUpView(authVM: AuthViewModel())
+    SignUpView().environmentObject(AuthViewModel())
         .presentationDetents([.fraction(0.5)])
         .presentationDragIndicator(.visible)
 }

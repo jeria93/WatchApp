@@ -8,22 +8,22 @@
 import SwiftUI
 
 struct ResetPasswordView: View {
-    @ObservedObject var authVM: AuthViewModel
+    @EnvironmentObject var authVM: AuthViewModel
     @Environment(\.dismiss) var dismiss
     @State private var emailError: String?
     @State private var email: String = ""
-    
+
     var body: some View {
         NavigationStack {
             ZStack {
                 Color.popcornYellow
                     .ignoresSafeArea(.all)
-                
+
                 VStack() {
                     Text("Reset Password")
                         .font(.title)
                         .fontWeight(.semibold)
-                    
+
                     VStack(alignment: .leading, spacing: 8) {
                         ClearableTextField(
                             title: "Enter your Email",
@@ -35,14 +35,14 @@ struct ResetPasswordView: View {
                         .onChange(of: email) { newValue in
                             emailError = validateEmail(newValue)
                         }
-                        
+
                         if let successMessage = authVM.successMessage {
                             Text(successMessage)
                                 .foregroundStyle(.green)
                                 .font(.caption)
                                 .padding(.horizontal)
                         }
-                        
+
                         if let emailError = emailError {
                             Text(emailError)
                                 .foregroundStyle(.red)
@@ -50,14 +50,14 @@ struct ResetPasswordView: View {
                                 .padding(.horizontal)
                         }
                     }
-                    
+
                     VStack{
                         Text("A reset link will be sent to your email address.\nFollow instructions to reset your password, \nthen try login again. \nRemember password needs to contain atleast 6 characters.")
                     }
                     .fontDesign(.rounded)
                     .multilineTextAlignment(.center)
                     .fontWeight(.semibold)
-                    
+
                     Button(action: {
                         emailError = validateEmail(email)
                         if emailError == nil {
@@ -73,7 +73,7 @@ struct ResetPasswordView: View {
                             .cornerRadius(40)
                     }
                     .padding(.top)
-                    
+
                 }
                 .padding()
                 .toolbar {
@@ -83,28 +83,28 @@ struct ResetPasswordView: View {
                             dismiss()
                         }
                     }
-                    
+
                 }
             }
         }
     }
-    
-        private func validateEmail(_ email: String) -> String? {
-            if email.isEmpty {
-                return "Email is required"
-            } else if !isValidEmail(email) {
-                return "Invalid email format"
-            }
-            return nil
+
+    private func validateEmail(_ email: String) -> String? {
+        if email.isEmpty {
+            return "Email is required"
+        } else if !isValidEmail(email) {
+            return "Invalid email format"
         }
-        
-   private func isValidEmail(_ email: String) -> Bool {
+        return nil
+    }
+
+    private func isValidEmail(_ email: String) -> Bool {
         let regex = #"^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"#
         return NSPredicate(format: "SELF MATCHES %@", regex).evaluate(with: email)
     }
 }
 
 #Preview {
-    ResetPasswordView(authVM: AuthViewModel())
+    ResetPasswordView().environmentObject(AuthViewModel())
 }
 

@@ -174,7 +174,7 @@ struct LoginView: View {
                     }
                     .padding(.horizontal)
                     .sheet(isPresented: $showSignUpSheet) {
-                        SignUpView(authVM: authVM)
+                        SignUpView()
                             .presentationDetents([.fraction(0.5)])
                             .presentationDragIndicator(.visible)
                     }
@@ -224,7 +224,7 @@ struct LoginView: View {
                 }
             }
             .sheet(isPresented: $showResetPasswordSheet) {
-                ResetPasswordView(authVM: authVM)
+                ResetPasswordView()
                     .presentationDetents([.fraction(0.5)])
                     .presentationDragIndicator(.visible)
             }

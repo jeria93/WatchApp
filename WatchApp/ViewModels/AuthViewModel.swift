@@ -16,22 +16,21 @@ import FirebaseCore
 final class AuthViewModel: ObservableObject {
     @Published var user: User?
     @Published var isSignedIn: Bool = false
-    @Published var errorMessage: String?
-    @Published var currentUsername: String?
-    @Published var successMessage: String?
-    private var previousEmail: String?
+    @Published var isAnonymous: Bool = false
 
-    /// Google
-    private let googleAuth = GoogleAuthManager.shared
+    @Published var currentUsername: String?
     @Published var displayName: String?
     @Published var photoURL: String?
 
+    @Published var errorMessage: String?
+    @Published var successMessage: String?
 
-    @Published var isAnonymous: Bool = false
-    
-    var currentUserId: String? {
-        return Auth.auth().currentUser?.uid
-    }
+    // Google
+    @Published var isGoogleUser: Bool = false
+    private let googleAuth = GoogleAuthManager.shared
+
+    private var previousEmail: String?
+    var currentUserId: String? { Auth.auth().currentUser?.uid }
 
     init() {
         Auth.auth().addStateDidChangeListener { [weak self] _, firebaseUser in
@@ -56,6 +55,8 @@ final class AuthViewModel: ObservableObject {
                 self.fetchUsername(for: firebaseUser.uid)
                 self.displayName = firebaseUser.displayName
                 self.photoURL = firebaseUser.photoURL?.absoluteString
+                self.fetchUserProfile()
+                self.isGoogleUser = false
             } else {
                 self.user = nil
                 self.isSignedIn = false
@@ -86,27 +87,39 @@ final class AuthViewModel: ObservableObject {
     func signInWithEmail(email: String, password: String) {
         Auth.auth().signIn(withEmail: email, password: password) { [weak self] result, error in
             if let error = error {
-                self?.errorMessage = "Error signing in : \(error.localizedDescription)"
+                self?.errorMessage = "Error signing in: \(error.localizedDescription)"
                 return
             }
 
             if let firebaseUser = result?.user {
                 self?.errorMessage = nil
+                self?.photoURL = nil
+                self?.deleteAllDocumentsData()
 
                 if let newEmail = firebaseUser.email {
                     self?.updateEmailInFirestore(uid: firebaseUser.uid, newEmail: newEmail) { success in
                         if success {
-                            print("Email synced with firestore after signing in")
-                        }else {
+                            print("Email synced with Firestore after signing in")
+                        } else {
                             print("Failed to sync email after signed in")
                         }
                     }
-                }
 
+                    // Remove profile photoURL from Firestore (avoid overwriting with local)
+                    let docRef = Firestore.firestore().collection("users").document(firebaseUser.uid)
+                    docRef.updateData(["photoURL": FieldValue.delete()]) { error in
+                        if let error = error {
+                            print("Failed to remove photoURL for email user: \(error.localizedDescription)")
+                        } else {
+                            print("Removed photoURL for email user in Firestore.")
+                        }
+                    }
+                }
                 if UserDefaults.standard.bool(forKey: "rememberMe") {
                     UserDefaults.standard.set(email, forKey: "savedEmail")
                     KeychainService.shared.save(password, forKey: "savedPassword")
                 }
+
                 self?.isAnonymous = false
             }
         }
@@ -158,6 +171,7 @@ final class AuthViewModel: ObservableObject {
 
         docRef.getDocument { snapshot, error in
             if let error = error {
+                print("Error fetching username: \(error.localizedDescription)")
                 return
             }
 
@@ -376,22 +390,76 @@ final class AuthViewModel: ObservableObject {
     func signInWithGoogle(from vc: UIViewController) {
         let googleRepo = GoogleAuthRepository()
         Task {
-
             do {
                 let userProfile = try await googleRepo.signInWithGoogle(from: vc)
 
+                self.deleteAllDocumentsData()
                 self.currentUsername = userProfile.username
                 self.displayName = userProfile.displayName
                 self.photoURL = userProfile.photoURL
                 self.isSignedIn = true
                 self.user = User(uid: userProfile.uid, email: userProfile.email, isAnonymous: false)
+                self.isGoogleUser = true
 
                 print("Google Sign-in successful for: \(userProfile.username)")
-
             } catch {
-
                 self.errorMessage = error.localizedDescription
                 print("Google Sign-in error: \(error.localizedDescription)")
+            }
+        }
+    }
+
+    /// Fetches the current user's profile from Firestore and updates local properties.
+    func fetchUserProfile() {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+
+        let userRef = Firestore.firestore().collection("users").document(uid)
+        userRef.getDocument { snapshot, error in
+            if let error = error {
+                print("Error fetching user profile: \(error.localizedDescription)")
+                return
+            }
+
+            if let data = snapshot?.data() {
+                do {
+                    let userProfile = try Firestore.Decoder().decode(UserProfile.self, from: data)
+                    self.displayName = userProfile.displayName
+                    self.photoURL = userProfile.photoURL
+                    self.currentUsername = userProfile.username
+                    print("User profile fetched: \(userProfile.username)")
+                } catch {
+                    print("Error decoding user profile: \(error.localizedDescription)")
+                }
+            } else {
+                print("No user profile data found.")
+            }
+        }
+    }
+
+    /// Deletes all files in the user's Documents directory.
+    private func deleteAllDocumentsData() {
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        do {
+            let fileURLs = try FileManager.default.contentsOfDirectory(at: documentsDirectory, includingPropertiesForKeys: nil, options: [])
+            for fileURL in fileURLs {
+                try FileManager.default.removeItem(at: fileURL)
+                print("Deleted file: \(fileURL.lastPathComponent)")
+            }
+            print("Deleted all files in Documents directory!")
+        } catch {
+            print("Error deleting documents: \(error)")
+        }
+    }
+
+    /// Removes the `photoURL` field from the Firestore user document for the specified user ID.
+    /// Typically used when an email/password user logs in to ensure that any local profile image does not overwrite their profile.
+    private func removePhotoURLFromFirestore(for uid: String) {
+        let docRef = Firestore.firestore().collection("users").document(uid)
+        docRef.updateData(["photoURL": FieldValue.delete()]) { error in
+            if let error = error {
+                print("Failed to remove photoURL for email user: \(error.localizedDescription)")
+            } else {
+                print("Removed photoURL for email user in Firestore.")
             }
         }
     }
