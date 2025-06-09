@@ -88,6 +88,7 @@ struct MovieRow: View {
                         .buttonStyle(.plain)
                         .padding(.trailing, 10)
                         .disabled(isButtonDisabled)
+                        .disabled(authVM.user?.isAnonymous ?? true)
                     }
                 }
                 
@@ -96,37 +97,43 @@ struct MovieRow: View {
                     .lineLimit(3)
                     .foregroundColor(.white)
                 
-                HStack{
-                    Image("pop_white")
-                        .resizable()
-                        .frame(width: 20, height: 20)
-                        .opacity(movie.userRating >= 1 ? 1.0 : 0.2)
-                    Image("pop_white")
-                        .resizable()
-                        .frame(width: 20, height: 20)
-                        .opacity(movie.userRating >= 2 ? 1.0 : 0.2)
-                    Image("pop_white")
-                        .resizable()
-                        .frame(width: 20, height: 20)
-                        .opacity(movie.userRating >= 3 ? 1.0 : 0.2)
-                    Image("pop_white")
-                        .resizable()
-                        .frame(width: 20, height: 20)
-                        .opacity(movie.userRating >= 4 ? 1.0 : 0.2)
-                    Image("pop_white")
-                        .resizable()
-                        .frame(width: 20, height: 20)
-                        .opacity(movie.userRating >= 5 ? 1.0 : 0.2)
-                    
-                    Text(averageRating != nil ? "\(averageRating!, specifier: "%.1f")" : "")
-                        .fontWeight(.semibold)
-                        .padding(.horizontal)
-                        .background{
-                            Circle()
-                                .fill(Color(.popcornYellow))
-                                .frame(width: 30, height: 25)
-                                .shadow(radius: 10)
+                HStack(spacing: 6){
+                        Image("pop_white")
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                            .opacity(movie.userRating >= 1 ? 1.0 : 0.2)
+                        Image("pop_white")
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                            .opacity(movie.userRating >= 2 ? 1.0 : 0.2)
+                        Image("pop_white")
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                            .opacity(movie.userRating >= 3 ? 1.0 : 0.2)
+                        Image("pop_white")
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                            .opacity(movie.userRating >= 4 ? 1.0 : 0.2)
+                        Image("pop_white")
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                            .opacity(movie.userRating >= 5 ? 1.0 : 0.2)
+                        
+                        ZStack{
+                            Image("pop_black")
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 25, height: 20)
+                            
+                            Text(averageRating != nil ? "\(averageRating!, specifier: "%.1f")" : "")
+                                .font(.system(size: 12))
+                                .fontWeight(.semibold)
+                                .foregroundStyle(.white)
+                                .frame(maxWidth: .infinity, maxHeight: .infinity)
                         }
+                        .shadow(radius: 10)
+                        .offset(x: -25)
+                    
                         .onAppear{
                             firestore.fetchAverageRating(movieId: movie.id) { rating in
                                 DispatchQueue.main.async {
@@ -150,15 +157,16 @@ struct MovieRow: View {
                                 }
                             }
                         }) {
-                            Image(systemName: movie.isWatched ? "checkmark.circle.fill" : "circle")
+                            Image(movie.isWatched ? "logo_w_pop_face" : "logo_w_pop_vit_outline")
                                 .resizable()
-                                .frame(width: 15, height: 15)
-                                .foregroundStyle(movie.isWatched ? .green : .white)
+                                .frame(width: 25, height: 25)
+//                                .foregroundStyle(movie.isWatched ? .green : .white)
                         }
                         .buttonStyle(.plain)
                         .padding(.trailing, 8)
                     }
                 }
+                
             }
         }
         .frame(height: 120)
@@ -237,6 +245,7 @@ struct MovieRow: View {
         }){
             MovieDetailView(movie: movie, contentType: contentType)
         }
+
     }
 }
 
