@@ -95,22 +95,3 @@ struct PopularView: View {
         
     }
     }
-    
-    
-    //        VStack {
-    //            ForEach(topFive.sorted(by: {$0.value > $1.value}).prefix(10), id: \.key) {
-    //                movieId, average in
-    //
-    //
-    //                Text("MovieId: \(movieId), Average Rating: \(String(format: "%.1f", average))")
-    //            }
-    //        }
-    //        .onAppear {
-    //
-    //            firestore.fetchTopAverage { result in
-    //            topFive = result }
-    //        }
-    
-    //#Preview {
-    //    PopularView()
-    //}
