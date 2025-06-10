@@ -14,7 +14,7 @@ struct ClearableTextField: View {
     var keyboardType: UIKeyboardType = .default
     var autocapitalization: TextInputAutocapitalization = .never
     var validate: ((String) -> String?)? = nil
-    
+
     @State private var internalError: String?
 
     var body: some View {
@@ -24,7 +24,7 @@ struct ClearableTextField: View {
                     if isSecure {
                         SecureField(title, text: $text)
                     } else {
-                          TextField(title, text: $text)
+                        TextField(title, text: $text)
                             .keyboardType(keyboardType)
                             .textInputAutocapitalization(autocapitalization)
                     }
@@ -51,11 +51,23 @@ struct ClearableTextField: View {
             }
 
             if let error = internalError, !error.isEmpty {
-              Text(error)
-                  .foregroundColor(.red)
-                  .font(.caption)
-                  .padding(.leading, 4)
+                Text(error)
+                    .foregroundColor(.red)
+                    .font(.caption)
+                    .padding(.leading, 4)
             }
         }
     }
+}
+
+#Preview {
+    ClearableTextField(
+        title: "Email",
+        text: .constant(
+            "example@example.com"
+        ),
+        validate: { input in
+            input.isEmpty ? "Required" : nil
+        })
+    .padding()
 }
