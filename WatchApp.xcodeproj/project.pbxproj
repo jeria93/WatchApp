@@ -39,6 +39,10 @@
 		03FA39162DDB221F005F1EDC /* TMDBService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA39152DDB221F005F1EDC /* TMDBService.swift */; };
 		03FA391A2DDB234E005F1EDC /* MovieViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA39192DDB234E005F1EDC /* MovieViewModel.swift */; };
 		03FA391C2DDB23C0005F1EDC /* MovieListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA391B2DDB23C0005F1EDC /* MovieListView.swift */; };
+		5D0A40C62DF86E24008BB6AC /* TopRatedMoviesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0A40C52DF86E24008BB6AC /* TopRatedMoviesListView.swift */; };
+		5D0A40C82DF86E94008BB6AC /* EditUsernameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0A40C72DF86E94008BB6AC /* EditUsernameView.swift */; };
+		5D0A40CA2DF86EBA008BB6AC /* EditEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0A40C92DF86EBA008BB6AC /* EditEmailView.swift */; };
+		5D0A40CC2DF86EDB008BB6AC /* DeleteAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0A40CB2DF86EDB008BB6AC /* DeleteAccountView.swift */; };
 		5D0D0C3E2DDB663300FC4499 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0D0C3D2DDB663300FC4499 /* AuthViewModel.swift */; };
 		5D0D0C402DDB665800FC4499 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0D0C3F2DDB665800FC4499 /* LoginView.swift */; };
 		5D7295312DE48E140067360A /* ResetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7295302DE48E140067360A /* ResetPasswordView.swift */; };
@@ -100,6 +104,10 @@
 		03FA39152DDB221F005F1EDC /* TMDBService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDBService.swift; sourceTree = "<group>"; };
 		03FA39192DDB234E005F1EDC /* MovieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewModel.swift; sourceTree = "<group>"; };
 		03FA391B2DDB23C0005F1EDC /* MovieListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListView.swift; sourceTree = "<group>"; };
+		5D0A40C52DF86E24008BB6AC /* TopRatedMoviesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopRatedMoviesListView.swift; sourceTree = "<group>"; };
+		5D0A40C72DF86E94008BB6AC /* EditUsernameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUsernameView.swift; sourceTree = "<group>"; };
+		5D0A40C92DF86EBA008BB6AC /* EditEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditEmailView.swift; sourceTree = "<group>"; };
+		5D0A40CB2DF86EDB008BB6AC /* DeleteAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountView.swift; sourceTree = "<group>"; };
 		5D0D0C3D2DDB663300FC4499 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		5D0D0C3F2DDB665800FC4499 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		5D7295302DE48E140067360A /* ResetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordView.swift; sourceTree = "<group>"; };
@@ -262,6 +270,10 @@
 				A44144562DF17D6500BCEBE4 /* PopularMovieItemView.swift */,
 				037219C42DF1A02900A2942E /* ProfileImageView.swift */,
 				5DD459BF2DF071D900BA7A69 /* RandomPickerView.swift */,
+				5D0A40C52DF86E24008BB6AC /* TopRatedMoviesListView.swift */,
+				5D0A40C72DF86E94008BB6AC /* EditUsernameView.swift */,
+				5D0A40C92DF86EBA008BB6AC /* EditEmailView.swift */,
+				5D0A40CB2DF86EDB008BB6AC /* DeleteAccountView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -366,6 +378,7 @@
 				0377633C2DDBBFD000777B8C /* EmptyStateView.swift in Sources */,
 				03FA39162DDB221F005F1EDC /* TMDBService.swift in Sources */,
 				A45A5F572DDF64910092054A /* ErrorView.swift in Sources */,
+				5D0A40CC2DF86EDB008BB6AC /* DeleteAccountView.swift in Sources */,
 				0377633E2DDBCB0300777B8C /* SearchBarView.swift in Sources */,
 				03A50E032DE49105004DFF62 /* ContentTypePickerView.swift in Sources */,
 				A44144572DF17D6500BCEBE4 /* PopularMovieItemView.swift in Sources */,
@@ -376,11 +389,13 @@
 				037219C52DF1A02900A2942E /* ProfileImageView.swift in Sources */,
 				03B4CD022DE5E9EA0086EE17 /* CrewCredit.swift in Sources */,
 				A45A5F4D2DDF631F0092054A /* ContentMapper.swift in Sources */,
+				5D0A40CA2DF86EBA008BB6AC /* EditEmailView.swift in Sources */,
 				0377633A2DDBBCD300777B8C /* MovieRow.swift in Sources */,
 				03B7B2EF2DECE3DC006D038B /* FilterPickerView.swift in Sources */,
 				A45A5F552DDF64790092054A /* EmptySavedContentView.swift in Sources */,
 				03FA391C2DDB23C0005F1EDC /* MovieListView.swift in Sources */,
 				03FA390D2DDB219D005F1EDC /* ContentView.swift in Sources */,
+				5D0A40C62DF86E24008BB6AC /* TopRatedMoviesListView.swift in Sources */,
 				5D0D0C402DDB665800FC4499 /* LoginView.swift in Sources */,
 				5D81BD1C2DE5B8050059346F /* KeychainService.swift in Sources */,
 				03FA390E2DDB219D005F1EDC /* WatchAppApp.swift in Sources */,
@@ -396,6 +411,7 @@
 				03B4CD002DE5E6CF0086EE17 /* Person.swift in Sources */,
 				A45A5F5B2DDF64E80092054A /* SavedMoviesView.swift in Sources */,
 				5D0D0C3E2DDB663300FC4499 /* AuthViewModel.swift in Sources */,
+				5D0A40C82DF86E94008BB6AC /* EditUsernameView.swift in Sources */,
 				DDAD79B82DDCF72C00C97EA6 /* UserProfile.swift in Sources */,
 				03FA39142DDB2206005F1EDC /* SecretManager.swift in Sources */,
 				03FA391A2DDB234E005F1EDC /* MovieViewModel.swift in Sources */,
