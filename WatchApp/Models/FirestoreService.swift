@@ -88,13 +88,14 @@ final class FirestoreMovieService {
     
     func fetchTopRatedMovies(userId: String, limit: Int = 5) async throws -> [Movie] {
         let ratings = try await fetchAllUserRatings(userId: userId)
-        let sortedRatings = ratings.sorted { $0.rating > $1.rating}.prefix(limit)
+        let sortedRatings = ratings.sorted { $0.rating > $1.rating }
         var movies: [Movie] = []
         for rating in sortedRatings {
             do{
                 let movieRaw = try await tmdbService.fetchMovieById(rating.movieId)
                 var movie = Movie(from: movieRaw, userRating: rating.rating)
                 movies.append(movie)
+                if movies.count >= limit { break }
             }catch {
                 print("Error fetching movie \(rating.movieId): \(error)")
             }
@@ -109,10 +110,9 @@ final class FirestoreMovieService {
             if let document = document, document.exists {
                 let ratingsDb = document.data() ?? [:]
                 
-                if ratingsDb.keys.contains("rating") && !ratingsDb.keys.contains(userId){
+                if ratingsDb.keys.contains("rating") && !ratingsDb.keys.contains("rating\(userId)"){
                     
-                    let suffix = userId
-                    let newFieldName = "rating\(suffix)"
+                    let newFieldName = "rating\(userId)"
                     
                     documentRef.updateData([
                         newFieldName: rating
@@ -173,7 +173,7 @@ final class FirestoreMovieService {
                             if let average = average {
                                 topFive[movieId] = average
                                 
-                                if topFive.count == querySnapshot!.documents.count {
+                                if topFive.count == min(5, querySnapshot!.documents.count) {
                                     completion(topFive)
                                 }
                             }
@@ -183,7 +183,4 @@ final class FirestoreMovieService {
             }
         }
     }
-    
-    
-
 }

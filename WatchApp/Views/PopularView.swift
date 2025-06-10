@@ -11,6 +11,7 @@ struct PopularView: View {
     
     @State private var topFive: [Int: Double] = [:]
     @State private var movies: [Movie] = []
+    @State private var selectedMovie: Movie?
     
     let firestore = FirestoreMovieService()
     let tmdbService = TMDBService()
@@ -62,7 +63,9 @@ struct PopularView: View {
                             .font(.headline)
                             .foregroundStyle(Color.popcornYellow)
                     }
-                    
+                    .onTapGesture {
+                        selectedMovie = movie
+                    }
                 }
             }
             .padding(8)
@@ -84,17 +87,17 @@ struct PopularView: View {
                                 print("Error fetching movie: \(error)")
                             }
                         }
-                        
                     }
                     movies = []
                 }
             }
             .background(Color.BG)
-            
         }
-        
+        .sheet(item: $selectedMovie) { movie in
+            MovieDetailView(movie: movie, contentType: .movie)
+        }
     }
-    }
+}
     
     
     //        VStack {

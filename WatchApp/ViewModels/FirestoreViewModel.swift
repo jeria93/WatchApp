@@ -16,6 +16,7 @@ final class FirestoreViewModel: ObservableObject {
     @Published var showUndoMessage: Bool = false
     @Published var lastDeletedMovie: Movie?
     @Published var topRatedMovies: [Movie] = []
+    private var isFetchingTopRated = false
     
     private let firestoreService = FirestoreMovieService()
     
@@ -104,20 +105,23 @@ final class FirestoreViewModel: ObservableObject {
     }
     
     func fetchTopRatedMovies() {
-        guard let userId = Auth.auth().currentUser?.uid else {
+        guard let userId = Auth.auth().currentUser?.uid, !isFetchingTopRated else {
             topRatedMovies = []
             return
         }
         
+        isFetchingTopRated = true
         Task {
             do{
-                let movies = try await firestoreService.fetchTopRatedMovies(userId: userId)
-                topRatedMovies = movies
-                print("Fetched top 5 movies: \(movies.map { ($0.title, $0.userRating) })")
+                let movies = try await firestoreService.fetchTopRatedMovies(userId: userId, limit: 5)
+                let userRatedMovies = Array(Set(movies.prefix(5)))
+                topRatedMovies = userRatedMovies.count > 5 ? Array(userRatedMovies.prefix(5)) : userRatedMovies
+                print("Fetched top 5 movies: \(topRatedMovies.map { ($0.title, $0.userRating) })")
             } catch {
                 print("Error fetching top rated movies: \(error)")
                 topRatedMovies = []
             }
+            isFetchingTopRated = false
         }
     }
 }

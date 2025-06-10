@@ -129,11 +129,12 @@ struct ProfileView: View {
                 .environmentObject(authVM)
                 .onDisappear {
                     firestoreVM.fetchTopRatedMovies()
+                    
                 }
         }
         .onAppear {
-            firestoreVM.fetchTopRatedMovies()
-            selectedImage = loadSavedImage()
+                firestoreVM.fetchTopRatedMovies() 
+                selectedImage = loadSavedImage()
         }
     }
 
@@ -203,17 +204,22 @@ struct TopRatedMoviesListView: View {
                         .foregroundStyle(.gray)
                         .padding(.vertical, 40)
                 } else {
-                    ForEach(0..<min(movies.count, 5), id: \.self) { index in
-                        HStack(spacing: 16) {
-                            MovieItemView(movie: movies[index], selectedMovie: $selectedMovie)
-                            if index % 2 == 0 && index + 1 < movies.count {
-                                MovieItemView(movie: movies[index + 1], selectedMovie: $selectedMovie)
-                            } else {
-                                Spacer()
+                    VStack(spacing: 8){
+                        LazyVGrid(columns: [GridItem(.fixed(100)), GridItem(.fixed(100))], spacing: 8) {
+                            ForEach(movies.prefix(4), id: \.id) { movie in
+                                MovieItemView(movie: movie, selectedMovie: $selectedMovie)
+                                    .frame(width: 100, height: 150)
                             }
                         }
-                        .padding(.horizontal)
+                        .padding(.horizontal, 20)
+                        
+                        if movies.count > 4 {
+                            MovieItemView(movie: movies[4], selectedMovie: $selectedMovie)
+                                .frame(width: 100, height: 150)
+                                .padding(.top, 8)
+                        }
                     }
+                    .frame(maxWidth: .infinity, alignment: .center)
                 }
             }
             .padding(.bottom, 5)

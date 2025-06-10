@@ -60,9 +60,10 @@ struct RandomPickerView: View {
                                 .padding(.top, 90)
                         }
                     } else{
-                        Text(unwatchedMovies.isEmpty ? "No unwatched movies available" : "No movies available")
-                            .foregroundStyle(.gray)
+                        Text(unwatchedMovies.isEmpty ? "No unwatched\nmovies available" : "No movies available")
+                            .foregroundStyle(.red)
                             .font(.title3)
+                            .multilineTextAlignment(.center)
                             .zIndex(0)
                     }
                     
