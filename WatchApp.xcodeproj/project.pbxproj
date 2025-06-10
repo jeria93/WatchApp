@@ -83,6 +83,7 @@
 		0377633B2DDBBFD000777B8C /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
 		0377633D2DDBCB0300777B8C /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
 		03908DAD2DDC8F690008C202 /* FirestoreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreViewModel.swift; sourceTree = "<group>"; };
+		039690DD2DF8110A00D78ACB /* WatchApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WatchApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		03A50DFE2DE46E4E004DFF62 /* Genre.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Genre.swift; sourceTree = "<group>"; };
 		03A50E002DE47534004DFF62 /* GenrePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenrePickerView.swift; sourceTree = "<group>"; };
 		03A50E022DE49105004DFF62 /* ContentTypePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentTypePickerView.swift; sourceTree = "<group>"; };
@@ -92,7 +93,6 @@
 		03B7B2EE2DECE3DC006D038B /* FilterPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPickerView.swift; sourceTree = "<group>"; };
 		03B7B2F02DECE699006D038B /* ResultsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsHeaderView.swift; sourceTree = "<group>"; };
 		03B7B2F22DECE8E4006D038B /* DateFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFilterView.swift; sourceTree = "<group>"; };
-		03BE729E2DD21E3300DD7805 /* WatchApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = WatchApp.app; path = "/Users/davidkalitzki/Desktop/Skola/XCode/WatchApp/build/Debug-iphoneos/WatchApp.app"; sourceTree = "<absolute>"; };
 		03FA39042DDB219D005F1EDC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		03FA39052DDB219D005F1EDC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		03FA39082DDB219D005F1EDC /* WatchAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchAppApp.swift; sourceTree = "<group>"; };
@@ -167,6 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				03FA39092DDB219D005F1EDC /* WatchApp */,
+				039690DD2DF8110A00D78ACB /* WatchApp.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -293,7 +294,7 @@
 				031F025D2DEEEA7D0014D5DB /* GoogleSignInSwift */,
 			);
 			productName = WatchApp;
-			productReference = 03BE729E2DD21E3300DD7805 /* WatchApp.app */;
+			productReference = 039690DD2DF8110A00D78ACB /* WatchApp.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
