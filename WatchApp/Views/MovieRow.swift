@@ -120,15 +120,15 @@ struct MovieRow: View {
                             .opacity(movie.userRating >= 5 ? 1.0 : 0.2)
                         
                         ZStack{
-                            Image("pop_black")
+                            Image("pop_white")
                                 .resizable()
                                 .scaledToFill()
-                                .frame(width: 25, height: 20)
+                                .frame(width: 35, height: 30)
                             
                             Text(averageRating != nil ? "\(averageRating!, specifier: "%.1f")" : "")
                                 .font(.system(size: 12))
                                 .fontWeight(.semibold)
-                                .foregroundStyle(.white)
+                                .foregroundStyle(.black)
                                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                         }
                         .shadow(radius: 10)

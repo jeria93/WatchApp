@@ -34,13 +34,6 @@ final class FirestoreMovieService {
         return doc.exists
     }
     
-//    func addUserRating(userId: String, ratedMovieId: Int, rating: Int) {
-//        let ratedMovieId = ratedMovieId
-//        let rating = rating
-//            firestore.collection("ratedMovies").document("\(ratedMovieId)").setData(["rating": rating])
-//        addRatingForAverage(userId: userId, ratedMovieId: ratedMovieId, rating: rating)
-//    }
-    
     func addSignedInUserRating(userId: String, ratedMovieId: Int, rating: Int) {
         let userId = userId
         let ratedMovieId = ratedMovieId

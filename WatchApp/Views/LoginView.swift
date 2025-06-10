@@ -174,9 +174,7 @@ struct LoginView: View {
                     }
                     .padding(.horizontal)
                     .sheet(isPresented: $showSignUpSheet) {
-                        SignUpView(authVM: authVM)
-                            .presentationDetents([.fraction(0.5)])
-                            .presentationDragIndicator(.visible)
+                        SignUpView()
                     }
 
                     Button(action: {
@@ -211,20 +209,10 @@ struct LoginView: View {
                         }
                     .frame(height: 50)
                     .padding(.horizontal)
-                    
-
-//                    GoogleSignInButton(scheme: .light, style: .wide) {
-//                        if let vc = UIApplication.shared.rootViewController {
-//                            authVM.signInWithGoogle(from: vc)
-//                        }
-//                    }
-//                    .frame(height: 50)
-//                    .padding(.horizontal)
-
                 }
             }
             .sheet(isPresented: $showResetPasswordSheet) {
-                ResetPasswordView(authVM: authVM)
+                ResetPasswordView()
                     .presentationDetents([.fraction(0.5)])
                     .presentationDragIndicator(.visible)
             }

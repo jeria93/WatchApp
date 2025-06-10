@@ -35,7 +35,19 @@ struct ProfileView: View {
                         Spacer()
 
                         ZStack(alignment: .topTrailing) {
-                            if let image = selectedImage {
+                            if authVM.isGoogleUser, let photoURL = authVM.photoURL, let url = URL(string: photoURL) {
+                                AsyncImage(url: url) { image in
+                                    image.resizable()
+                                        .scaledToFill()
+                                        .frame(width: 120, height: 120)
+                                        .clipShape(Circle())
+                                } placeholder: {
+                                    Circle()
+                                        .fill(.gray)
+                                        .frame(width: 120, height: 120)
+                                        .overlay(Text("🤷‍♂️"))
+                                }
+                            } else if let image = selectedImage {
                                 Image(uiImage: image)
                                     .resizable()
                                     .scaledToFill()
@@ -45,19 +57,21 @@ struct ProfileView: View {
                                 ProfileImageView()
                             }
 
-                            Button {
-                                showImagePicker = true
-                            } label: {
-                                Image(systemName: "pencil")
-                                    .imageScale(.small)
-                                    .foregroundStyle(.red)
-                                    .background {
-                                        Circle()
-                                            .fill(.white)
-                                            .frame(width: 32, height: 32)
-                                    }
+                            if !authVM.isGoogleUser {
+                                Button {
+                                    showImagePicker = true
+                                } label: {
+                                    Image(systemName: "pencil")
+                                        .imageScale(.small)
+                                        .foregroundStyle(.red)
+                                        .background {
+                                            Circle()
+                                                .fill(.white)
+                                                .frame(width: 32, height: 32)
+                                        }
+                                }
+                                .offset(x: -8, y: 10)
                             }
-                            .offset(x: -8, y: 10)
                         }
                         .sheet(isPresented: $showImagePicker) {
                             ImagePicker(selectedImage: $selectedImage)
@@ -76,6 +90,7 @@ struct ProfileView: View {
                         }
                     }
                     .padding(.horizontal)
+
 
                     TopRatedMoviesListView(movies: firestoreVM.topRatedMovies, selectedMovie: $selectedMovie)
                         .frame(maxWidth: .infinity)
@@ -133,8 +148,10 @@ struct ProfileView: View {
                 }
         }
         .onAppear {
-                firestoreVM.fetchTopRatedMovies() 
+            firestoreVM.fetchTopRatedMovies()
+            if !authVM.isGoogleUser {
                 selectedImage = loadSavedImage()
+            }
         }
     }
 

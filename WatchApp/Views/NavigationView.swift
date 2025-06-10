@@ -26,7 +26,6 @@ struct NavigationView: View {
                 .tag(1)
                 
                 MovieListView()
-                    .environmentObject(authVM)
                     .tabItem {
                         Image("movies_black_1x")
                         Text("Library")
@@ -34,7 +33,6 @@ struct NavigationView: View {
                     .tag(2)
                 
                 SavedMoviesView()
-                    .environmentObject(authVM)
                     .tabItem {
                         Label("Watchlist", systemImage: "bookmark.fill")
                     }
@@ -44,7 +42,6 @@ struct NavigationView: View {
                 
             
                     ProfileView()
-                        .environmentObject(authVM)
                         .tabItem {
                             Image(systemName: "person.fill")
                             Text("Profile")
