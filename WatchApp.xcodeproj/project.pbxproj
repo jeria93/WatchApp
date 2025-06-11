@@ -22,6 +22,7 @@
 		0377633C2DDBBFD000777B8C /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0377633B2DDBBFD000777B8C /* EmptyStateView.swift */; };
 		0377633E2DDBCB0300777B8C /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0377633D2DDBCB0300777B8C /* SearchBarView.swift */; };
 		03908DAE2DDC8F690008C202 /* FirestoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03908DAD2DDC8F690008C202 /* FirestoreViewModel.swift */; };
+		0393E8132DF990C500924B0F /* Secrets.plist.example.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0393E8122DF990C500924B0F /* Secrets.plist.example.plist */; };
 		03A50DFF2DE46E4E004DFF62 /* Genre.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A50DFE2DE46E4E004DFF62 /* Genre.swift */; };
 		03A50E012DE47534004DFF62 /* GenrePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A50E002DE47534004DFF62 /* GenrePickerView.swift */; };
 		03A50E032DE49105004DFF62 /* ContentTypePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A50E022DE49105004DFF62 /* ContentTypePickerView.swift */; };
@@ -98,6 +99,7 @@
 		0377633B2DDBBFD000777B8C /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
 		0377633D2DDBCB0300777B8C /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
 		03908DAD2DDC8F690008C202 /* FirestoreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreViewModel.swift; sourceTree = "<group>"; };
+		0393E8122DF990C500924B0F /* Secrets.plist.example.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Secrets.plist.example.plist; sourceTree = "<group>"; };
 		039690DD2DF8110A00D78ACB /* WatchApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WatchApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		03A50DFE2DE46E4E004DFF62 /* Genre.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Genre.swift; sourceTree = "<group>"; };
 		03A50E002DE47534004DFF62 /* GenrePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenrePickerView.swift; sourceTree = "<group>"; };
@@ -206,6 +208,7 @@
 				03FA39052DDB219D005F1EDC /* ContentView.swift */,
 				030B55E22DF97909006ED4E0 /* Secrets.plist */,
 				030B55E42DF97911006ED4E0 /* GoogleService-Info.plist */,
+				0393E8122DF990C500924B0F /* Secrets.plist.example.plist */,
 			);
 			path = WatchApp;
 			sourceTree = "<group>";
@@ -470,6 +473,7 @@
 				030B55E32DF97909006ED4E0 /* Secrets.plist in Resources */,
 				5D9D3E382DF9673A0005F00B /* pop.mp3 in Resources */,
 				5D9D3E392DF9673A0005F00B /* pop-1.mp3 in Resources */,
+				0393E8132DF990C500924B0F /* Secrets.plist.example.plist in Resources */,
 				03FA390A2DDB219D005F1EDC /* Assets.xcassets in Resources */,
 				DD5C92972DDB6FFB009D633F /* LaunchScreen.storyboard in Resources */,
 			);
