@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		030B55E32DF97909006ED4E0 /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 030B55E22DF97909006ED4E0 /* Secrets.plist */; };
+		030B55E52DF97911006ED4E0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 030B55E42DF97911006ED4E0 /* GoogleService-Info.plist */; };
 		031957BC2DED98DF004AAC47 /* ShareButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031957BB2DED98DF004AAC47 /* ShareButtonView.swift */; };
 		031F025C2DEEEA7D0014D5DB /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 031F025B2DEEEA7D0014D5DB /* GoogleSignIn */; };
 		031F025E2DEEEA7D0014D5DB /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 031F025D2DEEEA7D0014D5DB /* GoogleSignInSwift */; };
@@ -59,7 +61,6 @@
 		5D9D3E3A2DF9673A0005F00B /* SoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D9D3E342DF9673A0005F00B /* SoundPlayer.swift */; };
 		5DC46A812DE5E8AD002E5618 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC46A802DE5E8AD002E5618 /* ProfileView.swift */; };
 		5DD459C02DF071D900BA7A69 /* RandomPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD459BF2DF071D900BA7A69 /* RandomPickerView.swift */; };
-		5DD459C42DF0869100BA7A69 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5DD459C32DF0869100BA7A69 /* GoogleService-Info.plist */; };
 		A42B66492DDF41EA00BDA4A0 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A42B66482DDF41EA00BDA4A0 /* User.swift */; };
 		A42B664A2DDF41EA00BDA4A0 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = A42B66472DDF41EA00BDA4A0 /* Movie.swift */; };
 		A42B664B2DDF41EA00BDA4A0 /* FirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A42B66462DDF41EA00BDA4A0 /* FirestoreService.swift */; };
@@ -75,7 +76,6 @@
 		A45A5F5B2DDF64E80092054A /* SavedMoviesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45A5F5A2DDF64E80092054A /* SavedMoviesView.swift */; };
 		A4A3BA662DE46676002BAADD /* MovieDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A3BA652DE46676002BAADD /* MovieDetailView.swift */; };
 		A4B100BD2DDCA7040032B48E /* NavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B100BC2DDCA7040032B48E /* NavigationView.swift */; };
-		A4E193F42DF6CB700073EE90 /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = DDBAB45E2DEDD5A5000AC356 /* Secrets.plist */; };
 		A4F921432DDF4CB8003B8C41 /* ContentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F921422DDF4CB8003B8C41 /* ContentType.swift */; };
 		DD5C92972DDB6FFB009D633F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD5C92962DDB6FFB009D633F /* LaunchScreen.storyboard */; };
 		DD5C92992DDB7199009D633F /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5C92982DDB7199009D633F /* SplashScreenView.swift */; };
@@ -84,6 +84,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		030B55E22DF97909006ED4E0 /* Secrets.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Secrets.plist; sourceTree = "<group>"; };
+		030B55E42DF97911006ED4E0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		031957BB2DED98DF004AAC47 /* ShareButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareButtonView.swift; sourceTree = "<group>"; };
 		031F025F2DEEEFE80014D5DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		031F02622DEF266E0014D5DB /* GoogleAuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleAuthManager.swift; sourceTree = "<group>"; };
@@ -133,7 +135,6 @@
 		5D9D3E342DF9673A0005F00B /* SoundPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundPlayer.swift; sourceTree = "<group>"; };
 		5DC46A802DE5E8AD002E5618 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		5DD459BF2DF071D900BA7A69 /* RandomPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomPickerView.swift; sourceTree = "<group>"; };
-		5DD459C32DF0869100BA7A69 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A42B66462DDF41EA00BDA4A0 /* FirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreService.swift; sourceTree = "<group>"; };
 		A42B66472DDF41EA00BDA4A0 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		A42B66482DDF41EA00BDA4A0 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -154,7 +155,6 @@
 		DD5C92982DDB7199009D633F /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
 		DDAD79B52DDCB2AD00C97EA6 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		DDAD79B72DDCF72C00C97EA6 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
-		DDBAB45E2DEDD5A5000AC356 /* Secrets.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Secrets.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,10 +202,10 @@
 				03FA39102DDB21AB005F1EDC /* Models */,
 				03FA390F2DDB21A0005F1EDC /* Service */,
 				03FA39082DDB219D005F1EDC /* WatchAppApp.swift */,
-				5DD459C32DF0869100BA7A69 /* GoogleService-Info.plist */,
-				DDBAB45E2DEDD5A5000AC356 /* Secrets.plist */,
 				031F025F2DEEEFE80014D5DB /* Info.plist */,
 				03FA39052DDB219D005F1EDC /* ContentView.swift */,
+				030B55E22DF97909006ED4E0 /* Secrets.plist */,
+				030B55E42DF97911006ED4E0 /* GoogleService-Info.plist */,
 			);
 			path = WatchApp;
 			sourceTree = "<group>";
@@ -465,12 +465,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D9D3E362DF9673A0005F00B /* click.mp3 in Resources */,
+				030B55E52DF97911006ED4E0 /* GoogleService-Info.plist in Resources */,
 				5D9D3E372DF9673A0005F00B /* intro.mp3 in Resources */,
+				030B55E32DF97909006ED4E0 /* Secrets.plist in Resources */,
 				5D9D3E382DF9673A0005F00B /* pop.mp3 in Resources */,
 				5D9D3E392DF9673A0005F00B /* pop-1.mp3 in Resources */,
-				A4E193F42DF6CB700073EE90 /* Secrets.plist in Resources */,
 				03FA390A2DDB219D005F1EDC /* Assets.xcassets in Resources */,
-				5DD459C42DF0869100BA7A69 /* GoogleService-Info.plist in Resources */,
 				DD5C92972DDB6FFB009D633F /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
