@@ -72,4 +72,5 @@ ehthumbs.db
 Thumbs.db
 
 # MARK: - Övrigt
-.artifacts/
+.artifacts/WatchApp/GoogleService-Info.plist
+WatchApp/Secrets.plist
