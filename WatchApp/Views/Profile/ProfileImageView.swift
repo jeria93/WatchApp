@@ -12,7 +12,6 @@ struct ProfileImageView: View {
     @EnvironmentObject var auth: AuthViewModel
 
     var body: some View {
-
         Group {
             if let urlString = auth.photoURL,
                let url = URL(string: urlString) {

@@ -136,7 +136,7 @@ struct UndoSnackBar: View {
         VStack {
             Spacer()
             HStack {
-                Text("Movie deleted")
+                Text("Deleted")
                     .foregroundStyle(.white)
                 Button("UNDO") {
                     Task{
@@ -144,7 +144,7 @@ struct UndoSnackBar: View {
                     }
                 }
                 .foregroundStyle(.red)
-                .background(Color.white.opacity(0.5).cornerRadius(4))
+                .background(Color.black.cornerRadius(4))
                 .padding(.horizontal)
             }
             .padding()

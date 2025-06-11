@@ -96,8 +96,6 @@ struct MovieDetailView: View {
         .onAppear {
             fetchRating()
         }
-
-//        ShareButtonView(movie: movie)
     }
 
     private func setRating(id: Int, rating: Int) {

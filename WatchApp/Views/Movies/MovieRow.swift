@@ -160,7 +160,6 @@ struct MovieRow: View {
                             Image(movie.isWatched ? "logo_w_pop_face" : "logo_w_pop_vit_outline")
                                 .resizable()
                                 .frame(width: 25, height: 25)
-//                                .foregroundStyle(movie.isWatched ? .green : .white)
                         }
                         .buttonStyle(.plain)
                         .padding(.trailing, 8)

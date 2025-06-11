@@ -11,6 +11,7 @@ struct PopularView: View {
     
     @State private var topFive: [Int: Double] = [:]
     @State private var movies: [Movie] = []
+    @State private var selectedMovie: Movie?
     
     let firestore = FirestoreMovieService()
     let tmdbService = TMDBService()
@@ -20,14 +21,11 @@ struct PopularView: View {
             Color.BG
                 .ignoresSafeArea(.all)
             
-            
             VStack (alignment: .leading) {
                 ForEach(movies.sorted(by: {$0.averageRating > $1.averageRating}), id: \.id) { movie in
                     HStack() {
                         
                         VStack(alignment: .center){
-                            
-                        
                         ZStack{
                             Image("pop_white")
                                 .resizable()
@@ -62,7 +60,9 @@ struct PopularView: View {
                             .font(.headline)
                             .foregroundStyle(Color.popcornYellow)
                     }
-                    
+                    .onTapGesture {
+                        selectedMovie = movie
+                    }
                 }
             }
             .padding(8)
@@ -84,14 +84,18 @@ struct PopularView: View {
                                 print("Error fetching movie: \(error)")
                             }
                         }
-                        
                     }
                     movies = []
                 }
             }
             .background(Color.BG)
-            
         }
-        
+        .sheet(item: $selectedMovie) { movie in
+            MovieDetailView(movie: movie, contentType: .movie)
+        }
     }
-    }
+}
+    
+    //#Preview {
+    //    PopularView()
+    //}

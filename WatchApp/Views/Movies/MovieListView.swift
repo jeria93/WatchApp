@@ -19,17 +19,15 @@ struct MovieListView: View {
                     .ignoresSafeArea(.all)
 
                 VStack(spacing: 15) {
-
-                    if viewModel.selectedFilter != .genre {
-                        SearchBarView(text: $viewModel.searchText, filterType: viewModel.selectedFilter) {
-                            Task {
-                                if viewModel.searchText.trimmingCharacters(in: .whitespaces).isEmpty {
-                                    await viewModel.fetchTrendingContent()
-                                } else {
-                                    await viewModel.searchContent()
-                                }
+                    
+                    if viewModel.selectedFilter != .releaseDate {
+                        SearchBarView(
+                            text: $viewModel.searchText,
+                            filterType: viewModel.selectedFilter,
+                            onSubmit: {
+                                Task { await viewModel.onSearchTrigger() }
                             }
-                        }
+                        )
                         .padding(.vertical)
                     }
 
@@ -80,8 +78,6 @@ struct MovieListView: View {
         }
     }
 }
-
-
 
 #Preview {
     MovieListView()

@@ -13,7 +13,7 @@ class KeychainService {
     private let service = "com.nicholasjeria.WatchApp"
     
     
-    //Saves password in a safe way (keychain)
+    ///Saves password in a safe way (keychain)
     func save(_ value: String, forKey key: String) -> Bool {
         if let data = value.data(using: .utf8) {
             let query: [String: Any] = [
@@ -31,7 +31,7 @@ class KeychainService {
         return false
     }
     
-    //Catches password from keychain
+    ///Catches password from keychain
     func retrieve(forKey key: String) -> String? {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
@@ -52,7 +52,7 @@ class KeychainService {
         return nil
     }
     
-    //Deletes saved password from keychain
+    ///Deletes saved password from keychain
     func delete(forKey key: String) -> Bool {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
