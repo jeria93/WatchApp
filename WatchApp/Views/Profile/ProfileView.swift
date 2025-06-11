@@ -144,6 +144,7 @@ struct ProfileView: View {
                 .environmentObject(authVM)
                 .onDisappear {
                     firestoreVM.fetchTopRatedMovies()
+                    
                 }
         }
         .onAppear {
